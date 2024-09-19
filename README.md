@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Bow Valley College Portal
+ <img alt="React" src="https://ziadoua.github.io/m3-Markdown-Badges/badges/React/react2.svg"/>  <img alt="JavaScript" src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Javascript/javascript3.svg"/>  <img alt="NodeJS" src="https://ziadoua.github.io/m3-Markdown-Badges/badges/NodeJS/nodejs1.svg"/><img alt="Express.js" src="https://ziadoua.github.io/m3-Markdown-Badges/badges/Express/express1.svg"/> <img alt="JSON" src="https://ziadoua.github.io/m3-Markdown-Badges/badges/JSON/json1.svg"/> <img alt="CSS3" src="https://ziadoua.github.io/m3-Markdown-Badges/badges/CSS/css1.svg"/> <img alt="MUI" src="https://img.shields.io/badge/MUI-007FFF.svg?style=for-the-badge&logo=MUI&logoColor=white"/>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Table of Contents
+- [Collaborators](#Collaborators)
+- [Description](#Description)
+- [Features](#Features)
+  - [Current Features](#Current-Features) 
+  - [Coming Soon](#Coming-Soon)
+- [Phases](#Phases)
+  - [Phase 1](#Phase-1)
+  - [Phase 2](#Phase-2)
+  - [Phase 3](#Phase-3) 
+- [Usage](#Usage)
+- [Start Up](#Start-Up)
 
-## Available Scripts
+# Collaborators
+- Patrick MacDonald
+-
+-
+-
 
-In the project directory, you can run:
+# Description
+This project is a mockup of the Bow Valley College Portal, designed to allow users to manage their academic experience. Users will be able to add and organize programs, enroll in classes, and customize their profile page. The project will be developed and delivered in three phases, ensuring a seamless and efficient user experience.
 
-### `npm start`
+# Features
+## Current Features
+1.
+## Coming Soon
+1. User Authentication: Secure login functionality for users.
+2. Profile Management: View and update user profile details.
+3. Program Enrollment: Add new programs to track academic progress.
+4. Class Registration: Add classes within each program.
+5. Program Removal: Remove an entire program, including all associated classes.
+6. Class Removal: Un-enroll from individual classes.
+7. Contact Support: Send questions or inquiries via email directly through the portal.
+8. Admin Dashboard: View and manage user-submitted questions on the admin side.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Phases
+## Phase 1
+Phase One will focus on building the front end using React. This phase will simulate the core functionality of the app by saving and managing data locally in JSON format. Mock data will be pre-loaded when the application starts, allowing users to interact with a realistic interface without back-end integration at this stage.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Phase 2
+Phase Two will focus on building the back-end infrastructure using Node.js and Express to create a REST API that serves data to the front-end. During this phase, the portal will transition from using locally stored JSON data to a fully integrated back-end system with a database for persistent storage. The API will handle all CRUD (Create, Read, Update, Delete) operations for users, programs, and classes. Additionally, the back-end will include robust data validation and error handling to ensure a reliable and secure user experience.
+## Phase 3
+Phase three will focus on bringing the first two phases together to create a fully functioning full stack application.
 
-### `npm test`
+# Start up
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+> **Note**
+> Remember to run ```npm i``` after cloning project.
 
-### `npm run build`
+Project can be easily started from the root by running:
+```Bash
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Usage
+In you're browser go to:
+```Bash
+http://localhost:3000
+```
