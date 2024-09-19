@@ -16,7 +16,7 @@
 
 # Collaborators
 - Patrick MacDonald
--
+- Thiago Lima
 -
 -
 
