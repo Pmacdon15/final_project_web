@@ -18,7 +18,7 @@
 - Patrick MacDonald
 - Thiago Lima
 -
--
+- Manuella Lopes
 
 # Description
 This project is a mockup of the Bow Valley College Portal, designed to allow users to manage their academic experience. Users will be able to add and organize programs, enroll in classes, and customize their profile page. The project will be developed and delivered in three phases, ensuring a seamless and efficient user experience.
