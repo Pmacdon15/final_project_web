@@ -18,7 +18,6 @@
 - Patrick MacDonald
 - Marianna Antunes
 - Thiago Lima
--
 - Manuella Lopes
 
 # Description
