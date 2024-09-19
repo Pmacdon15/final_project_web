@@ -17,6 +17,7 @@
 # Collaborators
 - Patrick MacDonald
 - Marianna Antunes
+- Thiago Lima
 -
 -
 
