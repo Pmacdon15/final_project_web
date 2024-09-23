@@ -1,19 +1,24 @@
-import '../../App.css';
+import '../../../App.css';
+import BVCImage
+    from '../../bvc-image/BVCImage.component';
 export default function StudentLogin() {
     return (
-        <div className="HomePageMain">
-            <h1>Student Login</h1>
-            <form>
-                <label>
-                    Username:
-                    <input type="text" name="studentId" />
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        </div>
+        <>
+            <BVCImage />
+            <div className="HomePageMain">
+                <h1>Student Login</h1>
+                <form className='LoginForm'>
+                    <label>
+                        Student Number:
+                        <input type="text" name="studentId" />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="password" name="password" />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        </>
     )
 }
