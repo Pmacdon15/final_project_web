@@ -1,7 +1,11 @@
+import BVCImage from "../bvc-image/BVCImage.component"
 export default function StudentPortal() {
     return (
-        <div>
-            <h1>Student Portal</h1>
-        </div>
+        <>
+            <BVCImage />
+            <div>
+                <h1>Student Portal</h1>
+            </div>
+        </>
     )
 }
