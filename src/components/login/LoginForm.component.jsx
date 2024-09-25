@@ -56,6 +56,7 @@ export default function LoginForm({ loginType }) {
 
                 //Should redirect the user to the homepage
                 console.log(userExists);
+
             }
         } catch (error) {
             if (error?.message) {
