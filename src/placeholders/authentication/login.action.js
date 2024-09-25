@@ -1,4 +1,4 @@
-import users from './users.data'
+import users from './user.data.json'
 
 function handleLogin(username, password) {
     if (!username || !password) {
