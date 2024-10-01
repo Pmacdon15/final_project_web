@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 const pages = ['All Programs', 'My Programs', 'All Courses', 'My Courses'];
 const settings = ['Profile', 'Logout'];
 
-function NavBar() {
+function NavBar({email}) {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -91,7 +91,7 @@ function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={() => {
-                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}`);
+                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}/${email}`);
                   handleCloseNavMenu();
                 }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
@@ -123,7 +123,7 @@ function NavBar() {
               <Button
                 key={page}
                 onClick={()=>{
-                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}`);
+                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}/${email}`);
                   handleCloseNavMenu();
                 }}
                 sx={{ my: 2, color: 'white', display: 'block' }}
