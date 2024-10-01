@@ -91,7 +91,7 @@ function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={() => {
-                  navigate(`/${page.toLowerCase().replace(/ /g, '-')}`);
+                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}`);
                   handleCloseNavMenu();
                 }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
@@ -123,7 +123,7 @@ function NavBar() {
               <Button
                 key={page}
                 onClick={()=>{
-                  navigate(`/${page.toLowerCase().replace(/ /g, '-')}`);
+                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}`);
                   handleCloseNavMenu();
                 }}
                 sx={{ my: 2, color: 'white', display: 'block' }}
