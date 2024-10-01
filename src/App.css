@@ -111,6 +111,13 @@
   display: flex;
   margin-right: auto;
   border-style: solid;
-  width:250px;
-  height:
+  width: 250px;
+}
+
+.StudentPortalAllProgramsContent {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  width:80%;
+  justify-content: center;
 }
