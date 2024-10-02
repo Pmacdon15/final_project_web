@@ -16,6 +16,7 @@ export default function DisplayProgram({ program, email, isMyProgramPage }) {
             <p className="mb-2">Amount of terms: {program.durationTerms}</p>
             <p>Tuition: ${program.tuition}</p>
             {isMyProgramPage &&(
+                // TODO: Add onClick event to register for program and reload page
                 <button className="flex flex-col m-4 px-4 py-2 w-4/6 items-center bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300">
                     Register
                 </button>
