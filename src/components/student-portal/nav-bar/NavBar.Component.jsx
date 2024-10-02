@@ -19,13 +19,13 @@ import { useNavigate } from 'react-router-dom';
 
 function NavBar({ email }) {
   let pages = [];
-  if (email !== "") {
+  if (email === "") {
     pages = ['All Programs', 'All Classes',];
   } else {
     pages = ['Dashboard', 'All Programs', 'My Classes'];
   }
   let settings = [];
-  if (email !== "") {
+  if (email === "") {
     settings = ['Login'];
   } else {
     settings = ['Profile', 'Logout'];
