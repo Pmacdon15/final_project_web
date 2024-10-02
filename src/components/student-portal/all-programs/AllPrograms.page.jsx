@@ -12,9 +12,11 @@ export default function StudentPortalAllPrograms() {
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center ">
             <NavBar email={email} />
-            <h1>All Programs</h1>
-            <p>Here you can see all the programs available for you to enroll in.</p>
-            <DisplayAllPrograms programs={programs} email={email} />
+            <div className=' bg-blue-100  shadow-lg gap-4   p-4 md:p-8 border rounded-lg'>
+                <h1>All Programs</h1>
+                <p>Here you can see all the programs available for you to enroll in.</p>
+            </div>
+            <DisplayAllPrograms programs={programs} email={email} isMyProgramPage={false} />
         </div>
     )
 }
