@@ -17,18 +17,15 @@ import BVCWhiteImage from '../../bvc-image/BvcWhiteImage.component';
 import { useNavigate } from 'react-router-dom';
 
 
-const pages = ['Dashboard', 'All Programs', 'My Programs', 'All Classes', 'My Classes'];
-const settings = ['Profile', 'Logout'];
-
 function NavBar({ email }) {
   let pages = [];
-  if (email !== "") {
+  if (email === "") {
     pages = ['All Programs', 'All Classes',];
   } else {
     pages = ['Dashboard', 'All Programs', 'My Classes'];
   }
   let settings = [];
-  if (email !== "") {
+  if (email === "") {
     settings = ['Login'];
   } else {
     settings = ['Profile', 'Logout'];
@@ -169,7 +166,12 @@ function NavBar({ email }) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => {
+                  if (setting === 'Logout') {
+                    navigate('/');
+                  }
+                  handleCloseUserMenu();
+                }}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
