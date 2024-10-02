@@ -8,6 +8,7 @@ import AdminLogin from './components/login/admin-login/AdminLogin.page'
 import StudentPortalDashboard from './components/student-portal/dashboard/dashboard.page';
 import StudentPortalAllPrograms from './components/student-portal/all-programs/AllPrograms.page';
 import StudentPortalMyPrograms from './components/student-portal/my-programs/MyPrograms.page';
+import StudentPortalAllClasses from './components/student-portal/all-classes/AllClasses.page';
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,7 @@ function App() {
         <Route path="/student-portal-dashboard/:email" element={<StudentPortalDashboard />} />
         <Route path="/student-portal-all-programs/:email" element={<StudentPortalAllPrograms />} />
         <Route path="/student-portal-my-programs/:email" element={<StudentPortalMyPrograms />} />
+        <Route path="/student-portal-all-classes/:email" element={<StudentPortalAllClasses />} />
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
       </Routes>      
     </div>
