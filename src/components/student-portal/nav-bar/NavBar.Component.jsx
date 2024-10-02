@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb';
-import BVCImage from '../../bvc-image/BVCImage.component';
+import BVCWhiteImage from '../../bvc-image/BvcWhiteImage.component';
 // import { Height } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -56,12 +56,12 @@ function NavBar({ email }) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <BVCImage height={125} />
+          {/* <BVCWhiteImage height={80} /> */}
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/student-portal-dashboard"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -72,7 +72,7 @@ function NavBar({ email }) {
               textDecoration: 'none',
             }}
           >
-            Bow Valley College
+            <BVCWhiteImage height={60} />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -112,12 +112,13 @@ function NavBar({ email }) {
               ))}
             </Menu>
           </Box>
-          {/* <BVCImage height={125} /> */}
+          {/* <BVCImage height={80} /> */}
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href="/student-portal-dashboard"
+            href="/"
+
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -129,7 +130,7 @@ function NavBar({ email }) {
               textDecoration: 'none',
             }}
           >
-            BVC
+            <BVCWhiteImage height={60} />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
