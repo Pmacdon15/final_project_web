@@ -1,4 +1,4 @@
-export default function DisplayMyProgram({ program, email }) {
+export default function DisplayUserProgram({ program, email }) {
     return (
         <div className="flex flex-col w-full shadow-lg border-black items-center bg-white rounded-lg">
             <h1 className="text-2xl font-bold mb-2">{program.name}</h1>

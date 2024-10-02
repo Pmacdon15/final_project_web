@@ -5,7 +5,7 @@ import {LoadUserPrograms} from '../../../placeholders/load-data/loadData.action'
 import { useParams } from 'react-router-dom';
 import React from 'react';
 // import { useEffect } from 'react';
-import DisplayMyPrograms from './DisplayMyPrograms.component';
+import DisplayUserPrograms from './DisplayUserPrograms.component';
 export default function StudentPortalMyPrograms() {
     const { email } = useParams();
     //   console.log("From My Programs", email);
@@ -31,7 +31,7 @@ export default function StudentPortalMyPrograms() {
       <p>Here you can see all the programs available for you to enroll in as well as the programs you are enrolled in.</p>
       </div>
       <DisplayAllPrograms programs={programs} email={email} isMyProgramPage={true}/>
-      <DisplayMyPrograms programs={userPrograms} email={email}/>
+      <DisplayUserPrograms programs={userPrograms} email={email}/>
     </div >
   );
 }

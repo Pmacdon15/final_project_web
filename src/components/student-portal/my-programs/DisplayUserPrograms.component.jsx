@@ -1,4 +1,4 @@
-import DisplayMyProgram from "./DisplayMyProgram.component";
+import DisplayUserProgram from "./DisplayUserProgram.component";
 
 export default function MyPrograms({programs, email}) {
     return (
@@ -7,7 +7,7 @@ export default function MyPrograms({programs, email}) {
             <div>No data to load</div>
         ) : (
             programs.map((program, index) => (
-                <DisplayMyProgram key={index} program={program} email={email} />
+                <DisplayUserProgram key={index} program={program} email={email} />
             ))
         )}
     </div>
