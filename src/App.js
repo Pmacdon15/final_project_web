@@ -17,9 +17,9 @@ function App() {
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/student-portal-dashboard/:email" element={<StudentPortalDashboard />} />
-        <Route path="/student-portal-all-programs/:email" element={<StudentPortalAllPrograms />} />
+        <Route path="/student-portal-all-programs" element={<StudentPortalAllPrograms />} />
         <Route path="/student-portal-my-programs/:email" element={<StudentPortalMyPrograms />} />
-        <Route path="/student-portal-all-classes/:email" element={<StudentPortalAllClasses />} />
+        <Route path="/student-portal-all-classes/" element={<StudentPortalAllClasses />} />
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
       </Routes>      
     </div>
