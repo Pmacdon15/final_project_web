@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "name": "Software development diploma",
+        "description": "This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.",
+        "durationTerms": 4,
+        "tuition": 10000
+    },
+    {
+        "id": 2,
+        "name": "Software development post diploma",
+        "description": "This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.",
+        "durationTerms": 3,
+        "tuition": 8000
+    },
+    {
+        "id": 3,
+        "name": "Certificate in software development",
+        "description": "This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.",
+        "durationTerms": 2,
+        "tuition": 6000
+    }
+
+]

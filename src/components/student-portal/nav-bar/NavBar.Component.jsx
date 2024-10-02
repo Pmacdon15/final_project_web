@@ -16,10 +16,23 @@ import BVCWhiteImage from '../../bvc-image/BvcWhiteImage.component';
 // import { Height } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['All Programs', 'My Programs', 'All Courses', 'My Courses'];
+
+const pages = ['Dashboard', 'All Programs', 'My Programs', 'All Classes', 'My Classes'];
 const settings = ['Profile', 'Logout'];
 
-function NavBar() {
+function NavBar({ email }) {
+  let pages = [];
+  if (email !== "") {
+    pages = ['All Programs', 'All Classes',];
+  } else {
+    pages = ['Dashboard', 'All Programs', 'My Classes'];
+  }
+  let settings = [];
+  if (email !== "") {
+    settings = ['Login'];
+  } else {
+    settings = ['Profile', 'Logout'];
+  }
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -91,7 +104,7 @@ function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={() => {
-                  navigate(`/${page.toLowerCase().replace(/ /g, '-')}`);
+                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}/${email}`);
                   handleCloseNavMenu();
                 }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
@@ -105,6 +118,7 @@ function NavBar() {
             noWrap
             component="a"
             href="/"
+
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -122,8 +136,8 @@ function NavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={()=>{
-                  navigate(`/${page.toLowerCase().replace(/ /g, '-')}`);
+                onClick={() => {
+                  navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}/${email}`);
                   handleCloseNavMenu();
                 }}
                 sx={{ my: 2, color: 'white', display: 'block' }}

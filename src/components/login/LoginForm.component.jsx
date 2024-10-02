@@ -39,6 +39,12 @@ export default function LoginForm({ loginType }) {
 
         try {
             const userExists = handleLoginAction(username, password);
+            if (userExists.isAdmin) {
+                window.location.href = `/student-portal-all-programs`;
+                //TODO: Redirect to the admin-portal-all-programs page after page is created
+            } else {
+                window.location.href = `/student-portal-dashboard/${username}`;
+            }
 
             if (!userExists) {
                 setToastState(oldState => ({
@@ -95,9 +101,9 @@ export default function LoginForm({ loginType }) {
             />
 
             <BVCImage />
-            <div className="LoginHomePageMain">
+            <div className="flex flex-col items-center text-white text-2xl bg-blue-600 w-5/6 md:w-2/6 rounded-xl shadow-md gap-5">
                 <h1>{loginType} Portal</h1>
-                <form className="LoginForm" onSubmit={handleLogin}>
+                <form className="flex flex-col items-center justify-center gap-4 h-72 w-4/6 rounded-lg text-white bg-blue-400 mb-8" onSubmit={handleLogin}>
                     <TextField
                         id="userEmail"
                         name="userEmail"
