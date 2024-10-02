@@ -1,7 +1,7 @@
 import NavBar from '../nav-bar/NavBar.Component';
 import DisplayAllPrograms from '../all-programs/DisplayAllPrograms.component';
 import {LoadAllPrograms} from '../../../placeholders/load-data/loadData.action';
-import {LoadMyPrograms} from '../../../placeholders/load-data/loadData.action';
+import {LoadUserPrograms} from '../../../placeholders/load-data/loadData.action';
 import { useParams } from 'react-router-dom';
 import React from 'react';
 // import { useEffect } from 'react';
@@ -11,14 +11,14 @@ export default function StudentPortalMyPrograms() {
     //   console.log("From My Programs", email);
 
     const [programs, setPrograms] = React.useState([]);
-    const [myPrograms, setMyPrograms] = React.useState([]);
+    const [userPrograms, setUserPrograms] = React.useState([]);
 
     React.useEffect(() => {
         const fetchPrograms = async () => {
             const loadedPrograms = LoadAllPrograms();
             setPrograms(loadedPrograms);
-            const loadedMyPrograms = LoadMyPrograms(email);
-            setMyPrograms(loadedMyPrograms);            
+            const loadedUserPrograms = LoadUserPrograms(email);
+            setUserPrograms(loadedUserPrograms);            
         };
         fetchPrograms();
     }, [email]);
@@ -31,7 +31,7 @@ export default function StudentPortalMyPrograms() {
       <p>Here you can see all the programs available for you to enroll in as well as the programs you are enrolled in.</p>
       </div>
       <DisplayAllPrograms programs={programs} email={email} isMyProgramPage={true}/>
-      <DisplayMyPrograms programs={myPrograms} email={email}/>
+      <DisplayMyPrograms programs={userPrograms} email={email}/>
     </div >
   );
 }

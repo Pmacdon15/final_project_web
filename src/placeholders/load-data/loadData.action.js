@@ -1,15 +1,15 @@
 import programs from '../load-data/programs.data.json';
-import myPrograms from '../load-data/myPrograms.data.json';
+import userPrograms from '../load-data/userPrograms.data.json';
 
 function LoadAllPrograms() {
   return programs;
 }
 
-function LoadMyPrograms(email) {
+function LoadUserPrograms(email) {
     // TODO: Add data to /load-data/myPrograms.data.json
     // TODO: fetch my programs from the myPrograms.data.json file using email 
-  return myPrograms;
+  return userPrograms;
 }
 
 
-export { LoadAllPrograms, LoadMyPrograms };
+export { LoadAllPrograms, LoadUserPrograms };
