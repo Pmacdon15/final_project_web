@@ -1,0 +1,181 @@
+[
+    {
+        "id": 1,
+        "programId": 1,
+        "name": "Math For the Computer Industry",
+        "availableFall": true,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 2,
+        "programId": 1,
+        "name": "Essential skills for team's collaboration",
+        "availableFall": true,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 3,
+        "programId": 1,
+        "name": "programming fundamentals",
+        "availableFall": true,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 4,
+        "programId": 1,
+        "name": "Internet of things",
+        "availableFall": true,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 5,
+        "programId": 1,
+        "name": "Web and Internet fundamentals",
+        "availableFall": true,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 6,
+        "programId": 1,
+        "name": "Introduction to relational databases",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": true,
+        "availableSummer": true
+    },    {
+        "id":7 ,
+        "programId": 1,
+        "name": "Project management and software development",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": true,
+        "availableSummer": true
+    },
+    {
+        "id": 8,
+        "programId": 1,
+        "name": "Introduction to web design",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": true,
+        "availableSummer": true
+    },
+    {
+        "id": 9,
+        "programId": 1,
+        "name": "Introduction to object oriented programming",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": true,
+        "availableSummer": true
+    },
+    {
+        "id": 10,
+        "programId": 1,
+        "name": "Networking essentials",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": true,
+        "availableSummer": true
+    },
+    {
+        "id": 11,
+        "programId": 1,
+        "name": "Relational databases",
+        "availableFall": true,
+        "availableWinter": false,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 12,
+        "programId": 1,
+        "name": "Project management in software development",
+        "availableFall": true,
+        "availableWinter": false,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id":13 ,
+        "programId": 1,
+        "name": "Rapid application development",
+        "availableFall": true,
+        "availableWinter": false,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id":14 ,
+        "programId": 1,
+        "name": "Web programming",
+        "availableFall": true,
+        "availableWinter": false,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 15,
+        "programId": 1,
+        "name": "Object oriented programming",
+        "availableFall": true,
+        "availableWinter": false,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 16,
+        "programId": 1,
+        "name": "Introduction to games and simulation programming",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id":17 ,
+        "programId": 1,
+        "name": "Mobile application development",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id":18 ,
+        "programId": 1,
+        "name": "Algorithms and data structures",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id":19,
+        "programId": 1,
+        "name": "Software development capstone project",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+    {
+        "id": 20,
+        "programId": 1,
+        "name": "Enterprise computing",
+        "availableFall": false,
+        "availableWinter": true,
+        "availableSpring": false,
+        "availableSummer": false
+    },
+]
