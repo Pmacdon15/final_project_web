@@ -166,7 +166,12 @@ function NavBar({ email }) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => {
+                  if (setting === 'Logout') {
+                    navigate('/');
+                  }
+                  handleCloseUserMenu();
+                }}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
