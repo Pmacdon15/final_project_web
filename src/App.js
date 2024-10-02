@@ -4,11 +4,11 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './components/login/login-home-page/LoginHomePage.page';
 import StudentLogin from './components/login/student-login/StudentLogin.page'
 import AdminLogin from './components/login/admin-login/AdminLogin.page'
-// import StudentPortalHome from './components/student-portal/StudentPortal.page'
 import StudentPortalDashboard from './components/student-portal/dashboard/dashboard.page';
 import StudentPortalAllPrograms from './components/student-portal/all-programs/AllPrograms.page';
 import StudentPortalMyPrograms from './components/student-portal/my-programs/MyPrograms.page';
 import StudentPortalAllClasses from './components/student-portal/all-classes/AllClasses.page';
+
 function App() {
   return (
     <div className="App">

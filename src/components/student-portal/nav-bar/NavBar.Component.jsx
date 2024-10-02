@@ -16,10 +16,23 @@ import BVCImage from '../../bvc-image/BVCImage.component';
 // import { Height } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
+
 const pages = ['Dashboard', 'All Programs', 'My Programs', 'All Classes', 'My Classes'];
 const settings = ['Profile', 'Logout'];
 
-function NavBar({email}) {
+function NavBar({ email }) {
+  let pages = [];
+  if (email !== "") {
+    pages = ['All Programs', 'All Classes',];
+  } else {
+    pages = ['Dashboard', 'All Programs', 'My Classes'];
+  }
+  let settings = [];
+  if (email !== "") {
+    settings = ['Login'];
+  } else {
+    settings = ['Profile', 'Logout'];
+  }
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -122,7 +135,7 @@ function NavBar({email}) {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={()=>{
+                onClick={() => {
                   navigate(`/student-portal-${page.toLowerCase().replace(/ /g, '-')}/${email}`);
                   handleCloseNavMenu();
                 }}
