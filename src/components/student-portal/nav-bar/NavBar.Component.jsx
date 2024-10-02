@@ -17,6 +17,9 @@ import BVCImage from '../../bvc-image/BVCImage.component';
 import { useNavigate } from 'react-router-dom';
 
 
+const pages = ['Dashboard', 'All Programs', 'My Programs', 'All Classes', 'My Classes'];
+const settings = ['Profile', 'Logout'];
+
 function NavBar({ email }) {
   let pages = [];
   if (email !== "") {
