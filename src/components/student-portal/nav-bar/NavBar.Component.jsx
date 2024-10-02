@@ -16,7 +16,7 @@ import BVCImage from '../../bvc-image/BVCImage.component';
 // import { Height } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['All Programs', 'My Programs', 'All Courses', 'My Courses'];
+const pages = ['Dashboard', 'All Programs', 'My Programs', 'All Courses', 'My Courses'];
 const settings = ['Profile', 'Logout'];
 
 function NavBar({email}) {
@@ -104,7 +104,7 @@ function NavBar({email}) {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/student-portal-dashboard"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
