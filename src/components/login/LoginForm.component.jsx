@@ -39,13 +39,7 @@ export default function LoginForm({ loginType }) {
 
         try {
             const userExists = handleLoginAction(username, password);
-            if (userExists.isAdmin) {
-                window.location.href = `/student-portal-all-programs`;
-                //TODO: Redirect to the admin-portal-all-programs page after page is created
-            } else {
-                window.location.href = `/student-portal-dashboard/${username}`;
-            }
-
+           
             if (!userExists) {
                 setToastState(oldState => ({
                     ...oldState,
@@ -62,6 +56,13 @@ export default function LoginForm({ loginType }) {
 
                 //Should redirect the user to the homepage
                 console.log(userExists);
+                if (userExists.isAdmin) {
+                    window.location.href = `/student-portal-all-programs`;
+                    //TODO: Redirect to the admin-portal-all-programs page after page is created
+                } else {
+                    window.location.href = `/student-portal-dashboard/${username}`;
+                }
+    
 
             }
         } catch (error) {

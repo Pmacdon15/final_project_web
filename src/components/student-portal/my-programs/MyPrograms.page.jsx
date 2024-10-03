@@ -3,6 +3,7 @@ import DisplayAllPrograms from '../all-programs/DisplayAllPrograms.component';
 import {LoadAllPrograms} from '../../../placeholders/load-data/loadData.action';
 import {LoadUserPrograms} from '../../../placeholders/load-data/loadData.action';
 import { useParams } from 'react-router-dom';
+
 import React from 'react';
 // import { useEffect } from 'react';
 import DisplayUserPrograms from './DisplayUserPrograms.component';
