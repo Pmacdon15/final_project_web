@@ -32,6 +32,10 @@ export default function AdminPortalComments() {
                                 <p>
                                     {comment.comment}
                                 </p>
+                                <p>Date:</p>
+                                <p>
+                                    {comment.date}
+                                </p>
                             </div>
                         </div>
                     </div>
