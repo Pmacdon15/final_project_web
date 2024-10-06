@@ -23,6 +23,7 @@ function App() {
         <Route path="/student-portal-my-programs/:email" element={<StudentPortalMyPrograms />} />
         <Route path="/student-portal-all-classes/" element={<StudentPortalAllClasses />} />
         <Route path="/student-portal-comments/:email" element={<StudentPortalComments />} />
+        <Route path="/student-portal-comments/" element={<StudentPortalComments />} />
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
       </Routes>      
     </div>
