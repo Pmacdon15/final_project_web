@@ -1,4 +1,3 @@
-import { Add } from "@mui/icons-material";
 import NavBar from "../nav-bar/NavBar.Component";
 import { useParams } from "react-router-dom";
 import {AddComment} from '../../../placeholders/comments/comments.action';
