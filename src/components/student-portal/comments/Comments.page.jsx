@@ -1,5 +1,7 @@
+import { Add } from "@mui/icons-material";
 import NavBar from "../nav-bar/NavBar.Component";
 import { useParams } from "react-router-dom";
+import {AddComment} from '../../../placeholders/comments/comments.action';
 export default function StudentPortalComments() {
     const { email } = useParams();
     const handleSubmit = (event) => {
@@ -7,6 +9,7 @@ export default function StudentPortalComments() {
         const email = event.target.email.value;
         const comment = event.target.comment.value;
         console.log({ email, comment });
+        AddComment(email, comment);
         window.location.reload();
     };
 
