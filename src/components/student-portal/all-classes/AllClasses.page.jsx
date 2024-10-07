@@ -26,7 +26,6 @@ export default function StudentPortalAllClasses() {
             </div>
 
             <DisplayAllClasses allClasses={allClasses}  />
-
         </div>
     )
 }
