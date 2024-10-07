@@ -10,6 +10,7 @@ import StudentPortalMyPrograms from './components/student-portal/my-programs/MyP
 import StudentPortalAllClasses from './components/student-portal/all-classes/AllClasses.page';
 import StudentPortalComments from './components/student-portal/comments/Comments.page';
 import AdminPortalComments from './components/admin-portal/comments/Comments.page';
+import StudentSignupForm from './components/student-signup-portal/StudentSignUp.page'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/student-signup" element={<StudentSignupForm />} />
         <Route path="/student-portal-dashboard/:email" element={<StudentPortalDashboard />} />
         <Route path="/student-portal-all-programs" element={<StudentPortalAllPrograms />} />
         <Route path="/student-portal-all-programs/:email" element={<StudentPortalAllPrograms />} />
@@ -26,6 +28,7 @@ function App() {
         <Route path="/student-portal-comments/:email" element={<StudentPortalComments />} />
         <Route path="/student-portal-comments/" element={<StudentPortalComments />} />
         <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
+        <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />      
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
       </Routes>      
     </div>
