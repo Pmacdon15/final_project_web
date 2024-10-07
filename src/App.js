@@ -8,6 +8,8 @@ import StudentPortalDashboard from './components/student-portal/dashboard/dashbo
 import StudentPortalAllPrograms from './components/student-portal/all-programs/AllPrograms.page';
 import StudentPortalMyPrograms from './components/student-portal/my-programs/MyPrograms.page';
 import StudentPortalAllClasses from './components/student-portal/all-classes/AllClasses.page';
+import StudentPortalComments from './components/student-portal/comments/Comments.page';
+import AdminPortalComments from './components/admin-portal/comments/Comments.page';
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
         <Route path="/student-portal-all-programs/:email" element={<StudentPortalAllPrograms />} />
         <Route path="/student-portal-my-programs/:email" element={<StudentPortalMyPrograms />} />
         <Route path="/student-portal-all-classes/" element={<StudentPortalAllClasses />} />
+        <Route path="/student-portal-comments/:email" element={<StudentPortalComments />} />
+        <Route path="/student-portal-comments/" element={<StudentPortalComments />} />
+        <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
       </Routes>      
     </div>

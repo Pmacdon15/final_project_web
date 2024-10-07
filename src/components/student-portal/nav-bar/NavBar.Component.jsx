@@ -20,9 +20,9 @@ import { useNavigate } from 'react-router-dom';
 function NavBar({ email }) {
   let pages = [];
   if (email === "") {
-    pages = ['All Programs', 'All Classes',];
+    pages = ['All Programs', 'All Classes','Comments'];
   } else {
-    pages = ['Dashboard', 'All Programs', 'My Classes'];
+    pages = ['Dashboard', 'All Programs', 'My Classes', 'Comments'];
   }
   let settings = [];
   if (email === "") {
