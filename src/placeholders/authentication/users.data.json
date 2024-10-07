@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Patrick",
+    "email": "patrick@bvc.com",
+    "password": "1234",
+    "isAdmin": true,
+    "course": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Manuella",
+    "email": "manuella@bvc.com",
+    "password": "1234",
+    "isAdmin": false,
+    "course": [
+      4,
+      5,
+      1
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Thiago",
+    "email": "thiago@bvc.com",
+    "password": "1234",
+    "isAdmin": false,
+    "course": [
+      1,
+      3,
+      5
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Mariana",
+    "email": "mariana@bvc.com",
+    "password": "1234",
+    "isAdmin": true,
+    "course": [
+      1,
+      2,
+      4
+    ]
+  }
+]
