@@ -1,0 +1,27 @@
+[
+    {
+        "id":1,
+        "name":"SODV2201 Web Programming",
+        "status":"confirmed"
+    },
+    {
+        "id":2,
+        "name":"TECH1101 Web and Internet Fundamentals",
+        "status":"confirmed"
+    },
+    {
+        "id":3,
+        "name":"SODV1202 Introduction to Object Oriented Programming",
+        "status":"confirmed"
+    },
+    {
+        "id":4,
+        "name":"SODV1101 Programming Fundamentals",
+        "status":"confirmed"
+    },
+    {
+        "id":5,
+        "name":"TECH1201 Networking Essentials",
+        "status":"confirmed"
+    }
+]
