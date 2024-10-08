@@ -13,7 +13,7 @@ export default function StudentPortalAllClasses() {
             setAllClasses(loadedAllClasses);
         };
         fetchAllClasses();
-    }, []);
+    }, [allClasses]);
 
     // console.log(JSON.stringify(allClasses, null, 2));
 

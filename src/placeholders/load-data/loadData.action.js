@@ -14,9 +14,9 @@ function LoadUserPrograms(email) {
 
 
 function LoadAllClassesToLocalStorage() {
-  const existingClasses = JSON.parse(localStorage.getItem('allClasses'));
+  const existingClasses = JSON.parse(localStorage.getItem('allClasses')) || [];
   const newClasses = allClasses.filter(newClass =>
-    !existingClasses.some(existingClass => existingClass.id === newClass.id)
+    existingClasses && !existingClasses.some(existingClass => existingClass.id === newClass.id)
   );
   const updatedClasses = [...existingClasses, ...newClasses];
   localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
