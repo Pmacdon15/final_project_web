@@ -41,6 +41,13 @@ function LoadUserClasses() {
   return storedUserClasses ? JSON.parse(storedUserClasses) : null;
 }
 
+
+function AddUserClass(userClass) {
+  const existingUserClasses = LoadUserClasses();
+  const updatedUserClasses = [...existingUserClasses, userClass];
+  localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
+  console.log('User class added');
+}
 export { LoadAllPrograms,  LoadAllClasses, LoadUserClasses };
 
 
