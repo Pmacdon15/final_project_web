@@ -1,7 +1,6 @@
-export default function DisplayAvailableClasses({ filteredClasses }) {
-    console.log("From component", filteredClasses);
+export default function DisplayAvailableClasses({ filteredClasses, email }) {
     return (
-        <div className="bg-blue-300 w-5/6  min-h-fit flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto max-h-96 rounded-lg">            
+        <div className="bg-blue-300 w-5/6  min-h-fit flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto max-h-96 rounded-lg">
             {Array.isArray(filteredClasses) && filteredClasses.map((classDetails, index) => (
                 <div key={index} className="flex flex-row flex-wrap w-5/6 md:w-2/6 shadow-lg border-black items-center p-1 bg-white rounded-lg">
                     <h1 className="text-2xl font-bold mb-2">{classDetails.name}</h1>

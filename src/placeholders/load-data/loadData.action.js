@@ -2,10 +2,22 @@ import programs from '../load-data/programs.data.json';
 // import userPrograms from '../load-data/userPrograms.data.json';
 import allClasses from '../load-data/allClasses.data.json';
 import userClasses from '../load-data/userClasses.data.json';
+import userData from '../authentication/user.data.json';
 
 function LoadAllPrograms() {
   return programs;
 }
+
+function LoadUserDataToLocalStorage() {
+  const existingUserData = JSON.parse(localStorage.getItem('userData')) || [];
+  const newUserData = userData.filter(newUser =>
+    existingUserData && !existingUserData.some(existingUser => existingUser.email === newUser.email)
+  );
+  const updatedUserData = [...existingUserData, ...newUserData];
+  localStorage.setItem('userData', JSON.stringify(updatedUserData));
+  console.log('User data loaded to local storage without duplicates');
+}
+LoadUserDataToLocalStorage();
 
 function LoadAllClassesToLocalStorage() {
   const existingClasses = JSON.parse(localStorage.getItem('allClasses')) || [];
@@ -42,12 +54,20 @@ function LoadUserClasses() {
 }
 
 
-function AddUserClass(userClass) {
+// function AddUserClass(userClass) {
+//   const existingUserClasses = LoadUserClasses();
+//   const updatedUserClasses = [...existingUserClasses, userClass];
+//   localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
+//   console.log('User class added');
+// }
+
+function DropUserClass(classId, email) {
   const existingUserClasses = LoadUserClasses();
-  const updatedUserClasses = [...existingUserClasses, userClass];
+  const updatedUserClasses = existingUserClasses.filter(userClass => userClass.id !== classId && userClass.email === email);
   localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
-  console.log('User class added');
+  console.log('User class dropped');
 }
-export { LoadAllPrograms,  LoadAllClasses, LoadUserClasses };
+
+export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, DropUserClass };
 
 
