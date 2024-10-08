@@ -7,7 +7,7 @@ export default function DisplayClass({ filteredClasses }) {
                     <h1 className="text-2xl font-bold mb-2">{classDetails.name}</h1>
                     <p className="mb-2">{classDetails.description}</p>
                     <form className="mx-auto">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enroll</button>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110" type="submit">Enroll</button>
                     </form>
                 </div>
             ))}
