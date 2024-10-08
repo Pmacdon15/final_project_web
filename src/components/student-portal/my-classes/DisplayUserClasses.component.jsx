@@ -7,7 +7,7 @@ export default function DisplayUserClasses({ userClasses ,email }) {
         const email = event.target.email.value;
         DropUserClass(classId, email);
     }
-    
+
     return (
         <div className="bg-blue-300 w-5/6  min-h-fit flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto max-h-96 rounded-lg">     
             {Array.isArray(userClasses) && userClasses.length > 0 ? (
@@ -23,7 +23,7 @@ export default function DisplayUserClasses({ userClasses ,email }) {
                     </div>
                 ))
             ) : (
-                <p className="text-center text-xl">No data to load</p>
+                <p className="text-center text-xl">No registered classes!</p>
             )}
         </div>
     )

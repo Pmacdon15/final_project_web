@@ -53,13 +53,10 @@ function LoadUserClasses() {
   return storedUserClasses ? JSON.parse(storedUserClasses) : null;
 }
 
+function AddClassToUserClasses(classId, email, termId, season) {
 
-// function AddUserClass(userClass) {
-//   const existingUserClasses = LoadUserClasses();
-//   const updatedUserClasses = [...existingUserClasses, userClass];
-//   localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
-//   console.log('User class added');
-// }
+}
+
 
 function DropUserClass(classId, email) {
   const existingUserClasses = LoadUserClasses();
@@ -68,6 +65,6 @@ function DropUserClass(classId, email) {
   console.log('User class dropped');
 }
 
-export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, DropUserClass };
+export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddClassToUserClasses, DropUserClass };
 
 

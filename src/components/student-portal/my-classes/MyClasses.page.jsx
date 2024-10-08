@@ -150,9 +150,10 @@ export default function StudentPortalMyClasses() {
                                     const lastTerm = userTerms[userTerms.length - 1];
                                     const nextTermId = lastTerm.userTermId + 1;
                                     const nextTermSeason = getNextSeason(lastTerm.termSeason);
-
+                                    console.log("pressed");
                                     if (!userTerms.some(term => term.userTermId === nextTermId)) {
                                         setSelectedTerm({ userTermId: nextTermId, termSeason: nextTermSeason });
+                                        setSeason(nextTermSeason);
                                     }
                                 }}
                             >
