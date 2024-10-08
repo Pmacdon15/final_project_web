@@ -1,4 +1,4 @@
-export default function DisplayClass({ filteredClasses }) {
+export default function DisplayAvailableClasses({ filteredClasses }) {
     console.log("From component", filteredClasses);
     return (
         <div className="w-full flex flex-row flex-wrap gap-8 justify-center overflow-y-auto max-h-96">
