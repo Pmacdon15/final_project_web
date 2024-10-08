@@ -6,13 +6,6 @@ function LoadAllPrograms() {
   return programs;
 }
 
-function LoadUserPrograms(email) {
-  // TODO: Add data to /load-data/myPrograms.data.json
-  // TODO: fetch my programs from the myPrograms.data.json file using email 
-  return userPrograms;
-}
-
-
 function LoadAllClassesToLocalStorage() {
   const existingClasses = JSON.parse(localStorage.getItem('allClasses')) || [];
   const newClasses = allClasses.filter(newClass =>
@@ -31,6 +24,6 @@ function LoadAllClasses() {
 }
 
 
-export { LoadAllPrograms, LoadUserPrograms, LoadAllClasses };
+export { LoadAllPrograms,  LoadAllClasses };
 
 
