@@ -1,9 +1,9 @@
 export default function DisplayClass({ filteredClasses }) {
-    console.log("From component", JSON.stringify(filteredClasses, null, 2));
+    console.log("From component", filteredClasses);
     return (
-        <div className="w-full flex flex-row flex-wrap gap-8 justify-center">
-            {filteredClasses.map((classDetails, index) => (
-                <div key={index} className="flex flex-row flex-wrap w-2/6 shadow-lg border-black items-center p-1 bg-white rounded-lg">
+        <div className="w-full flex flex-row flex-wrap gap-8 justify-center overflow-y-auto max-h-96">
+            {Array.isArray(filteredClasses) && filteredClasses.map((classDetails, index) => (
+                <div key={index} className="flex flex-row flex-wrap w-5/6 md:w-2/6 shadow-lg border-black items-center p-1 bg-white rounded-lg">
                     <h1 className="text-2xl font-bold mb-2">{classDetails.name}</h1>
                     <p className="mb-2">{classDetails.description}</p>
                     <form className="mx-auto">
