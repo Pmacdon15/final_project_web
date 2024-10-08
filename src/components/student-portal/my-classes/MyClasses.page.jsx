@@ -1,12 +1,12 @@
 import NavBar from "../nav-bar/NavBar.Component"
 import React, { useEffect, useState } from 'react';
 import DisplayMyClasses from '../my-classes/DisplayMyClasses.component';
-import { LoadAllClasses } from '../../../placeholders/load-data/loadData.action';
+import { LoadAllClasses, LoadUserClasses } from '../../../placeholders/load-data/loadData.action';
 
 export default function StudentPortalMyClasses() {
     const [allClasses, setAllClasses] = useState();
     const [filteredClasses, setFilteredClasses] = useState();
-    // const [term, setTerm] = useState();
+    const [userClasses, setUserClasses] = useState();    
     const [season, setSeason] = useState();
 
     // const [amountOfTerms, setAmountOfTerms] = useState();
@@ -14,8 +14,10 @@ export default function StudentPortalMyClasses() {
     useEffect(() => {
         const fetchAllClasses = async () => {
             const loadedAllClasses = LoadAllClasses();
+            const loadedUserClasses = LoadUserClasses();
             setAllClasses(loadedAllClasses);
             setFilteredClasses(loadedAllClasses);
+            setUserClasses( loadedUserClasses);
         };
         fetchAllClasses();
     }, []);

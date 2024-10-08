@@ -1,6 +1,7 @@
 import programs from '../load-data/programs.data.json';
-import userPrograms from '../load-data/userPrograms.data.json';
+// import userPrograms from '../load-data/userPrograms.data.json';
 import allClasses from '../load-data/allClasses.data.json';
+import userClasses from '../load-data/userClasses.data.json';
 
 function LoadAllPrograms() {
   return programs;
@@ -23,7 +24,23 @@ function LoadAllClasses() {
   return storedClasses ? JSON.parse(storedClasses) : null;
 }
 
+function LoadUserClassesToLocalStorage() {
+  const existingUserClasses = JSON.parse(localStorage.getItem('userClasses')) || [];
+  const newUserClasses = userClasses.filter(newUserClass =>
+    existingUserClasses && !existingUserClasses.some(existingUserClass => existingUserClass.id === newUserClass.id)
+  );
+  const updatedUserClasses = [...existingUserClasses, ...newUserClasses];
+  localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
+  console.log('User classes loaded to local storage without duplicates');
+}
 
-export { LoadAllPrograms,  LoadAllClasses };
+LoadUserClassesToLocalStorage()
+
+function LoadUserClasses() {
+  const storedUserClasses = localStorage.getItem('userClasses');
+  return storedUserClasses ? JSON.parse(storedUserClasses) : null;
+}
+
+export { LoadAllPrograms,  LoadAllClasses, LoadUserClasses };
 
 
