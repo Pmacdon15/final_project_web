@@ -5,7 +5,7 @@ import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.compo
 import DisplayUserClasses from "./DisplayUserClasses.component";
 import { LoadAllClasses, LoadUserClasses, AddClassToUserClasses } from '../../../placeholders/load-data/loadData.action';
 import FirstSeasonSelector from "./FirstSeasonSelector.component";
-import TermButton from "./TermButton.component";
+import TermButtonSelector from "./TermButtonSelector.component";
 
 export default function StudentPortalMyClasses() {
     const { email } = useParams();
@@ -93,35 +93,12 @@ export default function StudentPortalMyClasses() {
                         setUserTerms={setUserTerms}
                     />
                 )}
-
-                <div className="flex bg-white p-2 w-full rounded-lg justify-center">
-                    <p className="mr-auto">Term:</p>
-                    {/* <div className="flex flex-row flex-wrap gap-2 justify-center w-full"> */}
-                    <TermButton
-                        userTerms={userTerms}
-                        selectedTerm={selectedTerm}
-                        setSelectedTerm={setSelectedTerm}
-                        setSeason={setSeason}
-                    />
-                    {/* {userTerms && userTerms.length > 0 && (
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
-                                onClick={() => {
-                                    const lastTerm = userTerms[userTerms.length - 1];
-                                    const nextTermId = lastTerm.userTermId + 1;
-                                    const nextTermSeason = getNextSeason(lastTerm.termSeason);
-                                    console.log("pressed");
-                                    if (!userTerms.some(term => term.userTermId === nextTermId)) {
-                                        setSelectedTerm({ userTermId: nextTermId, termSeason: nextTermSeason });
-                                        setSeason(nextTermSeason);
-                                    }
-                                }}
-                            >
-                                Term {userTerms[userTerms.length - 1].userTermId + 1} {getNextSeason(userTerms[userTerms.length - 1].termSeason)}
-                            </button>
-                        )} */}
-                    {/* </div> */}
-                </div>
+                <TermButtonSelector
+                    userTerms={userTerms}
+                    selectedTerm={selectedTerm}
+                    setSelectedTerm={setSelectedTerm}
+                    setSeason={setSeason}
+                />
                 <h1 className="text-2xl">Available classes:</h1>
                 <DisplayAvailableClasses filteredClasses={filteredClasses} email={email} termId={selectedTerm?.userTermId} season={season} />
                 <h1 className="text-2xl">User classes:</h1>
