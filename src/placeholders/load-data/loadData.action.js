@@ -57,13 +57,15 @@ LoadUserClassesToLocalStorage()
 
 function LoadUserClasses() {
   const storedUserClasses = localStorage.getItem('userClasses');
+  if (!storedUserClasses) {
+    LoadUserClassesToLocalStorage();
+  }
   return storedUserClasses ? JSON.parse(storedUserClasses) : null;
 }
 
-function AddToUserClasses(email, classId, termId, season) {
+function AddToUserClasses(userId, classId, programId, name, description, termId, season) {
   const existingUserClasses = LoadUserClasses() || [];
   let newUserTermId;
-
   if (existingUserClasses.length === 0) {
     newUserTermId = 1; // Start at 1 if there are no existing classes
   } else {
@@ -76,11 +78,13 @@ function AddToUserClasses(email, classId, termId, season) {
 
   const newUserClass = {
     id: classId,
-    email,
-    userTermId: newUserTermId,
+    userId: userId,
+    classId:  Number(classId),
+    programId:  Number(programId),
+    name: name,
+    description: description,
+    userTermId: Number(termId), // Ensure termId is a number
     termSeason: season,
-    programId: 1, // You can dynamically set this if you have a program ID for each class
-    userId: 3 // Update this to reflect the actual user ID, if available
   };
 
   console.log(newUserClass);
@@ -98,9 +102,6 @@ function DropUserClass(classId, email) {
   );
 
   localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
-  // console.log("updated data",updatedUserClasses);
-  // console.log("Dropping class:", classId, "for user:", email);
-  // console.log("Existing user classes before drop:", existingUserClasses);
 }
 
 

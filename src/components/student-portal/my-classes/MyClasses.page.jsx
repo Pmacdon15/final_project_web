@@ -11,8 +11,8 @@ import PageHeader from "../../page-header/PageHeader.component";
 export default function StudentPortalMyClasses() {
     const { email } = useParams();
     const [allClasses, setAllClasses] = useState();
-    const [filteredClasses, setFilteredClasses] = useState();
     const [userClasses, setUserClasses] = useState();
+    const [filteredClasses, setFilteredClasses] = useState();    
     const [userTerms, setUserTerms] = useState();
     const [season, setSeason] = useState();
     const [selectedTerm, setSelectedTerm] = useState();
@@ -27,6 +27,10 @@ export default function StudentPortalMyClasses() {
         };
         fetchAllClasses();
     }, []);
+
+    const handleAddClass = (newClass) => {
+        setUserClasses((prevUserClasses) => [...prevUserClasses, newClass]);
+    };
 
     // Get user terms
     useEffect(() => {
@@ -56,8 +60,8 @@ export default function StudentPortalMyClasses() {
             }
             // Filter out classes that the user is already enrolled in
             if (userClasses) {
-                const userClassIds = new Set(userClasses.map(userClass => userClass.id));
-                availableClasses = availableClasses.filter(classItem => !userClassIds.has(classItem.id));
+                const userClassIds = userClasses.map(userClass => userClass.id);
+                availableClasses = availableClasses.filter(classItem => !userClassIds.includes(classItem.id));
             }
             setFilteredClasses(availableClasses);
         }
@@ -76,11 +80,13 @@ export default function StudentPortalMyClasses() {
         }
     }, [userTerms]);
 
+
+
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
             <NavBar email={email} />
             <PageHeader title={"My Classes"} description={"Here you can see all the classes you can enroll in or can enroll."} />
-            <div className="flex flex-col bg-blue-200 w-5/6 shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
+            <div className="flex flex-col bg-blue-200 w-full md:w-5/6 shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
                 {!selectedTerm && (
                     <FirstSeasonSelector
                         setSeason={setSeason}
@@ -98,6 +104,7 @@ export default function StudentPortalMyClasses() {
                     filteredClasses={filteredClasses}
                     email={email} termId={selectedTerm?.userTermId}
                     season={season}
+                    onAddClass={handleAddClass}
                 />
                 <DisplayUserClasses
                     userClasses={filteredUserClasses}
