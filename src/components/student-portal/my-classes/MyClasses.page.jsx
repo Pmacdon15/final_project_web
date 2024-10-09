@@ -96,14 +96,14 @@ export default function StudentPortalMyClasses() {
 
                 <div className="flex bg-white p-2 w-full rounded-lg justify-center">
                     <p className="mr-auto">Term:</p>
-                    <div className="flex flex-row flex-wrap gap-2 justify-center w-full">
-                        <TermButton
-                            userTerms={userTerms}
-                            selectedTerm={selectedTerm}
-                            setSelectedTerm={setSelectedTerm}
-                            setSeason={setSeason}
-                        />
-                        {userTerms && userTerms.length > 0 && (
+                    {/* <div className="flex flex-row flex-wrap gap-2 justify-center w-full"> */}
+                    <TermButton
+                        userTerms={userTerms}
+                        selectedTerm={selectedTerm}
+                        setSelectedTerm={setSelectedTerm}
+                        setSeason={setSeason}
+                    />
+                    {/* {userTerms && userTerms.length > 0 && (
                             <button
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
                                 onClick={() => {
@@ -119,8 +119,8 @@ export default function StudentPortalMyClasses() {
                             >
                                 Term {userTerms[userTerms.length - 1].userTermId + 1} {getNextSeason(userTerms[userTerms.length - 1].termSeason)}
                             </button>
-                        )}
-                    </div>
+                        )} */}
+                    {/* </div> */}
                 </div>
                 <h1 className="text-2xl">Available classes:</h1>
                 <DisplayAvailableClasses filteredClasses={filteredClasses} email={email} termId={selectedTerm?.userTermId} season={season} />

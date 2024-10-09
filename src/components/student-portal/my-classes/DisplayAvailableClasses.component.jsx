@@ -11,7 +11,7 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
     }
     // console.log(filteredClasses)
     return (
-        <div className="bg-blue-300 w-5/6 min-h-fit flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto max-h-96 rounded-lg">
+        <div className="bg-blue-300 w-5/6  flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto max-h-[500px] rounded-lg">
             {Array.isArray(filteredClasses) && filteredClasses.length > 0 ? (
                 filteredClasses.map((classDetails, index) => (
                     <div key={index} className="flex flex-row flex-wrap w-5/6 md:w-2/6 shadow-lg border-black items-center p-1 bg-white rounded-lg">
