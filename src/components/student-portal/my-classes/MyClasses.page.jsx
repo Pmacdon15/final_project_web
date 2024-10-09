@@ -3,7 +3,8 @@ import NavBar from "../nav-bar/NavBar.Component";
 import React, { useEffect, useState } from 'react';
 import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.component';
 import DisplayUserClasses from "./DisplayUserClasses.component";
-import { LoadAllClasses, LoadUserClasses , AddClassToUserClasses} from '../../../placeholders/load-data/loadData.action';
+import { LoadAllClasses, LoadUserClasses, AddClassToUserClasses } from '../../../placeholders/load-data/loadData.action';
+import FirstSeasonSelector from "./FirstSeasonSelector.component";
 
 export default function StudentPortalMyClasses() {
     const { email } = useParams();
@@ -84,48 +85,12 @@ export default function StudentPortalMyClasses() {
             </div>
 
             <div className="flex flex-col bg-blue-200 w-5/6 shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
-                {!selectedTerm && (
-                    <div className="flex bg-white p-2 w-full rounded-lg justify-center">
-                        <p className="mr-auto">First Term Season:</p>
-                        <div className="flex flex-row flex-wrap gap-2 justify-center w-full">
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
-                                onClick={() => {
-                                    setSeason("Fall");
-                                    setSelectedTerm({ userTermId: 1, termSeason: "Fall" });
-                                    setUserTerms([{ userTermId: 1, termSeason: "Fall" }]);
-                                }}>
-                                Fall
-                            </button>
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
-                                onClick={() => {
-                                    setSeason("Winter");
-                                    setSelectedTerm({ userTermId: 1, termSeason: "Winter" });
-                                    setUserTerms([{ userTermId: 1, termSeason: "Winter" }]);
-                                }}>
-                                Winter
-                            </button>
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
-                                onClick={() => {
-                                    setSeason("Spring");
-                                    setSelectedTerm({ userTermId: 1, termSeason: "Spring" });
-                                    setUserTerms([{ userTermId: 1, termSeason: "Spring" }]);
-                                }}>
-                                Spring
-                            </button>
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
-                                onClick={() => {
-                                    setSeason("Summer");
-                                    setSelectedTerm({ userTermId: 1, termSeason: "Summer" });
-                                    setUserTerms([{ userTermId: 1, termSeason: "Summer" }]);
-                                }}>
-                                Summer
-                            </button>
-                        </div>
-                    </div>
+                {!selectedTerm && (                   
+                    <FirstSeasonSelector
+                        setSeason={setSeason}
+                        setSelectedTerm={setSelectedTerm}
+                        setUserTerms={setUserTerms}
+                    />
                 )}
 
                 <div className="flex bg-white p-2 w-full rounded-lg justify-center">
