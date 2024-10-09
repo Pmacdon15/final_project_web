@@ -59,13 +59,7 @@ export default function StudentPortalMyClasses() {
 
             setFilteredClasses(availableClasses);
         }
-    }, [season, allClasses, userClasses]);
-
-    function getNextSeason(currentSeason) {
-        const seasons = ["Fall", "Winter", "Spring", "Summer"];
-        const currentIndex = seasons.indexOf(currentSeason);
-        return seasons[(currentIndex + 1) % seasons.length];
-    }
+    }, [season, allClasses, userClasses]);   
 
     const filteredUserClasses = selectedTerm
         ? userClasses?.filter(userClass => userClass.userTermId === selectedTerm.userTermId)
@@ -80,7 +74,7 @@ export default function StudentPortalMyClasses() {
 
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
-            <NavBar email={email} />            
+            <NavBar email={email} />
             <PageHeader title={"My Classes"} description={"Here you can see all the classes you can enroll in or can enroll."} />
             <div className="flex flex-col bg-blue-200 w-5/6 shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
                 {!selectedTerm && (
@@ -96,8 +90,15 @@ export default function StudentPortalMyClasses() {
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
                 />
-                <DisplayAvailableClasses filteredClasses={filteredClasses} email={email} termId={selectedTerm?.userTermId} season={season} />
-                <DisplayUserClasses userClasses={filteredUserClasses} email={email} />
+                <DisplayAvailableClasses
+                    filteredClasses={filteredClasses}
+                    email={email} termId={selectedTerm?.userTermId}
+                    season={season}
+                />
+                <DisplayUserClasses
+                    userClasses={filteredUserClasses}
+                    email={email}
+                />
             </div>
         </div>
     );
