@@ -5,6 +5,7 @@ import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.compo
 import DisplayUserClasses from "./DisplayUserClasses.component";
 import { LoadAllClasses, LoadUserClasses, AddClassToUserClasses } from '../../../placeholders/load-data/loadData.action';
 import FirstSeasonSelector from "./FirstSeasonSelector.component";
+import TermButton from "./TermButton.component";
 
 export default function StudentPortalMyClasses() {
     const { email } = useParams();
@@ -85,7 +86,7 @@ export default function StudentPortalMyClasses() {
             </div>
 
             <div className="flex flex-col bg-blue-200 w-5/6 shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
-                {!selectedTerm && (                   
+                {!selectedTerm && (
                     <FirstSeasonSelector
                         setSeason={setSeason}
                         setSelectedTerm={setSelectedTerm}
@@ -96,18 +97,12 @@ export default function StudentPortalMyClasses() {
                 <div className="flex bg-white p-2 w-full rounded-lg justify-center">
                     <p className="mr-auto">Term:</p>
                     <div className="flex flex-row flex-wrap gap-2 justify-center w-full">
-                        {userTerms && userTerms.map((term, index) => (
-                            <button
-                                key={index}
-                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110 ${selectedTerm && selectedTerm.userTermId === term.userTermId ? 'bg-blue-700' : ''}`}
-                                onClick={() => {
-                                    setSelectedTerm(term);
-                                    setSeason(term.termSeason);
-                                }}
-                            >
-                                Term {term.userTermId} {term.termSeason}
-                            </button>
-                        ))}
+                        <TermButton
+                            userTerms={userTerms}
+                            selectedTerm={selectedTerm}
+                            setSelectedTerm={setSelectedTerm}
+                            setSeason={setSeason}
+                        />
                         {userTerms && userTerms.length > 0 && (
                             <button
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
