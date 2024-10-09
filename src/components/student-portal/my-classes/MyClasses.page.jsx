@@ -3,7 +3,7 @@ import NavBar from "../nav-bar/NavBar.Component";
 import React, { useEffect, useState } from 'react';
 import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.component';
 import DisplayUserClasses from "./DisplayUserClasses.component";
-import { LoadAllClasses, LoadUserClasses } from '../../../placeholders/load-data/loadData.action';
+import { LoadAllClasses, LoadUserClasses , AddClassToUserClasses} from '../../../placeholders/load-data/loadData.action';
 
 export default function StudentPortalMyClasses() {
     const { email } = useParams();
@@ -163,7 +163,7 @@ export default function StudentPortalMyClasses() {
                     </div>
                 </div>
                 <h1 className="text-2xl">Available classes:</h1>
-                <DisplayAvailableClasses filteredClasses={filteredClasses} email={email} />
+                <DisplayAvailableClasses filteredClasses={filteredClasses} email={email} termId={selectedTerm?.userTermId} season={season} />
                 <h1 className="text-2xl">User classes:</h1>
                 <DisplayUserClasses userClasses={filteredUserClasses} email={email} />
             </div>

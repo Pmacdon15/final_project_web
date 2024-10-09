@@ -10,8 +10,13 @@ import StudentPortalAllClasses from './components/student-portal/all-classes/All
 import StudentPortalMyClasses from './components/student-portal/my-classes/MyClasses.page';
 import StudentPortalComments from './components/student-portal/comments/Comments.page';
 import AdminPortalComments from './components/admin-portal/comments/Comments.page';
+// import { LoadAllClassesToLocalStorage, LoadUserClassesToLocalStorage, LoadUserDataToLocalStorage } from './placeholders/load-data/loadData.action';
 
 function App() {
+
+  // LoadUserDataToLocalStorage();
+  // LoadAllClassesToLocalStorage();
+  // LoadUserClassesToLocalStorage();
   return (
     <div className="App">
       <Routes>
@@ -27,7 +32,7 @@ function App() {
         <Route path="/student-portal-comments/" element={<StudentPortalComments />} />
         <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
-      </Routes>      
+      </Routes>
     </div>
   );
 }

@@ -14,8 +14,12 @@ function LoadUserDataToLocalStorage() {
     existingUserData && !existingUserData.some(existingUser => existingUser.email === newUser.email)
   );
   const updatedUserData = [...existingUserData, ...newUserData];
-  localStorage.setItem('userData', JSON.stringify(updatedUserData));
-  console.log('User data loaded to local storage without duplicates');
+  if (existingUserData.length === 0) {
+    console.log('No existing user data found in local storage');
+    localStorage.setItem('userData', JSON.stringify(updatedUserData));
+    console.log('User data loaded to local storage without duplicates');
+  }
+
 }
 LoadUserDataToLocalStorage();
 
@@ -25,7 +29,9 @@ function LoadAllClassesToLocalStorage() {
     existingClasses && !existingClasses.some(existingClass => existingClass.id === newClass.id)
   );
   const updatedClasses = [...existingClasses, ...newClasses];
-  localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  if (existingClasses.length === 0) {
+    localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  }
   console.log('All classes loaded to local storage without duplicates');
 }
 
@@ -42,8 +48,9 @@ function LoadUserClassesToLocalStorage() {
     existingUserClasses && !existingUserClasses.some(existingUserClass => existingUserClass.id === newUserClass.id)
   );
   const updatedUserClasses = [...existingUserClasses, ...newUserClasses];
-  localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
-  console.log('User classes loaded to local storage without duplicates');
+  if (existingUserClasses.length === 0) {
+    localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
+  }
 }
 
 LoadUserClassesToLocalStorage()
@@ -53,18 +60,52 @@ function LoadUserClasses() {
   return storedUserClasses ? JSON.parse(storedUserClasses) : null;
 }
 
-function AddClassToUserClasses(classId, email, termId, season) {
+function AddToUserClasses(email, classId, termId, season) {
+  const existingUserClasses = LoadUserClasses() || [];
+  let newUserTermId;
 
+  if (existingUserClasses.length === 0) {
+    newUserTermId = 1; // Start at 1 if there are no existing classes
+  } else {
+    // Get the last userTermId
+    const lastUserClass = existingUserClasses.reduce((max, userClass) =>
+      userClass.userTermId > max ? userClass.userTermId : max, 0
+    );
+    newUserTermId = lastUserClass + 1; // Increment the last userTermId
+  }
+
+  const newUserClass = {
+    id: classId,
+    email,
+    userTermId: newUserTermId,
+    termSeason: season,
+    programId: 1, // You can dynamically set this if you have a program ID for each class
+    userId: 3 // Update this to reflect the actual user ID, if available
+  };
+
+  console.log(newUserClass);
+  const updatedUserClasses = [...existingUserClasses, newUserClass];
+  localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
+  console.log('User class added');
 }
-
 
 function DropUserClass(classId, email) {
-  const existingUserClasses = LoadUserClasses();
-  const updatedUserClasses = existingUserClasses.filter(userClass => userClass.id !== classId && userClass.email === email);
+  const existingUserClasses = LoadUserClasses() || [];
+
+  // Keep classes that do not match both the classId and userId (email)
+  const updatedUserClasses = existingUserClasses.filter(userClass =>
+    !(userClass.classId === Number(classId) && userClass.userId === email)
+  );
+
   localStorage.setItem('userClasses', JSON.stringify(updatedUserClasses));
-  console.log('User class dropped');
+  // console.log("updated data",updatedUserClasses);
+  // console.log("Dropping class:", classId, "for user:", email);
+  // console.log("Existing user classes before drop:", existingUserClasses);
 }
 
-export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddClassToUserClasses, DropUserClass };
+
+
+
+export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddToUserClasses, DropUserClass };
 
 
