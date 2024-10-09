@@ -6,7 +6,7 @@ export default function DisplayUserClasses({ userClasses, email }) {
         const email = event.target.email.value;
         DropUserClass(classId, email);
         console.log('Dropped class', classId, email);
-        // window.location.reload();
+        window.location.reload();
     }
 
     return (
