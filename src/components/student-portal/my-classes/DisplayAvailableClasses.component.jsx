@@ -11,6 +11,8 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
     }
     // console.log(filteredClasses)
     return (
+        <>
+        <h1 className="text-2xl">Available classes:</h1>
         <div className="bg-blue-300 w-5/6  flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto max-h-[500px] rounded-lg">
             {Array.isArray(filteredClasses) && filteredClasses.length > 0 ? (
                 filteredClasses.map((classDetails, index) => (
@@ -30,5 +32,6 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
                 <p>Please select a term to view available classes.</p>
             )}
         </div>
+        </>
     )
 }

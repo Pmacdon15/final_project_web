@@ -6,6 +6,7 @@ import DisplayUserClasses from "./DisplayUserClasses.component";
 import { LoadAllClasses, LoadUserClasses, AddClassToUserClasses } from '../../../placeholders/load-data/loadData.action';
 import FirstSeasonSelector from "./FirstSeasonSelector.component";
 import TermButtonSelector from "./TermButtonSelector.component";
+import PageHeader from "../../page-header/PageHeader.component";
 
 export default function StudentPortalMyClasses() {
     const { email } = useParams();
@@ -79,12 +80,8 @@ export default function StudentPortalMyClasses() {
 
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
-            <NavBar email={email} />
-            <div className='bg-blue-100 shadow-lg gap-4 p-4 md:p-8 border rounded-lg items-center justify-center text-center'>
-                <h1 className="text-2xl">My Classes</h1>
-                <p>Here you can see all the classes you can enroll in or can enroll.</p>
-            </div>
-
+            <NavBar email={email} />            
+            <PageHeader title={"My Classes"} description={"Here you can see all the classes you can enroll in or can enroll."} />
             <div className="flex flex-col bg-blue-200 w-5/6 shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
                 {!selectedTerm && (
                     <FirstSeasonSelector
@@ -99,9 +96,7 @@ export default function StudentPortalMyClasses() {
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
                 />
-                <h1 className="text-2xl">Available classes:</h1>
                 <DisplayAvailableClasses filteredClasses={filteredClasses} email={email} termId={selectedTerm?.userTermId} season={season} />
-                <h1 className="text-2xl">User classes:</h1>
                 <DisplayUserClasses userClasses={filteredUserClasses} email={email} />
             </div>
         </div>
