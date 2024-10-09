@@ -17,6 +17,7 @@ export default function StudentPortalMyClasses() {
     const [season, setSeason] = useState();
     const [selectedTerm, setSelectedTerm] = useState();
 
+    // Load all classes and user classes
     useEffect(() => {
         const fetchAllClasses = async () => {
             const loadedAllClasses = LoadAllClasses();
@@ -27,6 +28,7 @@ export default function StudentPortalMyClasses() {
         fetchAllClasses();
     }, []);
 
+    // Get user terms
     useEffect(() => {
         if (userClasses) {
             const terms = [...new Set(userClasses.map(userClass => userClass.userTermId))];
@@ -38,6 +40,7 @@ export default function StudentPortalMyClasses() {
         }
     }, [userClasses]);
 
+    // Filter classes based on season and user classes
     useEffect(() => {
         if (season && allClasses) {
             let availableClasses = [];
@@ -51,20 +54,21 @@ export default function StudentPortalMyClasses() {
             } else if (season === "Summer") {
                 availableClasses = allClasses.filter(classItem => classItem.availableSummer);
             }
-
+            // Filter out classes that the user is already enrolled in
             if (userClasses) {
                 const userClassIds = new Set(userClasses.map(userClass => userClass.id));
                 availableClasses = availableClasses.filter(classItem => !userClassIds.has(classItem.id));
             }
-
             setFilteredClasses(availableClasses);
         }
-    }, [season, allClasses, userClasses]);   
+    }, [season, allClasses, userClasses]); 
 
+    // Filter user classes based on selected term
     const filteredUserClasses = selectedTerm
         ? userClasses?.filter(userClass => userClass.userTermId === selectedTerm.userTermId)
         : userClasses;
 
+    // Set the selected term to the first term in the user terms
     useEffect(() => {
         if (userTerms && userTerms.length > 0) {
             setSelectedTerm(userTerms[0]);
