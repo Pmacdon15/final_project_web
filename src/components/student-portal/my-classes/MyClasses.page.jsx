@@ -12,11 +12,20 @@ export default function StudentPortalMyClasses() {
     const { email } = useParams();
     const [allClasses, setAllClasses] = useState();
     const [userClasses, setUserClasses] = useState();
-    const [filteredClasses, setFilteredClasses] = useState();    
+    const [filteredClasses, setFilteredClasses] = useState();
     const [userTerms, setUserTerms] = useState();
     const [season, setSeason] = useState();
     const [selectedTerm, setSelectedTerm] = useState();
 
+    const handleChangeInClasses = () => {
+        const fetchAllClasses = async () => {
+          const loadedAllClasses = LoadAllClasses();
+          const loadedUserClasses = LoadUserClasses();
+          setAllClasses(loadedAllClasses);
+          setUserClasses(loadedUserClasses);
+        };
+        fetchAllClasses();
+      };
     // Load all classes and user classes
     useEffect(() => {
         const fetchAllClasses = async () => {
@@ -26,11 +35,7 @@ export default function StudentPortalMyClasses() {
             setUserClasses(loadedUserClasses);
         };
         fetchAllClasses();
-    }, []);
-
-    // const handleAddClass = (newClass) => {
-    //     setUserClasses((prevUserClasses) => [...prevUserClasses, newClass]);
-    // };
+    }, []);    
 
     // Get user terms
     useEffect(() => {
@@ -63,10 +68,9 @@ export default function StudentPortalMyClasses() {
                 const userClassIds = userClasses.map(userClass => userClass.classId); // Use classId from userClasses
                 availableClasses = availableClasses.filter(classItem => !userClassIds.includes(classItem.id)); // Compare with id from availableClasses
             }
-            
             setFilteredClasses(availableClasses);
         }
-    }, [season, allClasses, userClasses]); 
+    }, [season, allClasses, userClasses]);
 
     // Filter user classes based on selected term
     const filteredUserClasses = selectedTerm
@@ -80,7 +84,7 @@ export default function StudentPortalMyClasses() {
             setSeason(userTerms[0].termSeason);
         }
     }, [userTerms]);
-
+    
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
             <NavBar email={email} />
@@ -103,10 +107,12 @@ export default function StudentPortalMyClasses() {
                     filteredClasses={filteredClasses}
                     email={email} termId={selectedTerm?.userTermId}
                     season={season}
+                    onAddClass={handleChangeInClasses}
                 />
                 <DisplayUserClasses
                     userClasses={filteredUserClasses}
                     email={email}
+                    onDropClass={handleChangeInClasses}
                 />
             </div>
         </div>

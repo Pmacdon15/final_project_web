@@ -1,12 +1,12 @@
 import { DropUserClass } from "../../../placeholders/load-data/loadData.action";
-export default function DisplayUserClasses({ userClasses, email }) {
+export default function DisplayUserClasses({ userClasses, email, onDropClass }) {
     const handleOnSubmit = (event) => {
         event.preventDefault();
         const classId = event.target.classId.value;
         const email = event.target.email.value;
         DropUserClass(classId, email);
         console.log('Dropped class', classId, email);
-        window.location.reload();
+        onDropClass();
     }
 
     return (
