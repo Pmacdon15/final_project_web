@@ -22,7 +22,7 @@
     {
         "id": 3,
         "userId":"thiago@bvc.com",
-        "classId": 3,
+        "classId": 10,
         "programId": 1,
         "name": "Networking essentials",
         "description": "This course is designed to provide students with the knowledge and skills required to design and implement computer networks. Topics include: network topologies, network protocols, network security, and network management. Students will learn to design and implement computer networks.",

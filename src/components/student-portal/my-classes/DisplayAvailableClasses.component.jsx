@@ -1,5 +1,5 @@
 import { AddToUserClasses } from '../../../placeholders/load-data/loadData.action';
-export default function DisplayAvailableClasses({ filteredClasses, email, termId, season , onAddClass }) {
+export default function DisplayAvailableClasses({ filteredClasses, email, termId, season }) {
 
     async function handleOnSubmit(event) {
         event.preventDefault();
@@ -16,8 +16,7 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
         await AddToUserClasses(userId, classId, programId, name, description, userTermId, termSeason);
 
         // Create a new class object to add to user classes
-        const newClass = { id: classId, name, description, userTermId, season };
-        onAddClass(newClass); // Update user classes in the parent component
+        const newClass = { id: classId, name, description, userTermId, termSeason };        
     }
 
     return (

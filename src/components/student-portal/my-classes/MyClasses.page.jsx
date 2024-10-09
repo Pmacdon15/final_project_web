@@ -28,9 +28,9 @@ export default function StudentPortalMyClasses() {
         fetchAllClasses();
     }, []);
 
-    const handleAddClass = (newClass) => {
-        setUserClasses((prevUserClasses) => [...prevUserClasses, newClass]);
-    };
+    // const handleAddClass = (newClass) => {
+    //     setUserClasses((prevUserClasses) => [...prevUserClasses, newClass]);
+    // };
 
     // Get user terms
     useEffect(() => {
@@ -58,11 +58,12 @@ export default function StudentPortalMyClasses() {
             } else if (season === "Summer") {
                 availableClasses = allClasses.filter(classItem => classItem.availableSummer);
             }
-            // Filter out classes that the user is already enrolled in
+            //Filter out classes that the user is already enrolled in
             if (userClasses) {
-                const userClassIds = userClasses.map(userClass => userClass.id);
-                availableClasses = availableClasses.filter(classItem => !userClassIds.includes(classItem.id));
+                const userClassIds = userClasses.map(userClass => userClass.classId); // Use classId from userClasses
+                availableClasses = availableClasses.filter(classItem => !userClassIds.includes(classItem.id)); // Compare with id from availableClasses
             }
+            
             setFilteredClasses(availableClasses);
         }
     }, [season, allClasses, userClasses]); 
@@ -79,8 +80,6 @@ export default function StudentPortalMyClasses() {
             setSeason(userTerms[0].termSeason);
         }
     }, [userTerms]);
-
-
 
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
@@ -104,7 +103,6 @@ export default function StudentPortalMyClasses() {
                     filteredClasses={filteredClasses}
                     email={email} termId={selectedTerm?.userTermId}
                     season={season}
-                    onAddClass={handleAddClass}
                 />
                 <DisplayUserClasses
                     userClasses={filteredUserClasses}

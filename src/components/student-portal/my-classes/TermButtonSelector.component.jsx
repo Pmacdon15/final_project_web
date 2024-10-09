@@ -13,7 +13,7 @@ const TermButtons = ({ userTerms, selectedTerm, setSelectedTerm, setSeason }) =>
             <div className="flex flex-row flex-wrap gap-2 justify-center w-full">
                 {userTerms && userTerms.map((term) => (
                     <button
-                        key={term.userTermId}
+                        key={term.id}
                         className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110 ${selectedTerm && selectedTerm.userTermId === term.userTermId ? 'bg-blue-700' : ''}`}
                         onClick={() => {
                             setSelectedTerm(term);
@@ -37,7 +37,7 @@ const TermButtons = ({ userTerms, selectedTerm, setSelectedTerm, setSeason }) =>
                             }
                         }}
                     >
-                        Term {userTerms[userTerms.length - 1].userTermId + 1} {getNextSeason(userTerms[userTerms.length - 1].termSeason)}
+                        Term {Number(userTerms[userTerms.length - 1].userTermId )+ 1} {getNextSeason(userTerms[userTerms.length - 1].termSeason)}
                     </button>
                 )}
             </div>
