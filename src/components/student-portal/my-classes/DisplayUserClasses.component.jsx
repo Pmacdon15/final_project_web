@@ -1,12 +1,17 @@
 import { DropUserClass } from "../../../placeholders/load-data/loadData.action";
-export default function DisplayUserClasses({ userClasses, email, onDropClass }) {
-    const handleOnSubmit = (event) => {
+export default function DisplayUserClasses({ userClasses, email, termId, season, onDropClass }) {
+    async function handleOnSubmit(event) {
         event.preventDefault();
         const classId = event.target.classId.value;
         const email = event.target.email.value;
-        DropUserClass(classId, email);
+        const userTermId = event.target.userTermId.value;
+        const termSeason = event.target.termSeason.value;
+
+
+        await DropUserClass(classId, email);
         console.log('Dropped class', classId, email);
-        onDropClass();
+        console.log('User term id', userTermId, termSeason);
+        onDropClass(userTermId, termSeason);
     }
 
     return (
@@ -21,6 +26,8 @@ export default function DisplayUserClasses({ userClasses, email, onDropClass }) 
                             <form onSubmit={handleOnSubmit} className="mx-auto">
                                 <input type="hidden" name="classId" value={classDetails.id} />
                                 <input type="hidden" name="email" value={email} />
+                                <input type="hidden" name="userTermId" value={termId} />
+                                <input type="hidden" name="termSeason" value={season} />
                                 <button className="bg-red-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded hover:scale-110" type="submit">Drop</button>
                             </form>
                         </div>

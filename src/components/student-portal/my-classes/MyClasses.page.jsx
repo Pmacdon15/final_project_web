@@ -3,7 +3,7 @@ import NavBar from "../nav-bar/NavBar.Component";
 import React, { useEffect, useState } from 'react';
 import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.component';
 import DisplayUserClasses from "./DisplayUserClasses.component";
-import { LoadAllClasses, LoadUserClasses} from '../../../placeholders/load-data/loadData.action';
+import { LoadAllClasses, LoadUserClasses } from '../../../placeholders/load-data/loadData.action';
 import FirstSeasonSelector from "./FirstSeasonSelector.component";
 import TermButtonSelector from "./TermButtonSelector.component";
 import PageHeader from "../../page-header/PageHeader.component";
@@ -17,28 +17,23 @@ export default function StudentPortalMyClasses() {
     const [season, setSeason] = useState();
     const [selectedTerm, setSelectedTerm] = useState();
 
-    // Handle change in classes when added or dropped
-    const handleChangeInClasses = (termId,termSeason) => {
-        const fetchAllClasses = async () => {
-          const loadedAllClasses = LoadAllClasses();
-          const loadedUserClasses = LoadUserClasses();
-          setAllClasses(loadedAllClasses);
-          setUserClasses(loadedUserClasses);
-        };
-        fetchAllClasses();
-        console.log("Term ID: ", termId);
-        setSelectedTerm({ userTermId: termId, termSeason: termSeason });
-      };
+    const fetchAllClasses = async () => {
+        const loadedAllClasses = LoadAllClasses();
+        const loadedUserClasses = LoadUserClasses();
+        setAllClasses(loadedAllClasses);
+        setUserClasses(loadedUserClasses);
+    };
     // Load all classes and user classes
     useEffect(() => {
-        const fetchAllClasses = async () => {
-            const loadedAllClasses = LoadAllClasses();
-            const loadedUserClasses = LoadUserClasses();
-            setAllClasses(loadedAllClasses);
-            setUserClasses(loadedUserClasses);
-        };
         fetchAllClasses();
-    }, []);    
+    }, [selectedTerm]);
+
+
+    const handleChangeInClasses = async (termId, termSeason) => {
+        await fetchAllClasses();
+        console.log("Term ID: ", termId, "Term Season: ", termSeason);
+        setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
+    };
 
     // Get user terms
     useEffect(() => {
@@ -82,12 +77,14 @@ export default function StudentPortalMyClasses() {
 
     // Set the selected term to the first term in the user terms
     useEffect(() => {
-        if (userTerms && userTerms.length > 0) {
+        console.log("selectedTerm: ", selectedTerm);
+        if (userTerms && userTerms.length > 0 && !selectedTerm) {
             setSelectedTerm(userTerms[0]);
             setSeason(userTerms[0].termSeason);
         }
-    }, [userTerms]);
-    
+    }, [userTerms, selectedTerm]);
+
+
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
             <NavBar email={email} />
@@ -108,7 +105,8 @@ export default function StudentPortalMyClasses() {
                 />
                 <DisplayAvailableClasses
                     filteredClasses={filteredClasses}
-                    email={email} termId={selectedTerm?.userTermId}
+                    email={email} 
+                    termId={selectedTerm?.userTermId}
                     season={season}
                     onAddClass={handleChangeInClasses}
                 />
@@ -116,6 +114,8 @@ export default function StudentPortalMyClasses() {
                     userClasses={filteredUserClasses}
                     email={email}
                     onDropClass={handleChangeInClasses}
+                    termId={selectedTerm?.userTermId}
+                    season={season}
                 />
             </div>
         </div>
