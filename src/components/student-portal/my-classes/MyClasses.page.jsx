@@ -3,7 +3,7 @@ import NavBar from "../nav-bar/NavBar.Component";
 import React, { useEffect, useState } from 'react';
 import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.component';
 import DisplayUserClasses from "./DisplayUserClasses.component";
-import { LoadAllClasses, LoadUserClasses, AddClassToUserClasses } from '../../../placeholders/load-data/loadData.action';
+import { LoadAllClasses, LoadUserClasses} from '../../../placeholders/load-data/loadData.action';
 import FirstSeasonSelector from "./FirstSeasonSelector.component";
 import TermButtonSelector from "./TermButtonSelector.component";
 import PageHeader from "../../page-header/PageHeader.component";
@@ -17,7 +17,8 @@ export default function StudentPortalMyClasses() {
     const [season, setSeason] = useState();
     const [selectedTerm, setSelectedTerm] = useState();
 
-    const handleChangeInClasses = () => {
+    // Handle change in classes when added or dropped
+    const handleChangeInClasses = (termId,termSeason) => {
         const fetchAllClasses = async () => {
           const loadedAllClasses = LoadAllClasses();
           const loadedUserClasses = LoadUserClasses();
@@ -25,6 +26,8 @@ export default function StudentPortalMyClasses() {
           setUserClasses(loadedUserClasses);
         };
         fetchAllClasses();
+        console.log("Term ID: ", termId);
+        setSelectedTerm({ userTermId: termId, termSeason: termSeason });
       };
     // Load all classes and user classes
     useEffect(() => {

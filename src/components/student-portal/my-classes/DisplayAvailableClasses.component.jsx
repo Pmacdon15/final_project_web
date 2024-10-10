@@ -14,7 +14,7 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
 
         // Call the action to add the class
         await AddToUserClasses(userId, classId, programId, name, description, userTermId, termSeason);
-        onAddClass();     
+        onAddClass(userTermId, termSeason);     
     }
 
     return (
