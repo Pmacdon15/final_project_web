@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BVCImage from "../bvc-image/BVCImage.component";
+import { TextField, Button, Container, Grid } from "@mui/material";
 
 const StudentSignupForm = () => {
   const navigate = useNavigate();
@@ -38,6 +40,13 @@ const StudentSignupForm = () => {
     const newStudentId = generateStudentId();
     setStudentId(newStudentId);
 
+    // Store form data and the generated Student ID in localStorage
+    const signupData = {
+      ...formData,
+      studentId: newStudentId, // Include the generated Student ID
+    };
+    localStorage.setItem("studentSignupData", JSON.stringify(signupData));
+
     // You can handle signup logic here (e.g., send data to backend API)
     console.log("Generated Student ID:", newStudentId);
     // Redirect to welcome page after signup
@@ -45,110 +54,342 @@ const StudentSignupForm = () => {
   };
 
   return (
-    <div>
-      <h2>Student Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Phone:
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Birthday:
-          <input
-            type="date"
-            name="birthday"
-            value={formData.birthday}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Department:
-          <input
-            type="text"
-            name="department"
-            value={formData.department}
-            readOnly
-          />
-        </label>
-        <br />
-        <label>
-          Program:
-          <input
-            type="text"
-            name="program"
-            value={formData.program}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
+    <>
+      <BVCImage className="w-1/2" />
+      <div className="flex flex-col items-center mb-2 text-white text-2xl bg-blue-600 w-5/6 md:w-2/6 rounded-xl shadow-md gap-5">
+        <Container
+          maxWidth="sm"
+          className="flex flex-col items-center text-white text-2xl bg-blue-600 w-5/6 md:w-2/6 rounded-xl shadow-md gap-5"
+        >
+          <h2 className="pt-3">Student Signup</h2>
+          <form
+            className="flex flex-col items-center justify-center px-3 py-3 rounded-lg bg-blue-400 mb-8"
+            onSubmit={handleSubmit}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="firstName"
+                  name="firstName"
+                  label="First Name"
+                  variant="standard"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="lastName"
+                  name="lastName"
+                  label="Last Name"
+                  variant="standard"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id="email"
+                  name="email"
+                  label="Email"
+                  variant="standard"
+                  value={formData.email}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id="phone"
+                  name="phone"
+                  label="Phone"
+                  variant="standard"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id="birthday"
+                  name="birthday"
+                  label="Birthday"
+                  type="date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={formData.birthday}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id="department"
+                  name="department"
+                  label="Department"
+                  variant="standard"
+                  value={formData.department}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  fullWidth
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id="program"
+                  name="program"
+                  label="Program"
+                  variant="standard"
+                  value={formData.program}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id="username"
+                  name="username"
+                  label="Username"
+                  variant="standard"
+                  value={formData.username}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id="password"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  variant="standard"
+                  value={formData.password}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: "white",
+                      "&.Mui-focused": {
+                        color: "white",
+                      },
+                    },
+                    "& .MuiInput-underline": {
+                      "&:before": {
+                        borderBottomColor: "white",
+                      },
+                      "&:after": {
+                        borderBottomColor: "white",
+                      },
+                    },
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      "&:focus": {
+                        color: "white",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} className="text-center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  sx={{
+                    mt: 2,
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Container>
+      </div>
+    </>
   );
 };
 
