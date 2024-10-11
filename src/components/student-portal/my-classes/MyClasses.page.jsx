@@ -112,21 +112,21 @@ console.log("User terms: ", userTerms);
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
                 />
-                <div className="flex flex-col md:flex-row h-4/6 md:h-5/6 ">
-                <DisplayAvailableClasses
-                    filteredClasses={filteredClasses}
-                    email={email} 
-                    termId={selectedTerm?.userTermId}
-                    season={season}
-                    onAddClass={handleChangeInClasses}
-                />
-                <DisplayUserClasses
-                    userClasses={filteredUserClasses}
-                    email={email}
-                    onDropClass={handleChangeInClasses}
-                    termId={selectedTerm?.userTermId}
-                    season={season}
-                />
+                <div className="flex flex-col md:flex-row h-4/6 md:h-5/6 w-full gap-2  ">
+                    <DisplayAvailableClasses
+                        filteredClasses={filteredClasses}
+                        email={email}
+                        termId={selectedTerm?.userTermId}
+                        season={season}
+                        onAddClass={handleChangeInClasses}
+                    />
+                    <DisplayUserClasses
+                        userClasses={filteredUserClasses}
+                        email={email}
+                        onDropClass={handleChangeInClasses}
+                        termId={selectedTerm?.userTermId}
+                        season={season}
+                    />
                 </div>
             </div>
         </div>

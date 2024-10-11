@@ -20,7 +20,7 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
     return (
         <div className='flex flex-col w-full h-full items-center md:w-3/6'>
             <h1 className="text-2xl">Available classes:</h1>
-            <div className="bg-blue-300 w-full flex flex-row  flex-wrap gap-8 p-4 justify-center overflow-y-auto  rounded-lg">
+            <div className="bg-blue-300 w-full flex flex-row h-full flex-wrap gap-8 p-4 justify-center overflow-y-auto  rounded-lg">
                 {Array.isArray(filteredClasses) && filteredClasses.length > 0 ? (
                     filteredClasses.map((classDetails, index) => (
                         <div key={index} className="flex flex-row flex-wrap w-full md:w-[300px] h-auto min-h-fit shadow-lg border-black items-center p-1 bg-white rounded-lg">
