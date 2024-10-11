@@ -12,17 +12,18 @@ import StudentPortalComments from './components/student-portal/comments/Comments
 import AdminPortalComments from './components/admin-portal/comments/Comments.page';
 // import { LoadAllClassesToLocalStorage, LoadUserClassesToLocalStorage, LoadUserDataToLocalStorage } from './placeholders/load-data/loadData.action';
 
+import StudentSignupForm from './components/student-signup-portal/StudentSignUp.page'
+
+
 function App() {
 
-  // LoadUserDataToLocalStorage();
-  // LoadAllClassesToLocalStorage();
-  // LoadUserClassesToLocalStorage();
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/student-signup" element={<StudentSignupForm />} />
         <Route path="/student-portal-dashboard/:email" element={<StudentPortalDashboard />} />
         <Route path="/student-portal-all-programs" element={<StudentPortalAllPrograms />} />
         <Route path="/student-portal-all-programs/:email" element={<StudentPortalAllPrograms />} />
@@ -31,6 +32,7 @@ function App() {
         <Route path="/student-portal-comments/:email" element={<StudentPortalComments />} />
         <Route path="/student-portal-comments/" element={<StudentPortalComments />} />
         <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
+        <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />      
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
       </Routes>
     </div>

@@ -1,3 +1,4 @@
+import React from 'react';
 import NavBar from '../nav-bar/NavBar.Component.jsx';
 import { useParams } from 'react-router-dom';
 
