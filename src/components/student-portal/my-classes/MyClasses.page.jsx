@@ -95,10 +95,10 @@ export default function StudentPortalMyClasses() {
 
 console.log("User terms: ", userTerms);
     return (
-        <div className="flex flex-col w-full gap-4 justify-center items-center">
+        <div className="flex flex-col w-full gap-4  h-svh ">
             <NavBar email={email} />
             <PageHeader title={"My Classes"}  />
-            <div className="flex flex-col bg-blue-200 w-full shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
+            <div className="flex flex-col bg-blue-200 w-full shadow-lg items-center h-5/6 gap-4 p-2 md:p-4 border rounded-lg text-center">
                 {!selectedTerm && (
                     <FirstSeasonSelector
                         setSeason={setSeason}
@@ -112,7 +112,7 @@ console.log("User terms: ", userTerms);
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
                 />
-                <div className="flex flex-col md:flex-row ">
+                <div className="flex flex-col md:flex-row h-4/6 md:h-5/6 ">
                 <DisplayAvailableClasses
                     filteredClasses={filteredClasses}
                     email={email} 
