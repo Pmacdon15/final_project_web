@@ -15,13 +15,13 @@ export default function DisplayUserClasses({ userClasses, email, termId, season,
     }
 
     return (
-        <>
+        <div className='flex flex-col w-full md:w-3/6'>
             <h1 className="text-2xl">User classes:</h1>
-            <div className="bg-blue-300 w-5/6  flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto max-h-[500px] rounded-lg">
+            <div className="bg-blue-300 w-full  flex flex-row flex-wrap gap-8 p-4 justify-center overflow-y-auto h-[500px] rounded-lg">
                 {Array.isArray(userClasses) && userClasses.length > 0 ? (
                     userClasses.map((classDetails, index) => (
-                        <div key={index} className="flex flex-row flex-wrap w-5/6 md:w-2/6 shadow-lg border-black items-center p-1 bg-white rounded-lg">
-                            <h1 className="text-2xl font-bold mb-2">{classDetails.name}</h1>
+                        <div key={index} className="flex flex-row flex-wrap w-full md:w-[300px]  shadow-lg border-black items-center p-1 bg-white rounded-lg">
+                            <h1 className="flex text-2xl font-bold mb-2">{classDetails.name}</h1>
                             <p className="mb-2">{classDetails.description}</p>
                             <form onSubmit={handleOnSubmit} className="mx-auto">
                                 <input type="hidden" name="classId" value={classDetails.id} />
@@ -36,6 +36,6 @@ export default function DisplayUserClasses({ userClasses, email, termId, season,
                     <p className="text-center text-xl">No registered classes!</p>
                 )}
             </div>
-        </>
+        </div>
     );
 }

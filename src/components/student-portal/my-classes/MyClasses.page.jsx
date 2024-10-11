@@ -97,8 +97,8 @@ console.log("User terms: ", userTerms);
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
             <NavBar email={email} />
-            <PageHeader title={"My Classes"} description={"Here you can see all the classes you can enroll in or can enroll."} />
-            <div className="flex flex-col bg-blue-200 w-full md:w-5/6 shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
+            <PageHeader title={"My Classes"}  />
+            <div className="flex flex-col bg-blue-200 w-full shadow-lg items-center justify-center gap-4 p-2 md:p-4 border rounded-lg text-center">
                 {!selectedTerm && (
                     <FirstSeasonSelector
                         setSeason={setSeason}
@@ -112,7 +112,7 @@ console.log("User terms: ", userTerms);
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
                 />
-                
+                <div className="flex flex-col md:flex-row ">
                 <DisplayAvailableClasses
                     filteredClasses={filteredClasses}
                     email={email} 
@@ -127,6 +127,7 @@ console.log("User terms: ", userTerms);
                     termId={selectedTerm?.userTermId}
                     season={season}
                 />
+                </div>
             </div>
         </div>
     );
