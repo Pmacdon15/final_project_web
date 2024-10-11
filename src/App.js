@@ -9,11 +9,9 @@ import StudentPortalAllPrograms from './components/student-portal/all-programs/A
 import StudentPortalAllClasses from './components/student-portal/all-classes/AllClasses.page';
 import StudentPortalMyClasses from './components/student-portal/my-classes/MyClasses.page';
 import StudentPortalComments from './components/student-portal/comments/Comments.page';
+import AdminPortalAllClasses from './components/admin-portal/all-classes/AllClasses.page';
 import AdminPortalComments from './components/admin-portal/comments/Comments.page';
-// import { LoadAllClassesToLocalStorage, LoadUserClassesToLocalStorage, LoadUserDataToLocalStorage } from './placeholders/load-data/loadData.action';
-
 import StudentSignupForm from './components/student-signup-portal/StudentSignUp.page'
-
 
 function App() {
 
@@ -31,8 +29,9 @@ function App() {
         <Route path="/student-portal-my-classes/:email" element={<StudentPortalMyClasses />} />
         <Route path="/student-portal-comments/:email" element={<StudentPortalComments />} />
         <Route path="/student-portal-comments/" element={<StudentPortalComments />} />
+        <Route path="/admin-portal-all-classes" element={<AdminPortalAllClasses />} />
         <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
-        <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />      
+        <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
       </Routes>
     </div>
