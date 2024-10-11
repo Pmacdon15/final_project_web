@@ -31,19 +31,28 @@ export default function StudentPortalMyClasses() {
 
     const handleChangeInClasses = async (termId, termSeason) => {
         await fetchAllClasses();
+        console.log("User terms: ", userTerms);
         console.log("Term ID: ", termId, "Term Season: ", termSeason);
+        setUserTerms( [{ userTermId: Number(termId), termSeason: termSeason }]);
+       
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
     };
 
-    // Get user terms
+    // Get user terms without duplicates
     useEffect(() => {
-        if (userClasses) {
+        if (userClasses && userClasses.length > 0) {
             const terms = [...new Set(userClasses.map(userClass => userClass.userTermId))];
             const termsWithSeason = terms.map(term => {
                 const classInfo = userClasses.find(userClass => userClass.userTermId === term);
                 return { userTermId: term, termSeason: classInfo.termSeason };
             });
-            setUserTerms(termsWithSeason);
+
+            // Remove duplicates
+            const uniqueTermsWithSeason = termsWithSeason.filter((term, index, self) =>
+                index === self.findIndex(t => t.userTermId === term.userTermId)
+            );
+
+            setUserTerms(uniqueTermsWithSeason);
         }
     }, [userClasses]);
 
