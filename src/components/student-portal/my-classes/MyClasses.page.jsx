@@ -93,7 +93,7 @@ export default function StudentPortalMyClasses() {
         }
     }, [userTerms, selectedTerm]);
 
-
+console.log("User terms: ", userTerms);
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center">
             <NavBar email={email} />
@@ -112,6 +112,7 @@ export default function StudentPortalMyClasses() {
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
                 />
+                
                 <DisplayAvailableClasses
                     filteredClasses={filteredClasses}
                     email={email} 
