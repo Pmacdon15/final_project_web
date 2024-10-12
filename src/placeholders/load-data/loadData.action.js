@@ -65,16 +65,6 @@ function LoadUserClasses() {
 
 function AddToUserClasses(userId, classId, programId, name, description, termId, season) {
   const existingUserClasses = LoadUserClasses() || [];
-  let newUserTermId;
-  if (existingUserClasses.length === 0) {
-    newUserTermId = 1; // Start at 1 if there are no existing classes
-  } else {
-    // Get the last userTermId
-    const lastUserClass = existingUserClasses.reduce((max, userClass) =>
-      userClass.userTermId > max ? userClass.userTermId : max, 0
-    );
-    newUserTermId = lastUserClass + 1; // Increment the last userTermId
-  }
 
   const newUserClass = {
     id: classId,
