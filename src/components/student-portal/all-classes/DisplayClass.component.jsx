@@ -38,9 +38,9 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
                             <textarea
                                 name="description"
                                 defaultValue={classDetails.description}
-                                className=" w-3/6 h-36 border rounded-lg p-2 mb-2" // Increased height
+                                className=" w-5/6 md:w-3/6 h-36 border rounded-lg p-2 mb-2" // Increased height
                             />
-                            <div className="flex flex-row gap-4">
+                            <div className="flex flex-col md:flex-row gap-4">
                                 <label htmlFor="availableFall">Available fall:</label>
                                 <input type="checkbox" name="availableFall" defaultChecked={classDetails.availableFall} />
                                 <label htmlFor="availableSpring">Available Winter:</label>
