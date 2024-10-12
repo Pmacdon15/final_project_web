@@ -12,8 +12,8 @@ export default function AdminPortalAllClasses() {
     const fetchAllClasses = async () => {
         const loadedAllClasses = LoadAllClasses();
         setAllClasses(loadedAllClasses);
-    }; 
-    const onFormAction = async (className) => {    
+    };
+    const onFormAction = async (className) => {
         fetchAllClasses();
     };
 
@@ -26,11 +26,8 @@ export default function AdminPortalAllClasses() {
     return (
         <div className="flex flex-col w-full gap-4 justify-center items-center ">
             <NavBar email={email} />
-            <div className=' bg-blue-100  shadow-lg gap-4  p-4 md:p-8 border rounded-lg'>
-                <PageHeader title="All Classes"/>
-            </div>
-
-            <DisplayAllClasses allClasses={allClasses} isAdmin={true} onFormAction={onFormAction}/>
+            <PageHeader title="All Classes" />
+            <DisplayAllClasses allClasses={allClasses} isAdmin={true} onFormAction={onFormAction} />
         </div>
     )
 }
