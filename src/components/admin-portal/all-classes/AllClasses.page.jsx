@@ -27,8 +27,7 @@ export default function AdminPortalAllClasses() {
         <div className="flex flex-col w-full gap-4 justify-center items-center ">
             <NavBar email={email} />
             <div className=' bg-blue-100  shadow-lg gap-4  p-4 md:p-8 border rounded-lg'>
-                <h1>All Classes</h1>
-                <p>Here you can see all the classes available.</p>
+                <h1 className='text-2xl'>All Classes</h1>
             </div>
 
             <DisplayAllClasses allClasses={allClasses} isAdmin={true} onFormAction={onFormAction}/>
