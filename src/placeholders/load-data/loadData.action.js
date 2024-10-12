@@ -42,6 +42,13 @@ function LoadAllClasses() {
   return storedClasses ? JSON.parse(storedClasses) : null;
 }
 
+function RemoveClassFromLocalStorage(className) {
+  const existingClasses = LoadAllClasses() || [];
+  const updatedClasses = existingClasses.filter(classDetails => classDetails.name !== className);
+  localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  // console.log('Class removed from local storage');
+}
+
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses = JSON.parse(localStorage.getItem('userClasses')) || [];
   const newUserClasses = userClasses.filter(newUserClass =>
@@ -97,6 +104,6 @@ function DropUserClass(classId, email) {
 
 
 
-export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddToUserClasses, DropUserClass };
+export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, RemoveClassFromLocalStorage, AddToUserClasses, DropUserClass };
 
 

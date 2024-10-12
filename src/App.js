@@ -29,7 +29,7 @@ function App() {
         <Route path="/student-portal-my-classes/:email" element={<StudentPortalMyClasses />} />
         <Route path="/student-portal-comments/:email" element={<StudentPortalComments />} />
         <Route path="/student-portal-comments/" element={<StudentPortalComments />} />
-        <Route path="/admin-portal-all-classes" element={<AdminPortalAllClasses />} />
+        <Route path="/admin-portal-all-classes/:email" element={<AdminPortalAllClasses />} />
         <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
         <Route path="/admin-portal-comments/:email" element={<AdminPortalComments />} />
         {/* <Route path="/guest-login" element={<GuestLogin />} /> */}

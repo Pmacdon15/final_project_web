@@ -4,18 +4,22 @@ import NavBar from '../../student-portal/nav-bar/NavBar.Component';
 import DisplayAllClasses from '../../student-portal/all-classes/DisplayAllClasses.component';
 import { useParams } from 'react-router-dom';
 
-export default function AdminPortalAllClasses(){    
+export default function AdminPortalAllClasses() {
 
     const { email } = useParams();
     const [allClasses, setAllClasses] = useState();
 
-    useEffect(() => {
-        const fetchAllClasses = async () => {
-            const loadedAllClasses = LoadAllClasses();
-            setAllClasses(loadedAllClasses);
-        };
+    const fetchAllClasses = async () => {
+        const loadedAllClasses = LoadAllClasses();
+        setAllClasses(loadedAllClasses);
+    }; 
+    const onFormAction = async (className) => {    
         fetchAllClasses();
-    }, [allClasses]);
+    };
+
+    useEffect(() => {
+        fetchAllClasses();
+    }, [email]);
 
     // console.log(JSON.stringify(allClasses, null, 2));
 
@@ -27,7 +31,7 @@ export default function AdminPortalAllClasses(){
                 <p>Here you can see all the classes available.</p>
             </div>
 
-            <DisplayAllClasses allClasses={allClasses} isAdmin={true} />
+            <DisplayAllClasses allClasses={allClasses} isAdmin={true} onFormAction={onFormAction}/>
         </div>
     )
 }
