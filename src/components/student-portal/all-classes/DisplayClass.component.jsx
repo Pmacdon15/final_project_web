@@ -56,6 +56,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
                             >
                                 Save
                             </button>
+                            <input type="hidden" name="classId" value={classDetails.id} />
                         </form>
                         <button
                             className="bg-red-500 mt-1 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-red-700"
