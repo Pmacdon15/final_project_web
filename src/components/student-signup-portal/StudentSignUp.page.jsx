@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import BVCImage from "../bvc-image/BVCImage.component";
 import { Button, Container, Grid } from "@mui/material";
 import InputField from "./inputField.component";
+import { SaveUserData } from "../../placeholders/load-data/loadData.action"; // Import SaveUserData function
 
 const StudentSignupForm = () => {
   const navigate = useNavigate();
@@ -18,8 +19,6 @@ const StudentSignupForm = () => {
     password: "",
   });
 
-  const [studentId, setStudentId] = useState("");
-
   // Handles form input changes
   const handleChange = (e) => {
     setFormData({
@@ -28,7 +27,7 @@ const StudentSignupForm = () => {
     });
   };
 
-  // Generate a random Student ID (you can customize the format)
+  // Generate a random Student ID
   const generateStudentId = () => {
     return `SD${Math.floor(Math.random() * 1000000)}`;
   };
@@ -39,19 +38,17 @@ const StudentSignupForm = () => {
 
     // Generate a Student ID and update state
     const newStudentId = generateStudentId();
-    setStudentId(newStudentId);
 
     // Store form data and the generated Student ID in localStorage
     const signupData = {
       ...formData,
-      studentId: newStudentId, // Include the generated Student ID
+      studentId: newStudentId,
     };
-    localStorage.setItem("studentSignupData", JSON.stringify(signupData));
 
-    // You can handle signup logic here (e.g., send data to backend API)
-    console.log("Generated Student ID:", newStudentId);
+    SaveUserData(signupData); // Call SaveUserData to save the form data to local storage
+
     // Redirect to welcome page after signup
-    navigate(`/student-portal-dashboard/${formData.email}`);
+    navigate(`/student-portal-dashboard/${formData.email}`); // Redirect after signup
   };
 
   return (
@@ -113,7 +110,7 @@ const StudentSignupForm = () => {
                   id="birthday"
                   name="birthday"
                   label="Birthday"
-                  type="date"
+                  placeholder="mm/dd/yyyy"
                   value={formData.birthday}
                   onChange={handleChange}
                 />
