@@ -33,12 +33,12 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
                             <input type="text"
                                 name="className"
                                 defaultValue={classDetails.name}
-                                className=" text-center w-2/6 border rounded-lg p-2 mb-2"
+                                className=" text-center w-5/6 md:w-2/6 border rounded-lg p-2 mb-2"
                             />
                             <textarea
                                 name="description"
                                 defaultValue={classDetails.description}
-                                className=" w-5/6 md:w-3/6 h-36 border rounded-lg p-2 mb-2" // Increased height
+                                className="w-5/6 md:w-3/6 h-36 border rounded-lg p-2 mb-2" // Increased height
                             />
                             <div className="flex flex-col md:flex-row gap-4">
                                 <label htmlFor="availableFall">Available fall:</label>
