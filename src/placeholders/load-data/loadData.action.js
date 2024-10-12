@@ -105,7 +105,26 @@ function DropUserClass(classId, email) {
 }
 
 
+// Function to load user data from local storage after signup
+export function LoadUserData() {
+  const storedUserData = localStorage.getItem('userData');
+  return storedUserData ? JSON.parse(storedUserData) : [];
+}
 
+// Function to save user data to local storage
+export function SaveUserData(newUserData) {
+  const existingUserData = LoadUserData();
+
+  // Filter out any existing user with the same email to avoid duplicates
+  const filteredUserData = existingUserData.filter(user => user.email !== newUserData.email);
+
+  // Add the new user data to the filtered list
+  const updatedUserData = [...filteredUserData, newUserData];
+
+  // Save updated data back to local storage
+  localStorage.setItem('userData', JSON.stringify(updatedUserData));
+  console.log('User data saved to local storage.');
+}
 
 export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddToUserClasses, DropUserClass };
 
