@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../../student-portal/nav-bar/NavBar.Component';
 import DisplayAllClasses from '../../student-portal/all-classes/DisplayAllClasses.component';
 import { useParams } from 'react-router-dom';
-
+import PageHeader from "../../page-header/PageHeader.component";
 export default function AdminPortalAllClasses() {
 
     const { email } = useParams();
@@ -27,7 +27,7 @@ export default function AdminPortalAllClasses() {
         <div className="flex flex-col w-full gap-4 justify-center items-center ">
             <NavBar email={email} />
             <div className=' bg-blue-100  shadow-lg gap-4  p-4 md:p-8 border rounded-lg'>
-                <h1 className='text-2xl'>All Classes</h1>
+                <PageHeader title="All Classes"/>
             </div>
 
             <DisplayAllClasses allClasses={allClasses} isAdmin={true} onFormAction={onFormAction}/>
