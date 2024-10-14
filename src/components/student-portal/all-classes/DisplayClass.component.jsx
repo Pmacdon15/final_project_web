@@ -8,7 +8,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
         event.preventDefault();
         const formData = new FormData(event.target);
         const classId = Number(formData.get('classId')); // Convert to number
-        const className = formData.get('className');      
+        const className = formData.get('className');
         console.log("Removing class: ", className);
         await RemoveClassFromLocalStorage(classId);
         onFormAction(className);
@@ -43,7 +43,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
                         <input type="hidden" name="classId" value={classDetails.id} />
                         <input type="hidden" name="className" value={classDetails.name} />
                         <button className="bg-red-500 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 mr-2 hover:bg-red-700">X</button>
-                    </form>
+                    </form>                  
                 </div>
                 {isEditing ? (
                     <div className="flex flex-col h-fit w-full items-center ">
