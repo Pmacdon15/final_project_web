@@ -1,14 +1,31 @@
-import { RemoveClassFromLocalStorage } from "../../../placeholders/load-data/loadData.action";
+import { RemoveClassFromLocalStorage, EditClassFromLocalStorage } from "../../../placeholders/load-data/loadData.action";
 import { useState } from 'react';
 
 export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     const [isEditing, setIsEditing] = useState(false);
-    async function handleOnSubmit(event) {
+
+    async function handleOnRemove(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const className = formData.get('className');
+        const classId = Number(formData.get('classId')); // Convert to number
+        const className = formData.get('className');      
         console.log("Removing class: ", className);
-        await RemoveClassFromLocalStorage(className);
+        await RemoveClassFromLocalStorage(classId);
+        onFormAction(className);
+    }
+
+    async function handleOnEdit(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const classId = formData.get('classId');
+        const className = formData.get('className');
+        const description = formData.get('description');
+        const availableFall = formData.get('availableFall');
+        const availableWinter = formData.get('availableWinter');
+        const availableSpring = formData.get('availableSpring');
+        const availableSummer = formData.get('availableSummer');
+        console.log("Editing class: ", className);
+        // await EditClassFromLocalStorage(classId, className, description, availableFall, availableWinter, availableSpring, availableSummer);
         onFormAction(className);
     }
 
@@ -21,15 +38,18 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
 
                     </div>
                     <form
-                        onSubmit={handleOnSubmit}
+                        onSubmit={handleOnRemove}
                         className="flex flex-row items-center">
+                        <input type="hidden" name="classId" value={classDetails.id} />
                         <input type="hidden" name="className" value={classDetails.name} />
                         <button className="bg-red-500 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 mr-2 hover:bg-red-700">X</button>
                     </form>
                 </div>
                 {isEditing ? (
                     <div className="flex flex-col h-fit w-full items-center ">
-                        <form className="flex flex-col h-fit items-center w-full">
+                        <form
+                            onSubmit={handleOnRemove}
+                            className="flex flex-col h-fit items-center w-full">
                             <input type="text"
                                 name="className"
                                 defaultValue={classDetails.name}

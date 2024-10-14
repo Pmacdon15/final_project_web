@@ -42,11 +42,12 @@ function LoadAllClasses() {
   return storedClasses ? JSON.parse(storedClasses) : null;
 }
 
-function RemoveClassFromLocalStorage(className) {
+function RemoveClassFromLocalStorage(classId) {
   const existingClasses = LoadAllClasses() || [];
-  const updatedClasses = existingClasses.filter(classDetails => classDetails.name !== className);
+  console.log('ClassId=', classId);
+  const updatedClasses = existingClasses.filter(classDetails => Number(classDetails.id) !== Number(classId));
   localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
-  // console.log('Class removed from local storage');
+  console.log('Class removed from local storage');
 }
 
 function LoadUserClassesToLocalStorage() {
