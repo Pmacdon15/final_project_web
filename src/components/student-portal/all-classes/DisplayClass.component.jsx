@@ -88,6 +88,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
                 ) : (
                     <div className="flex flex-col w-full items-center">
                         <p className="mb-2">{classDetails.description}</p>
+                        <p>Program ID :{classDetails.programId}</p>
                         <p>Available fall: {classDetails.availableFall ? 'Yes' : 'No'}</p>
                         <p>Available winter: {classDetails.availableWinter ? 'Yes' : 'No'}</p>
                         <p>Available spring: {classDetails.availableSpring ? 'Yes' : 'No'}</p>

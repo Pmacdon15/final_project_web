@@ -42,6 +42,25 @@ function LoadAllClasses() {
   return storedClasses ? JSON.parse(storedClasses) : null;
 }
 
+function AddClassToLocalStorage(programId, description, className, availableFall, availableWinter, availableSpring, availableSummer) {
+  const existingClasses = LoadAllClasses() || [];
+  const lastClassId = existingClasses.length > 0 ? Math.max(...existingClasses.map(cls => cls.id)) : 0;
+  const newClass = {
+    id: lastClassId + 1,
+    programId: Number(programId),
+    name: className,
+    description: description,
+    availableFall: availableFall,
+    availableWinter: availableWinter,
+    availableSpring: availableSpring,
+    availableSummer: availableSummer,
+  };
+
+  const updatedClasses = [...existingClasses, newClass];
+  localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  console.log('Class added to local storage');
+}
+
 function RemoveClassFromLocalStorage(classId) {
   const existingClasses = LoadAllClasses() || [];
   console.log('ClassId=', classId);
@@ -68,7 +87,7 @@ function EditClassFromLocalStorage(classId, className, description, availableFal
   });
   localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
   console.log('Class edited in local storage');
-} 
+}
 
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses = JSON.parse(localStorage.getItem('userClasses')) || [];
@@ -97,8 +116,8 @@ function AddToUserClasses(userId, classId, programId, name, description, termId,
   const newUserClass = {
     id: classId,
     userId: userId,
-    classId:  Number(classId),
-    programId:  Number(programId),
+    classId: Number(classId),
+    programId: Number(programId),
     name: name,
     description: description,
     userTermId: Number(termId), // Ensure termId is a number
@@ -125,6 +144,6 @@ function DropUserClass(classId, email) {
 
 
 
-export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, RemoveClassFromLocalStorage, EditClassFromLocalStorage, AddToUserClasses, DropUserClass };
+export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddClassToLocalStorage, RemoveClassFromLocalStorage, EditClassFromLocalStorage, AddToUserClasses, DropUserClass };
 
 

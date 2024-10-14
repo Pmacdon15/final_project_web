@@ -2,11 +2,17 @@ import { useState } from 'react';
 import DisplayClass from './DisplayClass.component';
 import AddClass from './AddClass.component';
 
+
 export default function DisplayAllClasses({ allClasses, isAdmin, onFormAction }) {
     const [showAddClass, setShowAddClass] = useState(false);
 
     const showOrHideAddClass = () => {
         setShowAddClass(!showAddClass);
+    }
+
+    const handleOnAdd = () => { 
+        showOrHideAddClass();
+        onFormAction();
     }
     return (
         <div className="flex flex-col w-full md:w-4/6 bg-blue-100 shadow-lg gap-4 p-4 md:p-8 border rounded-lg mb-8">
@@ -24,7 +30,7 @@ export default function DisplayAllClasses({ allClasses, isAdmin, onFormAction })
                 </div>                
             )}
             {showAddClass && (
-                <AddClass onFormAction={onFormAction} />
+                <AddClass onFormAction={ handleOnAdd} />
             )}
         </div>
     )
