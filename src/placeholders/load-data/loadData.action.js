@@ -50,6 +50,26 @@ function RemoveClassFromLocalStorage(classId) {
   console.log('Class removed from local storage');
 }
 
+function EditClassFromLocalStorage(classId, className, description, availableFall, availableWinter, availableSpring, availableSummer) {
+  const existingClasses = LoadAllClasses() || [];
+  const updatedClasses = existingClasses.map(classDetails => {
+    if (Number(classDetails.id) === Number(classId)) {
+      return {
+        ...classDetails,
+        name: className,
+        description: description,
+        availableFall: availableFall,
+        availableWinter: availableWinter,
+        availableSpring: availableSpring,
+        availableSummer: availableSummer,
+      };
+    }
+    return classDetails;
+  });
+  localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  console.log('Class edited in local storage');
+} 
+
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses = JSON.parse(localStorage.getItem('userClasses')) || [];
   const newUserClasses = userClasses.filter(newUserClass =>
@@ -105,6 +125,6 @@ function DropUserClass(classId, email) {
 
 
 
-export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, RemoveClassFromLocalStorage, AddToUserClasses, DropUserClass };
+export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, RemoveClassFromLocalStorage, EditClassFromLocalStorage, AddToUserClasses, DropUserClass };
 
 

@@ -25,7 +25,8 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
         const availableSpring = formData.get('availableSpring');
         const availableSummer = formData.get('availableSummer');
         console.log("Editing class: ", className);
-        // await EditClassFromLocalStorage(classId, className, description, availableFall, availableWinter, availableSpring, availableSummer);
+        await EditClassFromLocalStorage(classId, className, description, availableFall, availableWinter, availableSpring, availableSummer);
+        setIsEditing(!isEditing)
         onFormAction(className);
     }
 
@@ -35,7 +36,6 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
                 <div className="flex flex-row justify-between w-full items-center p-2 gap-4">
                     <div className="flex flex-row justify-center border rounded-lg w-full items-center">
                         <h1 className="text-2xl font-bold mb-2 text-center flex-grow">{classDetails.name}</h1>
-
                     </div>
                     <form
                         onSubmit={handleOnRemove}
@@ -48,7 +48,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
                 {isEditing ? (
                     <div className="flex flex-col h-fit w-full items-center ">
                         <form
-                            onSubmit={handleOnRemove}
+                            onSubmit={handleOnEdit}
                             className="flex flex-col h-fit items-center w-full">
                             <input type="text"
                                 name="className"
