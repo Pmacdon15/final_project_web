@@ -53,7 +53,7 @@ function NavBar({ isAdminPage = false, isGuest = false }) {
     let settings = [];
 
     if (!currentUser) {
-        settings = ['Login'];
+        settings = ['Login', 'Sign Up'];
     } else {
         settings = ['Profile', 'Logout'];
     }
@@ -251,6 +251,9 @@ function NavBar({ isAdminPage = false, isGuest = false }) {
                                         }
                                         if (setting === 'Login') {
                                             navigate('/');
+                                        }
+                                        if (setting === 'Sign Up') {
+                                            navigate('/student-signup'); // Navigate to signup page
                                         }
                                         handleCloseUserMenu();
                                     }}
