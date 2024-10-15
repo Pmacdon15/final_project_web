@@ -1,1 +1,11 @@
-[]
+[
+    {
+        "email": "manuella@bvc.com",
+        "programName": "Software development diploma"
+    },
+    {
+        "email": "thiago@bvc.com",
+        "programName": "Software development diploma"
+    }
+
+]
