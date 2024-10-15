@@ -15,12 +15,31 @@ function getCurrentSeason(termId, maxTermId, lastTermSeason) {
     return seasons[(seasonIndex - termDiff + seasons.length) % seasons.length];
 }
 
+
+function getLastSeason(userTerms) {
+    const lastTerm = userTerms[userTerms.length - 1];
+    return lastTerm ? lastTerm.termSeason : 'Fall';
+}
+
+
 const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason }) => {
     // Sort user terms by userTermId
     const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
     // Determine the maximum term ID to iterate through
     const maxTermId = sortedUserTerms.length > 0 ? Math.max(...sortedUserTerms.map(term => term.userTermId)) : 0;
     const lastTerm = sortedUserTerms[sortedUserTerms.length - 1]; // Use last term from sorted array
+
+    const handleAddTerm = () => {
+        const nextTermId = maxTermId + 1;
+        const nextTermSeason = getNextSeason(getLastSeason(userTerms));
+        const newTerm = { userTermId: nextTermId, termSeason: nextTermSeason };
+        userTerms.push(newTerm);
+
+        console.log('Added term:', newTerm);
+        console.log('User terms:', userTerms);
+        setSelectedTerm(newTerm);
+        setSeason(nextTermSeason);
+    };
 
     return (
         <div className="flex bg-white p-2 w-full rounded-lg justify-center">
@@ -50,23 +69,16 @@ const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason 
                     );
                 })}
 
-                {/* Button to add the next term */}
-                {sortedUserTerms.length > 0 && (
+                {/* Buttons to add the next two terms */}
+                {userTerms.length ? (
                     <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
-                        onClick={() => {
-                            const nextTermId = lastTerm.userTermId + 1;
-                            const nextTermSeason = getNextSeason(lastTerm.termSeason);
-                            console.log("pressed");
-                            if (!sortedUserTerms.some(term => term.userTermId === nextTermId)) {
-                                setSelectedTerm({ userTermId: nextTermId, termSeason: nextTermSeason });
-                                setSeason(nextTermSeason);
-                            }
-                        }}
+                        onClick={handleAddTerm}
                     >
-                        Term {Number(lastTerm.userTermId) + 1} {getNextSeason(lastTerm.termSeason)}
+                        Add Term
                     </button>
-                )}
+
+                ) : null}
             </div>
         </div>
     );
