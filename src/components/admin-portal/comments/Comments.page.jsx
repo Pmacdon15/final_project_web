@@ -23,6 +23,9 @@ export default function AdminPortalComments() {
                 >
                     <div className="bg-white w-full rounded-lg p-4">
                         <div className="flex flex-col w-full h-fit  rounded-lg ">
+                        <p className="flex flex-row border-2 border-gray-300 p-2 w-full rounded-lg">
+                                Name: {comment.name}
+                            </p>
                             <p className="flex flex-row border-2 border-gray-300 p-2 w-full rounded-lg">
                                 Email: {comment.email}
                             </p>
