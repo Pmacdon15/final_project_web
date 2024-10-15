@@ -10,7 +10,7 @@ import {
 import DisplayProgram from './DisplayProgram.component';
 import filterPrograms from '../../../utils/search-filter';
 
-export default function DisplayAllPrograms({ programs, email }) {
+export default function DisplayAllPrograms({ programs }) {
     const [searchByName, setSearchByName] = React.useState('');
     const [searchByLength, setSearchByLength] = React.useState({
         value: '',
@@ -112,11 +112,7 @@ export default function DisplayAllPrograms({ programs, email }) {
                     <div>No data to load</div>
                 ) : (
                     filteredPrograms.map((program, index) => (
-                        <DisplayProgram
-                            key={index}
-                            program={program}
-                            email={email}
-                        />
+                        <DisplayProgram key={index} program={program} />
                     ))
                 )}
             </div>

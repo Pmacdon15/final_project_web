@@ -1,5 +1,3 @@
-import { useParams } from 'react-router-dom';
-import NavBar from '../nav-bar/NavBar.Component';
 import React, { useEffect, useState } from 'react';
 import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.component';
 import DisplayUserClasses from './DisplayUserClasses.component';
@@ -10,11 +8,13 @@ import {
 import FirstSeasonSelector from './FirstSeasonSelector.component';
 import TermButtonSelector from './TermButtonSelector.component';
 import PageHeader from '../../page-header/PageHeader.component';
+import getUserInfo from '../../../utils/get-user-info';
 import { Box, Stack, TextField } from '@mui/material';
 import filterPrograms from '../../../utils/search-filter';
 
 export default function StudentPortalMyClasses() {
-    const { email } = useParams();
+    const { email } = getUserInfo();
+
     const [allClasses, setAllClasses] = useState();
     const [userClasses, setUserClasses] = useState();
     const [filteredClasses, setFilteredClasses] = useState();
@@ -76,7 +76,6 @@ export default function StudentPortalMyClasses() {
     // Filter classes based on season and user classes
     useEffect(() => {
         if (season && allClasses) {
-
             const searchFilteredClasses = filterPrograms(
                 allClasses,
                 searchByName
@@ -138,10 +137,8 @@ export default function StudentPortalMyClasses() {
 
     console.log('User terms: ', userTerms);
     return (
-        <div className="flex flex-col w-full gap-4  h-svh ">
-            <NavBar email={email} />
+        <>
             <PageHeader title={'My Classes'} />
-
             <div className="flex flex-col bg-blue-200 w-full shadow-lg items-center h-5/6 gap-4 p-2 md:p-4 border rounded-lg text-center">
                 {!selectedTerm && (
                     <FirstSeasonSelector
@@ -212,6 +209,6 @@ export default function StudentPortalMyClasses() {
                     />
                 </div>
             </div>
-        </div>
+        </>
     );
 }
