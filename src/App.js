@@ -9,6 +9,7 @@ import StudentPortalAllPrograms from './components/student-portal/all-programs/A
 import StudentPortalAllClasses from './components/student-portal/all-classes/AllClasses.page';
 import StudentPortalMyClasses from './components/student-portal/my-classes/MyClasses.page';
 import StudentPortalComments from './components/student-portal/comments/Comments.page';
+import AdminPortalAllClasses from './components/admin-portal/all-classes/AllClasses.page';
 import AdminPortalComments from './components/admin-portal/comments/Comments.page';
 import StudentSignupForm from './components/student-signup-portal/StudentSignUp.page';
 
@@ -98,7 +99,7 @@ function App() {
                         path="all-classes"
                         element={
                             <RouteWrapper adminOnly>
-                                <StudentPortalAllClasses />
+                                <AdminPortalAllClasses />
                             </RouteWrapper>
                         }
                     />

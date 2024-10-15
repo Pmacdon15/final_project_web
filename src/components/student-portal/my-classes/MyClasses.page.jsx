@@ -9,6 +9,8 @@ import FirstSeasonSelector from './FirstSeasonSelector.component';
 import TermButtonSelector from './TermButtonSelector.component';
 import PageHeader from '../../page-header/PageHeader.component';
 import getUserInfo from '../../../utils/get-user-info';
+import { Box, Stack, TextField } from '@mui/material';
+import filterPrograms from '../../../utils/search-filter';
 
 export default function StudentPortalMyClasses() {
     const { email } = getUserInfo();
@@ -19,6 +21,7 @@ export default function StudentPortalMyClasses() {
     const [userTerms, setUserTerms] = useState();
     const [season, setSeason] = useState();
     const [selectedTerm, setSelectedTerm] = useState();
+    const [searchByName, setSearchByName] = useState('');
 
     const fetchAllClasses = async () => {
         const loadedAllClasses = LoadAllClasses();
@@ -67,22 +70,27 @@ export default function StudentPortalMyClasses() {
     // Filter classes based on season and user classes
     useEffect(() => {
         if (season && allClasses) {
+            const searchFilteredClasses = filterPrograms(
+                allClasses,
+                searchByName
+            );
+
             let availableClasses = [];
 
             if (season === 'Fall') {
-                availableClasses = allClasses.filter(
+                availableClasses = searchFilteredClasses.filter(
                     classItem => classItem.availableFall
                 );
             } else if (season === 'Winter') {
-                availableClasses = allClasses.filter(
+                availableClasses = searchFilteredClasses.filter(
                     classItem => classItem.availableWinter
                 );
             } else if (season === 'Spring') {
-                availableClasses = allClasses.filter(
+                availableClasses = searchFilteredClasses.filter(
                     classItem => classItem.availableSpring
                 );
             } else if (season === 'Summer') {
-                availableClasses = allClasses.filter(
+                availableClasses = searchFilteredClasses.filter(
                     classItem => classItem.availableSummer
                 );
             }
@@ -97,7 +105,7 @@ export default function StudentPortalMyClasses() {
             }
             setFilteredClasses(availableClasses);
         }
-    }, [season, allClasses, userClasses]);
+    }, [season, allClasses, userClasses, searchByName]);
 
     // Filter user classes based on selected term
     const filteredUserClasses = selectedTerm
@@ -133,6 +141,44 @@ export default function StudentPortalMyClasses() {
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
                 />
+                <Box
+                    className="w-full "
+                    component="fieldset"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+
+                        '> legend': {
+                            textAlign: 'left',
+                            fontWeight: 'bold',
+                            marginBottom: '.5rem'
+                        },
+
+                        'div > div': {
+                            background: 'white'
+                        },
+
+                        input: {
+                            borderRadius: '0.25rem'
+                        }
+                    }}
+                >
+                    <Stack spacing={2} direction="row">
+                        <TextField
+                            color="black"
+                            id="search-by-name"
+                            label="Class Name"
+                            value={searchByName}
+                            onChange={typedByUser => {
+                                setSearchByName(
+                                    typedByUser.target.value.toLocaleLowerCase()
+                                );
+                            }}
+                            sx={{ flex: 1 }}
+                            className="p-2 rounded-lg"
+                        />
+                    </Stack>
+                </Box>
                 <div className="flex flex-col md:flex-row h-4/6 md:h-5/6 w-full gap-2  ">
                     <DisplayAvailableClasses
                         filteredClasses={filteredClasses}
@@ -141,6 +187,7 @@ export default function StudentPortalMyClasses() {
                         season={season}
                         onAddClass={handleChangeInClasses}
                     />
+
                     <DisplayUserClasses
                         userClasses={filteredUserClasses}
                         email={email}

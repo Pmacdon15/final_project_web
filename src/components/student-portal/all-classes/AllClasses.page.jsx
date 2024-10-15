@@ -22,7 +22,7 @@ export default function StudentPortalAllClasses() {
                 <p>Here you can see all the classes available.</p>
             </div>
 
-            <DisplayAllClasses allClasses={allClasses} />
+            <DisplayAllClasses allClasses={allClasses} isAdmin={false} />
         </>
     );
 }
