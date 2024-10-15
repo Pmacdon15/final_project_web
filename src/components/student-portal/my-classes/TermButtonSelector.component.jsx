@@ -50,22 +50,29 @@ const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason 
                     );
                 })}
 
-                {/* Button to add the next term */}
+                {/* Buttons to add the next two terms */}
                 {sortedUserTerms.length > 0 && (
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
-                        onClick={() => {
-                            const nextTermId = lastTerm.userTermId + 1;
+                    <>
+                        {[1, 2,3].map(offset => {
+                            const nextTermId = lastTerm.userTermId + offset;
                             const nextTermSeason = getNextSeason(lastTerm.termSeason);
-                            console.log("pressed");
-                            if (!sortedUserTerms.some(term => term.userTermId === nextTermId)) {
-                                setSelectedTerm({ userTermId: nextTermId, termSeason: nextTermSeason });
-                                setSeason(nextTermSeason);
-                            }
-                        }}
-                    >
-                        Term {Number(lastTerm.userTermId) + 1} {getNextSeason(lastTerm.termSeason)}
-                    </button>
+                            lastTerm.termSeason = nextTermSeason; // Update lastTerm season for the next iteration
+                            return (
+                                <button
+                                    key={nextTermId}
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
+                                    onClick={() => {
+                                        if (!sortedUserTerms.some(term => term.userTermId === nextTermId)) {
+                                            setSelectedTerm({ userTermId: nextTermId, termSeason: nextTermSeason });
+                                            setSeason(nextTermSeason);
+                                        }
+                                    }}
+                                >
+                                    Term {nextTermId} {nextTermSeason}
+                                </button>
+                            );
+                        })}
+                    </>
                 )}
             </div>
         </div>
