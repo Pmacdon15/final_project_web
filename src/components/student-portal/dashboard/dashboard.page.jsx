@@ -1,3 +1,4 @@
+import React from 'react';
 import NavBar from '../nav-bar/NavBar.Component.jsx';
 import DisplayStudentData from './DisplayStudentData.component.jsx';
 import {LoadUserPrograms} from '../../../placeholders/load-data/loadData.action.js';
