@@ -15,7 +15,7 @@ function filterPrograms(programs, searchedName, searchedLength) {
             matchesCriteria = true;
         }
 
-        if (searchedLength.value) {
+        if (searchedLength?.value) {
             /* 
                 Mapping a function based on the selected operator.
                 The returned function will be evaluated in the if block below.
