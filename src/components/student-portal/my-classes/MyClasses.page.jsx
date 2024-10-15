@@ -18,7 +18,7 @@ export default function StudentPortalMyClasses() {
     const [allClasses, setAllClasses] = useState();
     const [userClasses, setUserClasses] = useState();
     const [filteredClasses, setFilteredClasses] = useState();
-    const [userTerms, setUserTerms] = useState();
+    const [userTerms, setUserTerms] = useState([]);
     const [season, setSeason] = useState();
     const [selectedTerm, setSelectedTerm] = useState();
     const [searchByName, setSearchByName] = useState('');
@@ -39,7 +39,14 @@ export default function StudentPortalMyClasses() {
         console.log('User terms: ', userTerms);
         console.log('Term ID: ', termId, 'Term Season: ', termSeason);
         setUserTerms([{ userTermId: Number(termId), termSeason: termSeason }]);
-
+        setUserTerms(prevTerms => {
+            const newTerm = { userTermId: Number(termId), termSeason: termSeason };
+            const termExists = prevTerms.some(term => term.userTermId === newTerm.userTermId);
+            if (!termExists) {
+                return [...prevTerms, newTerm];
+            }
+            return prevTerms;
+        });
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
     };
 
@@ -56,21 +63,20 @@ export default function StudentPortalMyClasses() {
                 return { userTermId: term, termSeason: classInfo.termSeason };
             });
 
-            // Remove duplicates
-            const uniqueTermsWithSeason = termsWithSeason.filter(
-                (term, index, self) =>
-                    index ===
-                    self.findIndex(t => t.userTermId === term.userTermId)
-            );
-
-            setUserTerms(uniqueTermsWithSeason);
+            // Remove duplicates and add to existing userTerms
+            setUserTerms(prevTerms => {
+                const newTerms = termsWithSeason.filter(
+                    term => !prevTerms.some(prevTerm => prevTerm.userTermId === term.userTermId)
+                );
+                return [...prevTerms, ...newTerms];
+            });
         }
     }, [userClasses]);
 
     // Filter classes based on season and user classes
     useEffect(() => {
         if (season && allClasses) {
-            
+
             const searchFilteredClasses = filterPrograms(
                 allClasses,
                 searchByName
@@ -111,18 +117,22 @@ export default function StudentPortalMyClasses() {
     // Filter user classes based on selected term
     const filteredUserClasses = selectedTerm
         ? userClasses?.filter(
-              userClass => userClass.userTermId === selectedTerm.userTermId
-          )
-        : userClasses;
+            userClass => userClass.userTermId === selectedTerm.userTermId
+        ) || []  // Fallback to an empty array if userClasses is undefined
+        : userClasses || [];  // Fallback to an empty array if userClasses is undefined
+
 
     // Set the selected term to the first term in the user terms
     useEffect(() => {
-        console.log('selectedTerm: ', selectedTerm);
         if (userTerms && userTerms.length > 0 && !selectedTerm) {
             setSelectedTerm(userTerms[0]);
             setSeason(userTerms[0].termSeason);
+        } else if (!userTerms.length) {
+            // Reset selected term if there are no user terms
+            setSelectedTerm(null);
+            setSeason(null);
         }
-    }, [userTerms, selectedTerm]);
+    }, [userTerms, selectedTerm]);    
 
     console.log('User terms: ', userTerms);
     return (
