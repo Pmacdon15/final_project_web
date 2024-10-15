@@ -42,6 +42,53 @@ function LoadAllClasses() {
   return storedClasses ? JSON.parse(storedClasses) : null;
 }
 
+function AddClassToLocalStorage(programId, description, className, availableFall, availableWinter, availableSpring, availableSummer) {
+  const existingClasses = LoadAllClasses() || [];
+  const lastClassId = existingClasses.length > 0 ? Math.max(...existingClasses.map(cls => cls.id)) : 0;
+  const newClass = {
+    id: lastClassId + 1,
+    programId: Number(programId),
+    name: className,
+    description: description,
+    availableFall: availableFall,
+    availableWinter: availableWinter,
+    availableSpring: availableSpring,
+    availableSummer: availableSummer,
+  };
+
+  const updatedClasses = [...existingClasses, newClass];
+  localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  console.log('Class added to local storage');
+}
+
+function RemoveClassFromLocalStorage(classId) {
+  const existingClasses = LoadAllClasses() || [];
+  console.log('ClassId=', classId);
+  const updatedClasses = existingClasses.filter(classDetails => Number(classDetails.id) !== Number(classId));
+  localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  console.log('Class removed from local storage');
+}
+
+function EditClassFromLocalStorage(classId, className, description, availableFall, availableWinter, availableSpring, availableSummer) {
+  const existingClasses = LoadAllClasses() || [];
+  const updatedClasses = existingClasses.map(classDetails => {
+    if (Number(classDetails.id) === Number(classId)) {
+      return {
+        ...classDetails,
+        name: className,
+        description: description,
+        availableFall: availableFall,
+        availableWinter: availableWinter,
+        availableSpring: availableSpring,
+        availableSummer: availableSummer,
+      };
+    }
+    return classDetails;
+  });
+  localStorage.setItem('allClasses', JSON.stringify(updatedClasses));
+  console.log('Class edited in local storage');
+}
+
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses = JSON.parse(localStorage.getItem('userClasses')) || [];
   const newUserClasses = userClasses.filter(newUserClass =>
@@ -65,22 +112,12 @@ function LoadUserClasses() {
 
 function AddToUserClasses(userId, classId, programId, name, description, termId, season) {
   const existingUserClasses = LoadUserClasses() || [];
-  let newUserTermId;
-  if (existingUserClasses.length === 0) {
-    newUserTermId = 1; // Start at 1 if there are no existing classes
-  } else {
-    // Get the last userTermId
-    const lastUserClass = existingUserClasses.reduce((max, userClass) =>
-      userClass.userTermId > max ? userClass.userTermId : max, 0
-    );
-    newUserTermId = lastUserClass + 1; // Increment the last userTermId
-  }
 
   const newUserClass = {
     id: classId,
     userId: userId,
-    classId:  Number(classId),
-    programId:  Number(programId),
+    classId: Number(classId),
+    programId: Number(programId),
     name: name,
     description: description,
     userTermId: Number(termId), // Ensure termId is a number
@@ -126,6 +163,6 @@ export function SaveUserData(newUserData) {
   console.log('User data saved to local storage.');
 }
 
-export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddToUserClasses, DropUserClass };
+export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddClassToLocalStorage, RemoveClassFromLocalStorage, EditClassFromLocalStorage, AddToUserClasses, DropUserClass };
 
 
