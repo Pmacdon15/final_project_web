@@ -249,6 +249,9 @@ function NavBar({ isAdminPage = false, isGuest = false }) {
                                             handleLogout();
                                             navigate('/');
                                         }
+                                        if (setting === 'Login') {
+                                            navigate('/');
+                                        }
                                         handleCloseUserMenu();
                                     }}
                                 >
