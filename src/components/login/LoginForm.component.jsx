@@ -5,6 +5,7 @@ import BVCImage from '../bvc-image/BVCImage.component';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
+import getUserInfo from '../../utils/get-user-info';
 
 //Should be replaced by the final authentication logic
 import handleLoginAction from '../../placeholders/authentication/login.action';
@@ -16,6 +17,18 @@ export default function LoginForm({ loginType }) {
         vertical: 'top',
         horizontal: 'right'
     });
+
+    const currentUser = getUserInfo();
+
+    //Prevent authenticated user from accessing this page
+    if (currentUser) {
+        if (currentUser.isAdmin) {
+            window.location.href = '/admin/dashboard';
+            return;
+        }
+
+        window.location.href = '/student/dashboard';
+    }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -39,7 +52,7 @@ export default function LoginForm({ loginType }) {
 
         try {
             const userExists = handleLoginAction(username, password);
-           
+
             if (!userExists) {
                 setToastState(oldState => ({
                     ...oldState,
@@ -55,15 +68,11 @@ export default function LoginForm({ loginType }) {
                 }));
 
                 //Should redirect the user to the homepage
-                console.log(userExists);
                 if (userExists.isAdmin) {
-                    window.location.href = `/student-portal-all-programs`;
-                    //TODO: Redirect to the admin-portal-all-programs page after page is created
+                    window.location.href = `/admin/all-programs`;
                 } else {
-                    window.location.href = `/student-portal-dashboard/${username}`;
+                    window.location.href = `/student/all-programs`;
                 }
-    
-
             }
         } catch (error) {
             if (error?.message) {
@@ -104,14 +113,15 @@ export default function LoginForm({ loginType }) {
             <BVCImage />
             <div className="flex flex-col items-center text-white text-2xl bg-blue-600 w-5/6 md:w-2/6 rounded-xl shadow-md gap-5">
                 <h1>{loginType} Portal</h1>
-                <form className="flex flex-col items-center justify-center gap-4 h-72 w-4/6 rounded-lg text-white bg-blue-400 mb-8" onSubmit={handleLogin}>
+                <form
+                    className="flex flex-col items-center justify-center gap-4 h-72 w-4/6 rounded-lg text-white bg-blue-400 mb-8"
+                    onSubmit={handleLogin}
+                >
                     <TextField
                         id="userEmail"
                         name="userEmail"
                         label="User Email"
                         variant="standard"
-                        
-                    
                         sx={{
                             '& .MuiInputLabel-root': {
                                 color: 'white',
