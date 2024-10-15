@@ -73,7 +73,7 @@ function App() {
                     <Route
                         path="dashboard"
                         element={
-                            <RouteWrapper>
+                            <RouteWrapper adminOnly>
                                 <StudentPortalDashboard />
                             </RouteWrapper>
                         }
@@ -89,7 +89,7 @@ function App() {
                     <Route
                         path="all-programs"
                         element={
-                            <RouteWrapper>
+                            <RouteWrapper adminOnly>
                                 <StudentPortalAllPrograms />
                             </RouteWrapper>
                         }
@@ -97,7 +97,7 @@ function App() {
                     <Route
                         path="all-classes"
                         element={
-                            <RouteWrapper>
+                            <RouteWrapper adminOnly>
                                 <StudentPortalAllClasses />
                             </RouteWrapper>
                         }
