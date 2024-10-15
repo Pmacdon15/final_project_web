@@ -123,10 +123,12 @@ export default function StudentPortalMyClasses() {
 
 
     // Set the selected term to the first term in the user terms
-    useEffect(() => {
+    useEffect(() => {     
+       const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
+        
         if (userTerms && userTerms.length > 0 && !selectedTerm) {
-            setSelectedTerm(userTerms[0]);
-            setSeason(userTerms[0].termSeason);
+            setSelectedTerm(sortedUserTerms[0]);
+            setSeason(sortedUserTerms[0].termSeason);
         } else if (!userTerms.length) {
             // Reset selected term if there are no user terms
             setSelectedTerm(null);
