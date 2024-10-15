@@ -3,10 +3,11 @@ import { AddComment } from '../../../placeholders/comments/comments.action';
 export default function StudentPortalComments() {
     const handleSubmit = event => {
         event.preventDefault();
+        const name = event.target.name.value;
         const email = event.target.email.value;
         const comment = event.target.comment.value;
-        console.log({ email, comment });
-        AddComment(email, comment);
+        console.log({ name, email, comment });
+        AddComment(name, email, comment);
         window.location.reload();
     };
 
@@ -20,19 +21,27 @@ export default function StudentPortalComments() {
                 <div className="bg-white w-full rounded-lg p-4">
                     <div className="flex flex-col w-full h-fit bg-slate-50 border shadow-lg ">
                         <form onSubmit={handleSubmit}>
+                        <p className="flex flex-row  p-4">
+                                Name:{' '}
+                                <input 
+                                    type="text"
+                                    name="name"
+                                    className="border-2 border-gray-300 p-2 ml-2 w-full rounded-lg"
+                                />
+                            </p>
                             <p className="flex flex-row  p-4">
                                 Email:{' '}
-                                <input
+                                <input 
                                     type="text"
                                     name="email"
-                                    className="border-2 border-gray-300 p-2 w-full rounded-lg"
+                                    className="border-2 border-gray-300 p-2 ml-2 w-full rounded-lg"
                                 />
                             </p>
                             <p className="flex flex-col text-start p-4 ">
                                 Comment:{' '}
                                 <textarea
                                     name="comment"
-                                    className="h-52 border-2 border-gray-300 p-2 w-full rounded-lg"
+                                    className="h-52 border-2 border-gray-300 mt-2 p-2 w-full rounded-lg"
                                 />
                             </p>
                             <div className="flex justify-end">
