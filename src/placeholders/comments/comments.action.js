@@ -8,7 +8,7 @@ function InitializeComments() {
     } else {
         const parsedStoredComments = JSON.parse(storedComments);
         const newComments = Comments.filter(comment => 
-            !parsedStoredComments.some(storedComment => storedComment.email === comment.email && storedComment.comment === comment.comment)
+            !parsedStoredComments.some(storedComment => storedComment.name === comment.name && storedComment.email === comment.email && storedComment.comment === comment.comment)
         );
         const updatedComments = [...parsedStoredComments, ...newComments];
         localStorage.setItem('comments', JSON.stringify(updatedComments));
@@ -22,8 +22,9 @@ function LoadComments() {
     return storedComments ? JSON.parse(storedComments) : Comments;
   }
   
-function AddComment(email, comment) {
+function AddComment(name, email, comment) {
   const newComment = {
+    name,
     email,
     comment,
     date: new Date().toISOString()
