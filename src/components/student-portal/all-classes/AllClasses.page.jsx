@@ -1,9 +1,13 @@
 import { LoadAllClasses } from '../../../placeholders/load-data/loadData.action';
 import React, { useEffect, useState } from 'react';
 import DisplayAllClasses from './DisplayAllClasses.component';
+import filterPrograms from '../../../utils/search-filter';
+import { Box, Stack, TextField } from '@mui/material';
 
 export default function StudentPortalAllClasses() {
-    const [allClasses, setAllClasses] = useState();
+    const [allClasses, setAllClasses] = useState([]);
+
+    const [searchByName, setSearchByName] = useState('');
 
     useEffect(() => {
         const fetchAllClasses = async () => {
@@ -12,6 +16,8 @@ export default function StudentPortalAllClasses() {
         };
         fetchAllClasses();
     }, []);
+
+    const filteredClasses = filterPrograms(allClasses, searchByName);
 
     // console.log(JSON.stringify(allClasses, null, 2));
 
@@ -22,7 +28,42 @@ export default function StudentPortalAllClasses() {
                 <p>Here you can see all the classes available.</p>
             </div>
 
-            <DisplayAllClasses allClasses={allClasses} isAdmin={false} />
+            <div className="bg-blue-200 w-full md:w-4/6 shadow-lg h-5/6 gap-4 p-2 md:p-4 border rounded-lg ">
+                <Box
+                    component="fieldset"
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+
+                        '> legend': {
+                            textAlign: 'left',
+                            fontWeight: 'bold',
+                            marginBottom: '.5rem'
+                        },
+
+                        'div > div': {
+                            background: 'white'
+                        }
+                    }}
+                >
+                    <Stack spacing={2} direction="row">
+                        <TextField
+                            color="black"
+                            id="search-by-name"
+                            label="Class Name"
+                            value={searchByName}
+                            onChange={typedByUser => {
+                                setSearchByName(
+                                    typedByUser.target.value.toLocaleLowerCase()
+                                );
+                            }}
+                            sx={{ flex: 1 }}
+                        />
+                    </Stack>
+                </Box>
+            </div>
+
+            <DisplayAllClasses allClasses={filteredClasses} isAdmin={false} />
         </>
     );
 }
