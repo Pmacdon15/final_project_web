@@ -9,7 +9,7 @@ export default function HomePageMain() {
       <a href="/guest/all-classes">
         <button className="LoginHomePageButtonLink">Guest Access</button>
       </a>
-      <a href="/student-signup">Clik here to Sign Up</a>
+      <a href="/student-signup">Click here to Sign Up</a>
     </div>
   );
 }
