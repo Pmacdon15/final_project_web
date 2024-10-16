@@ -37,7 +37,7 @@ export default function StudentPortalMyClasses() {
     const handleChangeInClasses = async (termId, termSeason) => {
         await fetchAllClasses();
         console.log('User terms: ', userTerms);
-        console.log('Term ID: ', termId, 'Term Season: ', termSeason);
+        console.log('Class added to term ID: ', termId, 'Term Season: ', termSeason);
         setUserTerms([{ userTermId: Number(termId), termSeason: termSeason }]);
         setUserTerms(prevTerms => {
             const newTerm = { userTermId: Number(termId), termSeason: termSeason };
@@ -135,7 +135,7 @@ export default function StudentPortalMyClasses() {
         }
     }, [userTerms, selectedTerm]);    
 
-    console.log('User terms: ', userTerms);
+ 
     return (
         <>
             <PageHeader title={'My Classes'} />
@@ -149,6 +149,7 @@ export default function StudentPortalMyClasses() {
                 )}
                 <TermButtonSelector
                     userTerms={userTerms}
+                    setUserTerms={setUserTerms}
                     selectedTerm={selectedTerm}
                     setSelectedTerm={setSelectedTerm}
                     setSeason={setSeason}
