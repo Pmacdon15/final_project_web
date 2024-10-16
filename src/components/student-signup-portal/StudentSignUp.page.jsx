@@ -162,9 +162,13 @@ const StudentSignupForm = () => {
                   Sign Up
                 </Button>
               </Grid>
+              <Grid item xs={12} className="text-center text-xs">
+              <a href="/">Click here to Sign In</a>
+              </Grid>
             </Grid>
           </form>
         </Container>
+        
       </div>
     </>
   );
