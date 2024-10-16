@@ -23,6 +23,7 @@ export default function StudentPortalMyClasses() {
     const [selectedTerm, setSelectedTerm] = useState();
     const [searchByName, setSearchByName] = useState('');
 
+
     const fetchAllClasses = async () => {
         const loadedAllClasses = LoadAllClasses();
         const loadedUserClasses = LoadUserClasses();
@@ -122,9 +123,9 @@ export default function StudentPortalMyClasses() {
 
 
     // Set the selected term to the first term in the user terms
-    useEffect(() => {     
-       const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
-        
+    useEffect(() => {
+        const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
+
         if (userTerms && userTerms.length > 0 && !selectedTerm) {
             setSelectedTerm(sortedUserTerms[0]);
             setSeason(sortedUserTerms[0].termSeason);
@@ -133,9 +134,9 @@ export default function StudentPortalMyClasses() {
             setSelectedTerm(null);
             setSeason(null);
         }
-    }, [userTerms, selectedTerm]);    
+    }, [userTerms, selectedTerm]);
 
- 
+
     return (
         <>
             <PageHeader title={'My Classes'} />
@@ -201,13 +202,15 @@ export default function StudentPortalMyClasses() {
                         onAddClass={handleChangeInClasses}
                     />
 
-                    <DisplayUserClasses
-                        userClasses={filteredUserClasses}
-                        email={email}
-                        onDropClass={handleChangeInClasses}
-                        termId={selectedTerm?.userTermId}
-                        season={season}
-                    />
+                    {filteredClasses && filteredClasses.length > 0 && (
+                        <DisplayUserClasses
+                            userClasses={filteredUserClasses}
+                            email={email}
+                            onDropClass={handleChangeInClasses}
+                            termId={selectedTerm?.userTermId}
+                            season={season}
+                        />
+                    )}
                 </div>
             </div>
         </>

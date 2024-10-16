@@ -1,5 +1,5 @@
 import { DropUserClass } from "../../../placeholders/load-data/loadData.action";
-export default function DisplayUserClasses({ userClasses, email, termId, season, onDropClass }) {
+export default function DisplayUserClasses({ userClasses=[], email, termId, season, onDropClass }) {
     async function handleOnSubmit(event) {
         event.preventDefault();
         const classId = event.target.classId.value;

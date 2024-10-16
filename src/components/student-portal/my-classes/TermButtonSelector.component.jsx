@@ -36,15 +36,9 @@ const TermButtons = ({ userTerms = [], setUserTerms, selectedTerm, setSelectedTe
 
         // Update userTerms using the setState function
         const updatedTerms = [...sortedUserTerms, newTerm]; // Create a new array with the new term
-        setUserTerms(updatedTerms); // Update the userTerms state
-
-        console.log("Last Season", lastTermSeason); // Correct last season
-        console.log("Next Season", nextTermSeason); // Correct next season
-
+        setUserTerms(updatedTerms); // Update the userTerms state  
         setSelectedTerm(newTerm);
-        setSeason(nextTermSeason);
-        console.log('Added term:', newTerm);
-        console.log('User terms:', updatedTerms);
+        setSeason(nextTermSeason);        
     };
 
     return (
