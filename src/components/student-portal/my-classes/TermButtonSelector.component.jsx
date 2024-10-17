@@ -22,23 +22,23 @@ function getLastSeason(userTerms) {
 }
 
 
-const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason }) => {
+const TermButtons = ({ userTerms = [], setUserTerms, selectedTerm, setSelectedTerm, setSeason }) => {
     // Sort user terms by userTermId
     const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
-    // Determine the maximum term ID to iterate through
     const maxTermId = sortedUserTerms.length > 0 ? Math.max(...sortedUserTerms.map(term => term.userTermId)) : 0;
-    const lastTerm = sortedUserTerms[sortedUserTerms.length - 1]; // Use last term from sorted array
 
     const handleAddTerm = () => {
+        // Calculate the next season based on the current sorted user terms, not on userTerms state
+        const lastTermSeason = getLastSeason(sortedUserTerms); // Get last season from sorted terms
+        const nextTermSeason = getNextSeason(lastTermSeason);  // Calculate the next season
         const nextTermId = maxTermId + 1;
-        const nextTermSeason = getNextSeason(getLastSeason(userTerms));
         const newTerm = { userTermId: nextTermId, termSeason: nextTermSeason };
-        userTerms.push(newTerm);
 
-        console.log('Added term:', newTerm);
-        console.log('User terms:', userTerms);
+        // Update userTerms using the setState function
+        const updatedTerms = [...sortedUserTerms, newTerm]; // Create a new array with the new term
+        setUserTerms(updatedTerms); // Update the userTerms state  
         setSelectedTerm(newTerm);
-        setSeason(nextTermSeason);
+        setSeason(nextTermSeason);        
     };
 
     return (
@@ -47,9 +47,9 @@ const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason 
             <div className="flex flex-row flex-wrap gap-2 justify-center w-full">
                 {/* Create buttons for all term IDs up to the maximum term ID */}
                 {[...Array(maxTermId)].map((_, index) => {
-                    const termId = index + 1; // Term IDs start from 1
-                    const term = sortedUserTerms.find(term => term.userTermId === termId); // Use sorted array
-                    const termSeason = term ? term.termSeason : getCurrentSeason(termId, maxTermId, lastTerm.termSeason);
+                    const termId = index + 1;
+                    const term = sortedUserTerms.find(term => term.userTermId === termId); 
+                    const termSeason = term ? term.termSeason : getCurrentSeason(termId, maxTermId, sortedUserTerms[sortedUserTerms.length - 1]?.termSeason);
                     return (
                         <button
                             key={termId}
@@ -69,7 +69,7 @@ const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason 
                     );
                 })}
 
-                {/* Buttons to add the next two terms */}
+                {/* Button to add the next term */}
                 {userTerms.length ? (
                     <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110"
@@ -77,7 +77,6 @@ const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason 
                     >
                         Add Term
                     </button>
-
                 ) : null}
             </div>
         </div>
@@ -85,3 +84,4 @@ const TermButtons = ({ userTerms = [], selectedTerm, setSelectedTerm, setSeason 
 };
 
 export default TermButtons;
+
