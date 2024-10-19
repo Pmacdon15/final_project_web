@@ -1,4 +1,4 @@
-import DisplayStudentData from './DisplayStudentData.component.jsx';
+import DisplayUserInfos from './DisplayUserInfos.component.jsx';
 import {LoadUserClasses} from '../../../placeholders/load-data/loadData.action.js';
 import {LoadUserData} from '../../../placeholders/load-data/loadData.action.js';
 import React from 'react';
@@ -31,7 +31,7 @@ export default function StudentPortalDashBoard() {
                 <h1 className='text-2xl font-bold mb-2'>My Dashboard</h1>
             </div>
             <div className="flex flex-col w-full gap-4 justify-center items-center ">
-                <DisplayStudentData student={userData} classes={userClasses}/>
+                <DisplayUserInfos userInfos={userData} classes={userClasses}/>
             </div>
         </div>
     );
