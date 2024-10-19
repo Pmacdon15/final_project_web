@@ -26,11 +26,13 @@ export default function StudentPortalDashBoard() {
     }, [email]);
 
     return (
-        <div className="flex flex-col w-full gap-4 justify-center items-center ">
+        <div>
             <div className=' bg-blue-100  shadow-lg gap-4   p-4 md:p-5 border rounded-lg '>
                 <h1 className='text-2xl font-bold mb-2'>My Dashboard</h1>
             </div>
-            <DisplayStudentData student={userData} classes={userClasses}/>
+            <div className="flex flex-col w-full gap-4 justify-center items-center ">
+                <DisplayStudentData student={userData} classes={userClasses}/>
+            </div>
         </div>
     );
 }
