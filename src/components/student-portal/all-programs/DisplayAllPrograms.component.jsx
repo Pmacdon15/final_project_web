@@ -1,5 +1,5 @@
 import React from 'react';
-import {ProgramForm} from './AddPrograms.component'
+import { ProgramForm } from '../../admin-portal/all-programs/AddPrograms.component'
 import {
     Box,
     FormControl,
@@ -11,7 +11,7 @@ import {
 import DisplayProgram from './DisplayProgram.component';
 import filterPrograms from '../../../utils/search-filter';
 
-export default function DisplayAllPrograms({ programs, onEdit, onDelete }) {
+export default function DisplayAllPrograms({ programs, onEdit, onDelete, isAdmin }) {
     const [searchByName, setSearchByName] = React.useState('');
     const [searchByLength, setSearchByLength] = React.useState({
         value: '',
@@ -107,30 +107,21 @@ export default function DisplayAllPrograms({ programs, onEdit, onDelete }) {
                     </Stack>
                 </Box>
             </div>
-{/* 
             <div className="flex flex-col w-full md:w-4/6 bg-blue-100  shadow-lg gap-4   p-4 md:p-8 border rounded-lg mb-8">
-                {filteredPrograms.length === 0 ? (
-                    <div>No data to load</div>
-                ) : (
-                    filteredPrograms.map((program, index) => (
-                        <DisplayProgram key={index} program={program} />
-                    ))
-                )}
-                <button onClick={() => onEdit(programs)} className="btn btn-secondary">Edit</button>
-                <button onClick={() => onDelete(programs.id)} className="btn btn-danger">Delete</button>
-            </div> */}
-            <div className="flex flex-col w-full md:w-4/6 bg-blue-100  shadow-lg gap-4   p-4 md:p-8 border rounded-lg mb-8">
-            {programs.map((program) => (
-                <div key={program.id}>
-                    <div>
-                    <button onClick={() => onEdit(program)} className="btn btn-secondary">Edit</button>
-                    <button onClick={() => onDelete(program.id)} className="btn btn-danger">Delete</button>
+                {programs.map((program) => (
+                    <div key={program.id}>
+                        <div>
+                            {isAdmin &&
+                                <>
+                                    <button onClick={() => onEdit(program)} className="btn btn-secondary">Edit</button>
+                                    <button onClick={() => onDelete(program.id)} className="btn btn-danger">Delete</button>
+                                </>
+                            }
+                        </div>
+                        <DisplayProgram program={program} />
                     </div>
-                    <DisplayProgram program={program} />
-                    
-                </div>
-            ))}
-        </div>
+                ))}
+            </div>
         </>
     );
 }

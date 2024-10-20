@@ -4,8 +4,24 @@ import allClasses from '../load-data/allClasses.data.json';
 import userClasses from '../load-data/userClasses.data.json';
 import userData from '../authentication/user.data.json';
 
+function LoadAllProgramsToLocalStorage() {
+  const existingPrograms = JSON.parse(localStorage.getItem('allPrograms')) || [];
+  const newPrograms = programs.filter(newProgram =>
+    existingPrograms && !existingPrograms.some(existingProgram => existingProgram.id === newProgram.id)
+  );
+  const updatedPrograms = [...existingPrograms, ...newPrograms];
+  if (existingPrograms.length === 0) {
+    localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
+    console.log('Programs loaded to local storage without duplicates');
+  }
+  console.log('Programs loaded to local storage without duplicates');
+}
+
+LoadAllProgramsToLocalStorage();
+
 function LoadAllPrograms() {
-  return programs;
+  const storedPrograms = localStorage.getItem('allPrograms');
+  return storedPrograms ? JSON.parse(storedPrograms) : null;
 }
 
 function LoadUserDataToLocalStorage() {
