@@ -1,4 +1,5 @@
 import React from 'react';
+import {ProgramForm} from './AddPrograms.component'
 import {
     Box,
     FormControl,
@@ -10,7 +11,7 @@ import {
 import DisplayProgram from './DisplayProgram.component';
 import filterPrograms from '../../../utils/search-filter';
 
-export default function DisplayAllPrograms({ programs }) {
+export default function DisplayAllPrograms({ programs, onEdit, onDelete }) {
     const [searchByName, setSearchByName] = React.useState('');
     const [searchByLength, setSearchByLength] = React.useState({
         value: '',
@@ -106,7 +107,7 @@ export default function DisplayAllPrograms({ programs }) {
                     </Stack>
                 </Box>
             </div>
-
+{/* 
             <div className="flex flex-col w-full md:w-4/6 bg-blue-100  shadow-lg gap-4   p-4 md:p-8 border rounded-lg mb-8">
                 {filteredPrograms.length === 0 ? (
                     <div>No data to load</div>
@@ -115,7 +116,21 @@ export default function DisplayAllPrograms({ programs }) {
                         <DisplayProgram key={index} program={program} />
                     ))
                 )}
-            </div>
+                <button onClick={() => onEdit(programs)} className="btn btn-secondary">Edit</button>
+                <button onClick={() => onDelete(programs.id)} className="btn btn-danger">Delete</button>
+            </div> */}
+            <div className="flex flex-col w-full md:w-4/6 bg-blue-100  shadow-lg gap-4   p-4 md:p-8 border rounded-lg mb-8">
+            {programs.map((program) => (
+                <div key={program.id}>
+                    <div>
+                    <button onClick={() => onEdit(program)} className="btn btn-secondary">Edit</button>
+                    <button onClick={() => onDelete(program.id)} className="btn btn-danger">Delete</button>
+                    </div>
+                    <DisplayProgram program={program} />
+                    
+                </div>
+            ))}
+        </div>
         </>
     );
 }
