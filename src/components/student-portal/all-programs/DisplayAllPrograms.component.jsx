@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProgramForm } from '../../admin-portal/all-programs/AddPrograms.component'
+// import { ProgramForm } from '../../admin-portal/all-programs/AddPrograms.component'
 import {
     Box,
     FormControl,
@@ -9,7 +9,7 @@ import {
     TextField
 } from '@mui/material';
 import DisplayProgram from './DisplayProgram.component';
-import filterPrograms from '../../../utils/search-filter';
+// import filterPrograms from '../../../utils/search-filter';
 
 export default function DisplayAllPrograms({ programs, onEdit, onDelete, isAdmin }) {
     const [searchByName, setSearchByName] = React.useState('');
@@ -41,11 +41,11 @@ export default function DisplayAllPrograms({ programs, onEdit, onDelete, isAdmin
         }));
     }
 
-    const filteredPrograms = filterPrograms(
-        programs,
-        searchByName,
-        searchByLength
-    );
+    // const filteredPrograms = filterPrograms(
+    //     programs,
+    //     searchByName,
+    //     searchByLength
+    // );
 
     return (
         <>

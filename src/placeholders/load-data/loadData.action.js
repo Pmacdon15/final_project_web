@@ -24,6 +24,19 @@ function LoadAllPrograms() {
   return storedPrograms ? JSON.parse(storedPrograms) : null;
 }
 
+function AddProgramToLocalStorage(program) {
+  const existingPrograms = LoadAllPrograms() || [];
+  const lastProgramId = existingPrograms.length > 0 ? Math.max(...existingPrograms.map(prog => prog.id)) : 0;
+  const newProgram = {
+    id: lastProgramId + 1,
+    ...program,
+  };
+
+  const updatedPrograms = [...existingPrograms, newProgram];
+  localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
+  console.log('Program added to local storage');
+}
+
 function LoadUserDataToLocalStorage() {
   const existingUserData = JSON.parse(localStorage.getItem('userData')) || [];
   const newUserData = userData.filter(newUser =>
@@ -179,6 +192,6 @@ export function SaveUserData(newUserData) {
   console.log('User data saved to local storage.');
 }
 
-export { LoadAllPrograms, LoadAllClasses, LoadUserClasses, AddClassToLocalStorage, RemoveClassFromLocalStorage, EditClassFromLocalStorage, AddToUserClasses, DropUserClass };
+export { LoadAllPrograms, AddProgramToLocalStorage, LoadAllClasses, LoadUserClasses, AddClassToLocalStorage, RemoveClassFromLocalStorage, EditClassFromLocalStorage, AddToUserClasses, DropUserClass };
 
 

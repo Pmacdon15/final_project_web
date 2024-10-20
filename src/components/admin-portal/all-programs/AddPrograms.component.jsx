@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AddProgramToLocalStorage } from '../../../placeholders/load-data/loadData.action';
 
 export default function ProgramForm({ program, onCreate, onEdit, onClose }) {
     const [name, setName] = useState('');
@@ -28,7 +29,8 @@ export default function ProgramForm({ program, onCreate, onEdit, onClose }) {
         if (program) {
             onEdit(newProgram);
         } else {
-            onCreate(newProgram);
+            AddProgramToLocalStorage(newProgram);
+            onCreate();
         }
     };
 
