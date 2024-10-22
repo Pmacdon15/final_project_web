@@ -17,9 +17,9 @@ export default function DisplayUserInfos({userInfos, classes, program, onFormAct
     }
 
     return (
-        <div className = "flex flex-col w-96 shadow-lg border-black items-center bg-white rounded-lg">
+        <div className = "flex flex-col w-full shadow-lg border-black items-center bg-white rounded-lg">
             {isEditing? (
-                <div className="flex flex-col h-fit items-center w-full">
+                <div>
                     <form
                         onSubmit={handleOnEdit}
                         className="flex flex-col h-fit items-center w-full">
@@ -39,13 +39,13 @@ export default function DisplayUserInfos({userInfos, classes, program, onFormAct
                             className=" text-center w-5/6 md:w-5/6 border rounded-lg p-2 mb-2"
                         />
                         <button 
-                            className="bg-green-600  my-2 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700"
+                            className="bg-green-600 w-2/6 mt-1 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700"
                             type="submit">
                             Save
                         </button>
                     </form>
                     <button
-                        className="bg-red-500  my-2 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-red-700"
+                        className="bg-red-500 w-2/6 mt-1 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-red-700"
                         onClick={() => setIsEditing(!isEditing)}>
                             Cancel
                         </button>

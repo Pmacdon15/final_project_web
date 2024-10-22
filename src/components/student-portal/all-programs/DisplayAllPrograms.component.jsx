@@ -1,129 +1,38 @@
-import React from "react";
-import {
-  Box,
-  FormControl,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-} from "@mui/material";
-import DisplayProgram from "./DisplayProgram.component";
+import React, { useEffect, useState } from 'react';
 
-export default function DisplayAllPrograms({
-  programs,
-  onEdit,
-  onDelete,
-  isAdmin,
-}) {
-  const [searchByName, setSearchByName] = React.useState("");
-  const [searchByLength, setSearchByLength] = React.useState({
-    value: "",
-    operator: "eq",
-  });
+import DisplayProgram from './DisplayProgram.component';
+import filterPrograms from '../../../utils/search-filter';
+import SearchFilters from '../../search-filters/SearchFilters.component';
 
-  function handleSearchByLength(typedByUser) {
-    const parsed = Number(typedByUser.target.value);
+export default function DisplayAllPrograms({ programs }) {
+    const [searchByName, setSearchByName] = useState('');
+    const [searchByLength, setSearchByLength] = useState({
+        value: '',
+        operator: 'eq'
+    });
 
-    if (isNaN(parsed) || parsed === 0) {
-      setSearchByLength((oldState) => ({
-        ...oldState,
-        value: "",
-      }));
-    } else {
-      setSearchByLength((oldState) => ({
-        ...oldState,
-        value: parsed,
-      }));
-    }
-  }
+    let filteredPrograms = filterPrograms(
+        programs,
+        searchByName,
+        searchByLength
+    );
 
-  function handleOperatorSelect(selectedByUser) {
-    setSearchByLength((oldState) => ({
-      ...oldState,
-      operator: selectedByUser.target.value,
-    }));
-  }
-
-  return (
-    <>
-      <div className="bg-blue-200 w-full md:w-4/6 shadow-lg h-5/6 gap-4 p-2 md:p-4 border rounded-lg ">
-        <Box
-          component="fieldset"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-
-            "> legend": {
-              textAlign: "left",
-              fontWeight: "bold",
-              marginBottom: ".5rem",
-            },
-
-            "div > div": {
-              background: "white",
-            },
-          }}
-        >
-          <Stack spacing={2} direction="row">
-            <TextField
-              color="black"
-              id="search-by-name"
-              label="Program Name"
-              value={searchByName}
-              onChange={(typedByUser) => {
-                setSearchByName(typedByUser.target.value.toLocaleLowerCase());
-              }}
-              sx={{ flex: 1 }}
+    return (
+        <>
+            <SearchFilters
+                searchByName={searchByName}
+                searchByLength={searchByLength}
+                setSearchByName={setSearchByName}
+                setSearchByLength={setSearchByLength}
             />
-            <div>
-              <FormControl>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={searchByLength.operator}
-                  onChange={handleOperatorSelect}
-                >
-                  <MenuItem value={"eq"}>{"="}</MenuItem>
-                  <MenuItem value={"le"}>{"<="}</MenuItem>
-                  <MenuItem value={"lt"}>{"<"}</MenuItem>
-                  <MenuItem value={"ge"}>{">="}</MenuItem>
-                  <MenuItem value={"gt"}>{">"}</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField
-                color="black"
-                id="search-by-length"
-                label="Program Length"
-                type="number"
-                value={searchByLength.value}
-                onChange={handleSearchByLength}
-              />
-            </div>
-          </Stack>
-        </Box>
-      </div>
-      <div className="flex flex-col w-full md:w-4/6 bg-blue-100  shadow-lg gap-4   p-4 md:p-8 border rounded-lg mb-8">
-        {programs.map((program) => (
-          <div key={program.id}>
-            
-            <DisplayProgram program={program} />
-            <div className="grid justify-items-center mt-1 p-2 text-white font-extrabold rounded-lg shadow-lg">
-              {isAdmin && (
-                <div className="flex justify-between gap-4 mt-2">
-                  <button
-                    className="bg-green-600 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700"
-                    onClick={() => onEdit(program)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="bg-red-600 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-red-700"
-                    onClick={() => onDelete(program.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
+            <div className="flex flex-col w-full md:w-4/6 bg-blue-100  shadow-lg gap-4   p-4 md:p-8 border rounded-lg mb-8">
+                {filteredPrograms.length === 0 ? (
+                    <div>No data to load</div>
+                ) : (
+                    filteredPrograms.map((program, index) => (
+                        <DisplayProgram key={index} program={program} />
+                    ))
+                )}
             </div>
           </div>
         ))}
