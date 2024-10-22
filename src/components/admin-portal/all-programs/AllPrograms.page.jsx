@@ -6,7 +6,6 @@ import DisplayAllPrograms from "../../../components/student-portal/all-programs/
 import { LoadAllPrograms } from "../../../placeholders/load-data/loadData.action";
 import React, { useEffect, useState } from "react";
 import ProgramForm from "./AddPrograms.component"; // New component for creating/editing
-// import { v4 as uuidv4 } from "uuid"; // For generating unique IDs
 
 export default function AdminPortalAllPrograms() {
   const [programs, setPrograms] = useState([]);
@@ -22,7 +21,6 @@ export default function AdminPortalAllPrograms() {
   }, []);
 
   const createProgram = () => {
-    // setPrograms([...programs, { ...newProgram, id: uuidv4() }]);
     fetchPrograms();
     setFormVisible(false);
   };
