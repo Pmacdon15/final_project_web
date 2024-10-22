@@ -241,6 +241,26 @@ export function SaveUserData(newUserData) {
   console.log("User data saved to local storage.");
 }
 
+function EditUserDataFromLocalStorage (userId, userName, userProneNum, userAddress, userEmail, userPassword, userIsAdmin){
+  const existingUsers = LoadUserData() || [];
+  const updatedUsers = existingUsers.map(userDetails => {
+    if (Number(userDetails.id) === Number(userId)) {
+      return {
+        ...userDetails,
+        name: userName,
+        phoneNum: userProneNum,
+        address: userAddress,
+        email: userEmail,
+        password: userPassword,
+        isAdmin: userIsAdmin,
+      };
+    }
+    return userDetails;
+  });
+  localStorage.setItem('userData', JSON.stringify(updatedUsers));
+  console.log('Users edited in local storage');
+}
+
 export {
   LoadAllPrograms,
   AddProgramToLocalStorage,
@@ -251,4 +271,5 @@ export {
   EditClassFromLocalStorage,
   AddToUserClasses,
   DropUserClass,
+  EditUserDataFromLocalStorage
 };
