@@ -64,7 +64,7 @@ export default function AdminPortalAllClasses() {
                 </Box>
             </div>
 
-            <DisplayAllClasses allClasses={filteredClasses} isAdmin={false} />
+            <DisplayAllClasses allClasses={filteredClasses} isAdmin={true} />
         </>
     );
 }
