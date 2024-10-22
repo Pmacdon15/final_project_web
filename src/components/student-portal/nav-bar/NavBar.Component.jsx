@@ -255,6 +255,13 @@ function NavBar({ isAdminPage = false, isGuest = false }) {
                                         if (setting === 'Sign Up') {
                                             navigate('/student-signup'); // Navigate to signup page
                                         }
+                                        if (setting === 'Profile') {
+                                            if(!currentUser.isAdmin)
+                                            navigate('/student/dashboard'); 
+                                        else
+                                        navigate('/admin/dashboard'); 
+
+                                        }
                                         handleCloseUserMenu();
                                     }}
                                 >
