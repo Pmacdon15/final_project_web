@@ -1,7 +1,7 @@
 import { LoadAllClasses } from '../../../placeholders/load-data/loadData.action';
 import React, { useEffect, useState } from 'react';
 import DisplayAllClasses from '../../student-portal/all-classes/DisplayAllClasses.component';
-import PageHeader from '../../page-header/PageHeader.component';
+// import PageHeader from '../../page-header/PageHeader.component';
 import filterPrograms from '../../../utils/search-filter';
 import { Box, Stack, TextField } from '@mui/material';
 
@@ -10,11 +10,11 @@ export default function AdminPortalAllClasses() {
 
     const [searchByName, setSearchByName] = useState('');
 
+    const fetchAllClasses = async () => {
+        const loadedAllClasses = LoadAllClasses();
+        setAllClasses(loadedAllClasses);
+    };
     useEffect(() => {
-        const fetchAllClasses = async () => {
-            const loadedAllClasses = LoadAllClasses();
-            setAllClasses(loadedAllClasses);
-        };
         fetchAllClasses();
     }, []);
 
@@ -64,7 +64,7 @@ export default function AdminPortalAllClasses() {
                 </Box>
             </div>
 
-            <DisplayAllClasses allClasses={filteredClasses} isAdmin={false} />
+            <DisplayAllClasses allClasses={filteredClasses} isAdmin={true} onFormAction={fetchAllClasses}/>
         </>
     );
 }
