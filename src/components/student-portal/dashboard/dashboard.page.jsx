@@ -44,7 +44,7 @@ export default function StudentPortalDashBoard() {
 
     return (
         <div className='flex flex-col justify-center items-center w-full p-2 gap-8'>
-            <div className='f bg-blue-100 shadow-lg gap-4 w-2/6  p-4 md:p-5 border rounded-lg '>
+            <div className='f bg-blue-100 shadow-lg gap-4 w-3/6 md:w-2/6  p-4 md:p-5 border rounded-lg '>
                 <h1 className='text-2xl font-bold mb-2'>My Dashboard</h1>
             </div>
             <DisplayUserInfos userInfos={userData} classes={userClasses} program={userProgram} onFormAction={onFormAction} />

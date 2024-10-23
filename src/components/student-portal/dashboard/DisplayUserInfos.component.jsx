@@ -15,7 +15,7 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
         setIsEditing(!isEditing);
         onFormAction(userName);
     }
-// console.log("classes", classes);
+    console.log("classes", classes);
     return (
         <div className="flex flex-col w-full items-center bg-white">
             {isEditing && (
@@ -63,19 +63,19 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
 
                     <div>
                         <h2 className="text-xl font-bold mb-2">Program </h2>
-                        {Array.isArray(classes) && classes.length > 0 ? (
+                        {/* {Array.isArray(classes) && classes.length > 0 ? (
                             <p className="mb-2"> {}</p>
                         ) : (
                             <p className="mb-2">No registered program!</p>
-                        )}
+                        )} */}
                         <h2 className="text-xl font-bold mb-2">Classes </h2>
-                        {/* {Array.isArray(classes) && classes.length > 0 ? (
-                                classes.map((classItem, index) => (
-                                    <p key={index} className="mb-2"> {classItem.name}</p>
-                                ))
-                            ) : (
-                                <p className="mb-2">No registered classes!</p>
-                            )} */}
+                        {classes && classes.length > 0 ? (
+                            classes.map((classItem, index) => (
+                                <p key={index} className="mb-2"> {classItem.name}</p>
+                            ))
+                        ) : (
+                            <p className="mb-2">No registered classes!</p>
+                        )}
                     </div>
                 </div>
             )}
