@@ -4,6 +4,7 @@ import { LoadUserData } from '../../../placeholders/load-data/loadData.action.js
 import { LoadAllPrograms } from '../../../placeholders/load-data/loadData.action.js';
 import { useState, useEffect } from 'react';
 import getUserInfo from '../../../utils/get-user-info';
+import { useCallback } from 'react';
 
 export default function StudentPortalDashBoard() {
     const { email } = getUserInfo();
@@ -13,26 +14,29 @@ export default function StudentPortalDashBoard() {
     const [userClasses, setUserClasses] = useState([]);
     const [userProgram, setUserProgram] = useState();
 
-    // Fetching users data from local storage and findind current user data through email
-    const fetchUserData = async () => {
-        const loadedUsersData = LoadUserData();
+    // Fetching users data from local storage and find current user data through email
+
+    const fetchUserData = useCallback(async () => {
+        const loadedUsersData = await LoadUserData();
         const loadedUserData = loadedUsersData.find(student => student.email === email);
         setUserData(loadedUserData);
-    };
+    }, [email]);
+
+    const fetchUserClasses = useCallback(async () => {
+        const loadedUserClasses = await LoadUserClasses();
+        setUserClasses(loadedUserClasses);
+        if (loadedUserClasses.length > 0) {
+            const userProgramId = loadedUserClasses[0].programId;
+            const loadedAllPrograms = await LoadAllPrograms();
+            const userProgram = loadedAllPrograms.find(program => program.id === userProgramId);
+            setUserProgram(userProgram);
+        }
+    }, []);
 
     useEffect(() => {
         fetchUserData();
-        const fetchUserClasses = async () => {
-            const loadedUserClasses = LoadUserClasses();
-            setUserClasses(loadedUserClasses);
-            if (userClasses.length > 0) {
-                const userProgramId = userClasses[0].programId;
-                const loadedAllPrograms = LoadAllPrograms();
-                setUserProgram(loadedAllPrograms.find(program => program.id === userProgramId));
-            }
-        };
         fetchUserClasses();
-    }, []);
+    }, [fetchUserData, fetchUserClasses]);
 
     const onFormAction = async () => {
         fetchUserData();
@@ -46,4 +50,5 @@ export default function StudentPortalDashBoard() {
             <DisplayUserInfos userInfos={userData} classes={userClasses} program={userProgram} onFormAction={onFormAction} />
         </div>
     );
+
 }
