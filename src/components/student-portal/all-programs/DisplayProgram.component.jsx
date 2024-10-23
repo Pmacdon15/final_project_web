@@ -16,7 +16,7 @@ export default function DisplayProgram({ program, isAdmin, onEdit, onDelete }) {
       )}
       <div>
         <p className="text-xl font-bold mb-2">Program Description:</p>
-        <p className="mb-2">{program.description}</p>
+        <p className="text-justify mb-2">{program.description}</p>
       </div>
       <p className="text-xl font-bold mb-2">
         Amount of terms:{" "}
