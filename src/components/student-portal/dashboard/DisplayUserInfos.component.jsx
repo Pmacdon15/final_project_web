@@ -61,22 +61,23 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
                         Update Personal Information
                     </button>
 
-                    <div>
-                        <h2 className="text-xl font-bold mb-2">Program </h2>
-                        {/* {Array.isArray(classes) && classes.length > 0 ? (
-                            <p className="mb-2"> {}</p>
-                        ) : (
-                            <p className="mb-2">No registered program!</p>
-                        )} */}
-                        <h2 className="text-xl font-bold mb-2">Classes </h2>
-                        {classes && classes.length > 0 ? (
-                            classes.map((classItem, index) => (
-                                <p key={index} className="mb-2"> {classItem.name}</p>
-                            ))
-                        ) : (
-                            <p className="mb-2">No registered classes!</p>
-                        )}
-                    </div>
+                    <h2 className="text-xl font-bold mb-2">Program </h2>
+                    {/* Display program */}
+                    {classes && classes.length > 0 && program ? (
+                        <p className="mb-2"> {program.name}</p>
+                    ) : (
+                        <p className="mb-2">No registered program!</p>
+                    )}
+                    <h2 className="text-xl font-bold mb-2">Classes </h2>
+                    {/* Display classes */}
+                    {classes && classes.length > 0 ? (
+                        classes.map((classItem, index) => (
+                            <p key={index} className="mb-2"> {classItem.name}</p>
+                        ))
+                    ) : (
+                        <p className="mb-2">No registered classes!</p>
+                    )}
+
                 </div>
             )}
         </div>
