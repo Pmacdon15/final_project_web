@@ -4,6 +4,8 @@ import allClasses from "../load-data/allClasses.data.json";
 import userClasses from "../load-data/userClasses.data.json";
 import userData from "../authentication/user.data.json";
 
+//////////////>>>>>>>>>>>> program data <<<<<<<<<<<<<<<////////////////////////////
+
 function LoadAllProgramsToLocalStorage() {
   const existingPrograms =
     JSON.parse(localStorage.getItem("allPrograms")) || [];
@@ -45,6 +47,26 @@ function AddProgramToLocalStorage(program) {
   console.log("Program added to local storage");
 }
 
+function EditProgramInLocalStorage(updatedProgram) {
+  const existingPrograms = LoadAllPrograms() || [];
+  const updatedPrograms = existingPrograms.map((program) =>
+    program.id === updatedProgram.id ? updatedProgram : program
+  );
+  localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
+  console.log('Program edited in local storage');
+}
+
+function DeleteProgramFromLocalStorage(programId) {
+  const existingPrograms = LoadAllPrograms() || [];
+  const updatedPrograms = existingPrograms.filter(
+    (program) => program.id !== programId
+  );
+  localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
+  console.log('Program deleted from local storage');
+}
+
+//////////////>>>>>>>>>>>> user data <<<<<<<<<<<<<<<////////////////////////////
+
 function LoadUserDataToLocalStorage() {
   const existingUserData = JSON.parse(localStorage.getItem("userData")) || [];
   const newUserData = userData.filter(
@@ -62,6 +84,8 @@ function LoadUserDataToLocalStorage() {
   }
 }
 LoadUserDataToLocalStorage();
+
+//////////////>>>>>>>>>>>> classes data <<<<<<<<<<<<<<<////////////////////////////
 
 function LoadAllClassesToLocalStorage() {
   const existingClasses = JSON.parse(localStorage.getItem("allClasses")) || [];
@@ -152,6 +176,8 @@ function EditClassFromLocalStorage(
   console.log("Class edited in local storage");
 }
 
+//////////////>>>>>>>>>>>> user classes data <<<<<<<<<<<<<<<////////////////////////////
+
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses =
     JSON.parse(localStorage.getItem("userClasses")) || [];
@@ -218,6 +244,8 @@ function DropUserClass(classId, email) {
   localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
 }
 
+//////////////>>>>>>>>>>>> user sign up data <<<<<<<<<<<<<<<////////////////////////////
+
 // Function to load user data from local storage after signup
 export function LoadUserData() {
   const storedUserData = localStorage.getItem("userData");
@@ -240,6 +268,8 @@ export function SaveUserData(newUserData) {
   localStorage.setItem("userData", JSON.stringify(updatedUserData));
   console.log("User data saved to local storage.");
 }
+
+//////////////>>>>>>>>>>>> edit user data / dashboard <<<<<<<<<<<<<<<////////////////////////////
 
 function EditUserDataFromLocalStorage (userId, userName, userProneNum, userAddress, userEmail, userPassword, userIsAdmin){
   const existingUsers = LoadUserData() || [];
@@ -264,6 +294,8 @@ function EditUserDataFromLocalStorage (userId, userName, userProneNum, userAddre
 export {
   LoadAllPrograms,
   AddProgramToLocalStorage,
+  EditProgramInLocalStorage,
+  DeleteProgramFromLocalStorage,
   LoadAllClasses,
   LoadUserClasses,
   AddClassToLocalStorage,
