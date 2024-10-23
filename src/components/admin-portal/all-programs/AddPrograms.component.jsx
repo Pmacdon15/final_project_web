@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AddProgramToLocalStorage } from '../../../placeholders/load-data/loadData.action';
+import { AddProgramToLocalStorage, EditProgramInLocalStorage } from '../../../placeholders/load-data/loadData.action';
 
 export default function ProgramForm({ program, onCreate, onEdit, onClose }) {
     const [name, setName] = useState('');
@@ -19,20 +19,21 @@ export default function ProgramForm({ program, onCreate, onEdit, onClose }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const newProgram = {
-            id: program ? program.id : null,
-            name,
-            description,
-            durationTerms: Number(durationTerms),
-            tuition: Number(tuition),
+          name,
+          description,
+          durationTerms: Number(durationTerms),
+          tuition: Number(tuition),
         };
-
+      
         if (program) {
-            onEdit(newProgram);
+            newProgram.id = program.id
+          EditProgramInLocalStorage(newProgram);
+          onEdit(newProgram);
         } else {
-            AddProgramToLocalStorage(newProgram);
-            onCreate();
+          AddProgramToLocalStorage(newProgram);
+          onCreate();
         }
-    };
+      };
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col w-full item-center md:w-4/6 bg-blue-100 shadow-lg gap-4 p-4 md:p-8 border rounded-lg mb-8">
