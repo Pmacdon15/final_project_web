@@ -6,7 +6,7 @@ export default function HomePageMain() {
       <h1>Access portal</h1>
       <ButtonLink text="Student" link="/student-login" />
       <ButtonLink text="Admin" link="/admin-login" />
-      <a href="/guest/all-classes">
+      <a href="/guest/all-programs">
         <button className="LoginHomePageButtonLink">Guest Access</button>
       </a>
       <a href="/student-signup">Click here to Sign Up</a>
