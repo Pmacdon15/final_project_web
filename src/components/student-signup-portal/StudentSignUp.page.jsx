@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import BVCImage from "../bvc-image/BVCImage.component";
 import { Button, Container, Grid } from "@mui/material";
 import InputField from "./inputField.component";
-import { SaveUserData } from "../../placeholders/load-data/loadData.action"; // Import SaveUserData function
+import { SaveUserData } from "../../placeholders/load-data/loadData.action";
 
 const StudentSignupForm = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook to navigate
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     birthday: "",
-    department: "Software Development", // Default to 'Software Development' as only this department is available
+    department: "Software Development", // Default to 'Software Development'
     program: "",
     username: "",
     password: "",
@@ -33,23 +33,33 @@ const StudentSignupForm = () => {
   };
 
   // Handles form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Generate a Student ID and update state
-    const newStudentId = generateStudentId();
-
-    // Store form data and the generated Student ID in localStorage
-    const signupData = {
+const handleSubmit = (e) => {
+  e.preventDefault();
+  // Generate a Student ID
+  const newStudentId = generateStudentId();
+  
+  // Store form data and the generated Student ID in localStorage
+  const signupData = {
       ...formData,
       studentId: newStudentId,
-    };
-
-    SaveUserData(signupData); // Call SaveUserData to save the form data to local storage
-
-    // Redirect to welcome page after signup
-    navigate(`/student-portal-dashboard/${formData.email}`); // Redirect after signup
   };
+  
+  // Save user data in localStorage or in your specific data management solution
+  SaveUserData(signupData);
+  console.log("Saved user data:", JSON.parse(localStorage.getItem("userData")));
+  
+  // Save user session in sessionStorage
+  sessionStorage.setItem('BVC_Session', JSON.stringify({
+      email: formData.email,
+      name: `${formData.firstName} ${formData.lastName}`,
+      studentId: newStudentId,
+      isAdmin: false // assuming all new users are not admin
+  }));
+
+  // Redirect to the student portal dashboard after signup
+  navigate('/student/dashboard');
+};
+
 
   return (
     <>
@@ -163,12 +173,11 @@ const StudentSignupForm = () => {
                 </Button>
               </Grid>
               <Grid item xs={12} className="text-center text-xs">
-              <a href="/">Click here to Sign In</a>
+                <a href="/">Click here to Sign In</a>
               </Grid>
             </Grid>
           </form>
         </Container>
-        
       </div>
     </>
   );
