@@ -48,7 +48,7 @@ const StudentSignupForm = () => {
     SaveUserData(signupData); // Call SaveUserData to save the form data to local storage
 
     // Redirect to welcome page after signup
-    navigate(`/student-portal-dashboard/${formData.email}`); // Redirect after signup
+    navigate(`/student/dashboard`); // Redirect after signup
   };
 
   return (
