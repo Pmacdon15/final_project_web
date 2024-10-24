@@ -1,4 +1,6 @@
-import users from './user.data.json';
+// import users from './user.data.json';
+import { LoadUserData } from "../load-data/loadData.action";
+const users = LoadUserData();
 
 function handleLogin(username, password) {
     if (!username || !password) {
