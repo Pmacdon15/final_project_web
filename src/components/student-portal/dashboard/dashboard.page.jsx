@@ -8,7 +8,7 @@ import { useCallback } from 'react';
 
 export default function StudentPortalDashBoard() {
     const { email } = getUserInfo();
-    console.log("USer email:", email);
+    console.log("User email:", email);
 
     const [userData, setUserData] = useState([]);
     const [userClasses, setUserClasses] = useState([]);

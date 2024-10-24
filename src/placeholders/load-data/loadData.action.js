@@ -2,7 +2,7 @@ import programs from "../load-data/programs.data.json";
 // import userPrograms from '../load-data/userPrograms.data.json';
 import allClasses from "../load-data/allClasses.data.json";
 import userClasses from "../load-data/userClasses.data.json";
-import userData from "../authentication/user.data.json";
+import userData from "../authentication/users.data.js";
 
 //////////////>>>>>>>>>>>> program data <<<<<<<<<<<<<<<////////////////////////////
 
@@ -271,14 +271,14 @@ export function SaveUserData(newUserData) {
 
 //////////////>>>>>>>>>>>> edit user data / dashboard <<<<<<<<<<<<<<<////////////////////////////
 
-function EditUserDataFromLocalStorage (userId, userName, userProneNum, userAddress, userEmail, userPassword, userIsAdmin){
+function EditUserDataFromLocalStorage (userId, userName, userPhoneNum, userAddress, userEmail, userPassword, userIsAdmin){
   const existingUsers = LoadUserData() || [];
   const updatedUsers = existingUsers.map(userDetails => {
     if (Number(userDetails.id) === Number(userId)) {
       return {
         ...userDetails,
         name: userName,
-        phoneNum: userProneNum,
+        phoneNum: userPhoneNum,
         address: userAddress,
         email: userEmail,
         password: userPassword,
