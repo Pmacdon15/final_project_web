@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import BVCImage from "../bvc-image/BVCImage.component";
 import { Button, Container, Grid } from "@mui/material";
@@ -7,13 +7,13 @@ import { SaveUserData } from "../../placeholders/load-data/loadData.action"; // 
 
 const StudentSignupForm = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const formDataRef = useRef({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     birthday: "",
-    department: "Software Development", // Default to 'Software Development' as only this department is available
+    department: "Software Development",
     program: "",
     username: "",
     password: "",
@@ -21,10 +21,7 @@ const StudentSignupForm = () => {
 
   // Handles form input changes
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    formDataRef.current[e.target.name] = e.target.value;
   };
 
   // Generate a random Student ID
@@ -41,14 +38,14 @@ const StudentSignupForm = () => {
 
     // Store form data and the generated Student ID in localStorage
     const signupData = {
-      ...formData,
-      studentId: newStudentId,
+      ...formDataRef.current,
+      id: newStudentId,
     };
 
     SaveUserData(signupData); // Call SaveUserData to save the form data to local storage
 
     // Redirect to welcome page after signup
-    navigate(`/student-portal-dashboard/${formData.email}`); // Redirect after signup
+    navigate(`/student/dashboard`); // Redirect after signup
   };
 
   return (
@@ -71,7 +68,7 @@ const StudentSignupForm = () => {
                   name="firstName"
                   label="First Name"
                   type="text"
-                  value={formData.firstName}
+                  // value={formDataRef.firstName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -81,7 +78,7 @@ const StudentSignupForm = () => {
                   name="lastName"
                   label="Last Name"
                   type="text"
-                  value={formData.lastName}
+                  // value={formDataRef.lastName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -91,7 +88,7 @@ const StudentSignupForm = () => {
                   name="email"
                   label="Email"
                   type="email"
-                  value={formData.email}
+                  // value={formDataRef.email}
                   onChange={handleChange}
                 />
               </Grid>
@@ -101,7 +98,7 @@ const StudentSignupForm = () => {
                   name="phone"
                   label="Phone"
                   type="number"
-                  value={formData.phone}
+                  // value={formDataRef.phone}
                   onChange={handleChange}
                 />
               </Grid>
@@ -111,7 +108,7 @@ const StudentSignupForm = () => {
                   name="birthday"
                   label="Birthday"
                   placeholder="mm/dd/yyyy"
-                  value={formData.birthday}
+                  // value={formDataRef.birthday}
                   onChange={handleChange}
                 />
               </Grid>
@@ -120,7 +117,7 @@ const StudentSignupForm = () => {
                   id="department"
                   name="department"
                   label="Department"
-                  value={formData.department}
+                  value={"Software Development"}
                   readOnly
                 />
               </Grid>
@@ -129,7 +126,7 @@ const StudentSignupForm = () => {
                   id="program"
                   name="program"
                   label="Program"
-                  value={formData.program}
+                  // value={formDataRef.program}
                   onChange={handleChange}
                 />
               </Grid>
@@ -138,7 +135,7 @@ const StudentSignupForm = () => {
                   id="username"
                   name="username"
                   label="Username"
-                  value={formData.username}
+                  // value={formDataRef.username}
                   onChange={handleChange}
                 />
               </Grid>
@@ -148,7 +145,7 @@ const StudentSignupForm = () => {
                   name="password"
                   label="Password"
                   type="password"
-                  value={formData.password}
+                  // value={formDataRef.password}
                   onChange={handleChange}
                 />
               </Grid>
@@ -163,12 +160,12 @@ const StudentSignupForm = () => {
                 </Button>
               </Grid>
               <Grid item xs={12} className="text-center text-xs">
-              <a href="/">Click here to Sign In</a>
+                <a href="/">Click here to Sign In</a>
               </Grid>
             </Grid>
           </form>
         </Container>
-        
+
       </div>
     </>
   );

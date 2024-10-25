@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import DisplayAvailableClasses from '../my-classes/DisplayAvailableClasses.component';
 import DisplayUserClasses from './DisplayUserClasses.component';
 import {
@@ -14,6 +14,7 @@ import filterPrograms from '../../../utils/search-filter';
 
 export default function StudentPortalMyClasses() {
     const { email } = getUserInfo();
+    console.log('User email:', email);
 
     const [allClasses, setAllClasses] = useState();
     const [userClasses, setUserClasses] = useState();
@@ -24,16 +25,21 @@ export default function StudentPortalMyClasses() {
     const [searchByName, setSearchByName] = useState('');
 
 
-    const fetchAllClasses = async () => {
+
+    const fetchAllClasses = useCallback(async () => {
         const loadedAllClasses = LoadAllClasses();
         const loadedUserClasses = LoadUserClasses();
         setAllClasses(loadedAllClasses);
-        setUserClasses(loadedUserClasses);
-    };
+        const filteredUserClasses = loadedUserClasses.filter(
+            userClass => userClass.userId === email
+        );
+        console.log('Filtered user classes: ', filteredUserClasses);
+        setUserClasses(filteredUserClasses);
+    }, [email]);
     // Load all classes and user classes
     useEffect(() => {
         fetchAllClasses();
-    }, [selectedTerm]);
+    }, [selectedTerm, fetchAllClasses]);
 
     const handleChangeInClasses = async (termId, termSeason) => {
         await fetchAllClasses();
