@@ -1,8 +1,8 @@
 import '../../../App.css';
-export default function ButtonLink({ text, link }) {
+export default function ButtonLink({ link }) {
     return (
         <a href={link}>
-            <button className="LoginHomePageButtonLink">Login as {text}</button>
+            <button className="LoginHomePageButtonLink">Login</button>
         </a>
     )
 }
