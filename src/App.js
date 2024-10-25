@@ -13,7 +13,7 @@ import AdminPortalAllClasses from './components/admin-portal/all-classes/AllClas
 import AdminPortalComments from './components/admin-portal/comments/Comments.page';
 import StudentSignupForm from './components/student-signup-portal/StudentSignUp.page';
 import AdminPortalAllPrograms from './components/admin-portal/all-programs/AllPrograms.page';
-
+import AdminPortalDashBoard from './components/admin-portal/dashboard/adminDashboard.page'
 import RouteWrapper from './components/route-wrapper';
 import NotAllowed from './components/not-allowed/NotAllowed.page';
 import PageNotFound from './components/page-not-found';
@@ -76,7 +76,7 @@ function App() {
                         path="dashboard"
                         element={
                             <RouteWrapper adminOnly>
-                                <StudentPortalDashboard />
+                                <AdminPortalDashBoard />
                             </RouteWrapper>
                         }
                     />
@@ -92,7 +92,7 @@ function App() {
                         path="all-programs"
                         element={
                             <RouteWrapper adminOnly>
-                                <AdminPortalAllPrograms />
+                                <AdminPortalAllPrograms  />
                             </RouteWrapper>
                         }
                     />
