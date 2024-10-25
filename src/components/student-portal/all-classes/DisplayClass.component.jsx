@@ -119,13 +119,34 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
         <div className="flex flex-col w-full items-center">
           <p className="text-xl font-bold mb-2">Course Description</p>
           <p className="text-justify mb-2">{classDetails.description}</p>
-          <p className="text-xl font-bold mb-2">Program ID :  <spam className="text-xl font-normal mb-2">{classDetails.programId}</spam></p>
+          <p className="text-xl font-bold mb-2">
+            Program ID :{" "}
+            <spam className="text-xl font-normal mb-2">
+              {classDetails.programId}
+            </spam>
+          </p>
           <p className="text-xl font-bold mb-2">Availability</p>
 
-          {classDetails.availableFall && <p className="font-bold mb-2">Fall: <spam className="text-xl font-normal mb-2">Yes</spam></p>}
-          {classDetails.availableWinter && <p className="font-bold mb-2">Winter: <spam className="text-xl font-normal mb-2">Yes</spam></p>}
-          {classDetails.availableSpring && <p className=" font-bold mb-2">Spring: <spam className="text-xl font-normal mb-2">Yes</spam></p>}
-          {classDetails.availableSummer && <p className="font-bold mb-2">Summer: <spam className="text-xl font-normal mb-2">Yes</spam></p>}
+          {classDetails.availableFall && (
+            <p className="font-bold mb-2">
+              Fall: <spam className="text-xl font-normal mb-2">Yes</spam>
+            </p>
+          )}
+          {classDetails.availableWinter && (
+            <p className="font-bold mb-2">
+              Winter: <spam className="text-xl font-normal mb-2">Yes</spam>
+            </p>
+          )}
+          {classDetails.availableSpring && (
+            <p className=" font-bold mb-2">
+              Spring: <spam className="text-xl font-normal mb-2">Yes</spam>
+            </p>
+          )}
+          {classDetails.availableSummer && (
+            <p className="font-bold mb-2">
+              Summer: <spam className="text-xl font-normal mb-2">Yes</spam>
+            </p>
+          )}
           <button
             className="bg-blue-500 mt-1 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-blue-700"
             onClick={() => setIsEditing(!isEditing)}
@@ -142,11 +163,29 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
           {classDetails.name}
         </h1>
       </div>
-      <p className="mb-2">{classDetails.description}</p>
-      {classDetails.availableFall && <p>Available fall: Yes</p>}
-      {classDetails.availableWinter && <p>Available winter: Yes</p>}
-      {classDetails.availableSpring && <p>Available spring: Yes</p>}
-      {classDetails.availableSummer && <p>Available summer: Yes</p>}
+      <p className="text-justify mb-2">{classDetails.description}</p>
+      <p className="text-xl font-bold mb-2">Availability</p>
+
+      {classDetails.availableFall && (
+        <p className="font-bold mb-2">
+          Fall: <spam className="text-xl font-normal mb-2">Yes</spam>
+        </p>
+      )}
+      {classDetails.availableWinter && (
+        <p className="font-bold mb-2">
+          Winter: <spam className="text-xl font-normal mb-2">Yes</spam>
+        </p>
+      )}
+      {classDetails.availableSpring && (
+        <p className=" font-bold mb-2">
+          Spring: <spam className="text-xl font-normal mb-2">Yes</spam>
+        </p>
+      )}
+      {classDetails.availableSummer && (
+        <p className="font-bold mb-2">
+          Summer: <spam className="text-xl font-normal mb-2">Yes</spam>
+        </p>
+      )}
     </div>
   );
 }

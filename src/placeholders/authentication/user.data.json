@@ -1,31 +1,69 @@
 [
-    {
-        "id": 1,
-        "name": "Patrick",
-        "email": "patrick@bvc.com",
-        "password": "1234",
-        "isAdmin": true
-    },
-    {
-        "id": 2,
-        "name": "Manuella",
-        "email": "manuella@bvc.com",
-        "password": "1234",
-        "isAdmin": false
-    },
-    {
-        "id": 3,
-        "name": "Thiago",
-        "email": "thiago@bvc.com",
-        "password": "1234",
-        "isAdmin": false
-    },
-    {
-        "id": 4,
-        "name": "Mariana",
-        "email": "mariana@bvc.com",
-        "password": "1234",
-        "isAdmin": true
-    }
-]
+  {
+    "isAdmin": true,
+    "id": "SD000001",
+    "firstName": "Patrick",
+    "lastName": "Macdonald",
+    "birthday": "01011990",
+    "phone": "1234567890",
+    "email": "patrick@bvc.com",
+    "department": "Software Development",
+    "program": "SD diploma",
+    "username": "patrick",
+    "password": "1234"
+  },
+  {
+    "isAdmin": false,
+    "id": "SD000002",
+    "firstName": "Manuella",
+    "lastName": "Lopes",
+    "birthday": "01011990",
+    "phone": "1234567890",
+    "email": "manuella@bvc.com",
+    "department": "Software Development",
+    "program": "SD diploma",
+    "username": "manuella",
+    "password": "1234"
+  },
+  {
+    "isAdmin": false,
+    "id": "SD000003",
+    "firstName": "Thiago",
+    "lastName": "Lima",
+    "birthday": "01011990",
+    "phone": "1234567890",
+    "email": "thiago@bvc.com",
+    "department": "Software Development",
+    "program": "SD diploma",
+    "username": "thiago",
+    "password": "1234"
 
+  },
+  {
+    "isAdmin": true,
+    "id": "SD000004",
+    "firstName": "Mariana",
+    "lastName": "Rangel",
+    "birthday": "01011990",
+    "phone": "1234567890",
+    "email": "mariana@bvc.com",
+    "department": "Software Development",
+    "program": "SD diploma",
+    "username": "mariana",
+    "password": "1234"
+  },
+
+  {
+    "isAdmin": false,
+    "birthday": "01011990",
+    "department": "Software Development",
+    "email": "bia@bvc.com",
+    "firstName": "Bia",
+    "id": "SD926181",
+    "lastName": "Dias",
+    "password": "1234",
+    "phone": "1234567890",
+    "program": "SD diploma",
+    "username": "biadias"
+  }
+]
