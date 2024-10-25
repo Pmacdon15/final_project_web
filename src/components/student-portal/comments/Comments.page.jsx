@@ -22,7 +22,7 @@ export default function StudentPortalComments() {
                     <div className="flex flex-col w-full h-fit bg-slate-50 border shadow-lg ">
                         <form onSubmit={handleSubmit}>
                         <p className="flex flex-row  p-4">
-                                Name:{' '}
+                                Name:
                                 <input 
                                     type="text"
                                     name="name"
@@ -30,7 +30,7 @@ export default function StudentPortalComments() {
                                 />
                             </p>
                             <p className="flex flex-row  p-4">
-                                Email:{' '}
+                                Email:
                                 <input 
                                     type="text"
                                     name="email"
@@ -38,7 +38,7 @@ export default function StudentPortalComments() {
                                 />
                             </p>
                             <p className="flex flex-col text-start p-4 ">
-                                Comment:{' '}
+                                Comment:
                                 <textarea
                                     name="comment"
                                     className="h-52 border-2 border-gray-300 mt-2 p-2 w-full rounded-lg"
