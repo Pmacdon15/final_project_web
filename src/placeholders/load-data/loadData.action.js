@@ -4,7 +4,7 @@ import allClasses from "../load-data/allClasses.data.json";
 import userClasses from "../load-data/userClasses.data.json";
 import userData from "../authentication/user.data.json";
 
-//////////////>>>>>>>>>>>> program data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: Program data 
 
 function LoadAllProgramsToLocalStorage() {
   const existingPrograms =
@@ -65,7 +65,7 @@ function DeleteProgramFromLocalStorage(programId) {
   console.log('Program deleted from local storage');
 }
 
-//////////////>>>>>>>>>>>> user data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: User data 
 
 function LoadUserDataToLocalStorage() {
   const existingUserData = JSON.parse(localStorage.getItem("userData")) || [];
@@ -85,7 +85,7 @@ function LoadUserDataToLocalStorage() {
 }
 LoadUserDataToLocalStorage();
 
-//////////////>>>>>>>>>>>> classes data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: Classes data 
 
 function LoadAllClassesToLocalStorage() {
   const existingClasses = JSON.parse(localStorage.getItem("allClasses")) || [];
@@ -176,7 +176,7 @@ function EditClassFromLocalStorage(
   console.log("Class edited in local storage");
 }
 
-//////////////>>>>>>>>>>>> user classes data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: User classes data 
 
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses =
@@ -244,7 +244,7 @@ function DropUserClass(classId, email) {
   localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
 }
 
-//////////////>>>>>>>>>>>> user sign up data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: User sign up data 
 
 // Function to load user data from local storage after signup
 export function LoadUserData() {
@@ -289,7 +289,7 @@ export function SaveUserData(newUserData) {
   console.log("User data saved to local storage.");
 }
 
-//////////////>>>>>>>>>>>> edit user data / dashboard <<<<<<<<<<<<<<<////////////////////////////
+//MARK: Edit user data / dashboard 
 
 // function EditUserDataFromLocalStorage (userId, userName, userProneNum, userAddress, userEmail, userPassword, userIsAdmin){
 //   const existingUsers = LoadUserData() || [];
