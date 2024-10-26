@@ -21,7 +21,7 @@ const commonPages = ['All Programs', 'All Classes', 'Comments'];
 
 const guestPages = [...commonPages];
 
-const adminPages = ['Dashboard', ...commonPages];
+const adminPages = ['Dashboard', 'View Students', ...commonPages];
 const studentPages = ['Dashboard', 'My Classes', ...commonPages];
 
 function NavBar({ isAdminPage = false, isGuest = false }) {

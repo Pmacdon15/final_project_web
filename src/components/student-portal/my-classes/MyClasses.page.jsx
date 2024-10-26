@@ -25,7 +25,6 @@ export default function StudentPortalMyClasses() {
     const [searchByName, setSearchByName] = useState('');
 
 
-
     const fetchAllClasses = useCallback(async () => {
         const loadedAllClasses = LoadAllClasses();
         const loadedUserClasses = LoadUserClasses();
@@ -35,7 +34,8 @@ export default function StudentPortalMyClasses() {
         );
         console.log('Filtered user classes: ', filteredUserClasses);
         setUserClasses(filteredUserClasses);
-    }, [email]);
+    }, [email])
+    ;
     // Load all classes and user classes
     useEffect(() => {
         fetchAllClasses();

@@ -17,6 +17,7 @@ import AdminPortalDashBoard from './components/admin-portal/dashboard/adminDashb
 import RouteWrapper from './components/route-wrapper';
 import NotAllowed from './components/not-allowed/NotAllowed.page';
 import PageNotFound from './components/page-not-found';
+import AdminPortalViewStudents from './components/admin-portal/view_students/ViewStudents.page';
 
 function App() {
     return (
@@ -77,6 +78,14 @@ function App() {
                         element={
                             <RouteWrapper adminOnly>
                                 <AdminPortalDashBoard />
+                            </RouteWrapper>
+                        }
+                    />
+                    <Route
+                        path="view-students"
+                        element={
+                            <RouteWrapper adminOnly>
+                                <AdminPortalViewStudents />
                             </RouteWrapper>
                         }
                     />

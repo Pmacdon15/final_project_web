@@ -4,7 +4,7 @@ import allClasses from "../load-data/allClasses.data.json";
 import userClasses from "../load-data/userClasses.data.json";
 import userData from "../authentication/user.data.json";
 
-//////////////>>>>>>>>>>>> program data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: Program data 
 
 function LoadAllProgramsToLocalStorage() {
   const existingPrograms =
@@ -65,7 +65,7 @@ function DeleteProgramFromLocalStorage(programId) {
   console.log('Program deleted from local storage');
 }
 
-//////////////>>>>>>>>>>>> user data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: User data 
 
 function LoadUserDataToLocalStorage() {
   const existingUserData = JSON.parse(localStorage.getItem("userData")) || [];
@@ -85,7 +85,7 @@ function LoadUserDataToLocalStorage() {
 }
 LoadUserDataToLocalStorage();
 
-//////////////>>>>>>>>>>>> classes data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: Classes data 
 
 function LoadAllClassesToLocalStorage() {
   const existingClasses = JSON.parse(localStorage.getItem("allClasses")) || [];
@@ -176,7 +176,7 @@ function EditClassFromLocalStorage(
   console.log("Class edited in local storage");
 }
 
-//////////////>>>>>>>>>>>> user classes data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: User classes data 
 
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses =
@@ -244,7 +244,7 @@ function DropUserClass(classId, email) {
   localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
 }
 
-//////////////>>>>>>>>>>>> user sign up data <<<<<<<<<<<<<<<////////////////////////////
+//MARK: User sign up data 
 
 // Function to load user data from local storage after signup
 export function LoadUserData() {
@@ -266,50 +266,26 @@ export function SaveUserData(newUserData) {
 
   // Save updated data back to local storage
   localStorage.setItem("userData", JSON.stringify(updatedUserData));
-    //set user information to session storage
-    sessionStorage.setItem(
-      'BVC_Session',
-      JSON.stringify({
-          // name: newUserData.name,
-          // isAdmin: newUserData.isAdmin,
-          // id: newUserData.id,
-          // email: newUserData.email
-          firstName: newUserData.firstName,
-          lastName: newUserData.lastName,
-          department: newUserData.department,
-          program: newUserData.program,
-          birthday: newUserData.birthday,
-          username: newUserData.username,
-          phone: newUserData.phone,
-          id: newUserData.id,
-          email: newUserData.email,
-      })
+  //set user information to session storage
+  sessionStorage.setItem(
+    'BVC_Session',
+    JSON.stringify({
+      firstName: newUserData.firstName,
+      lastName: newUserData.lastName,
+      department: newUserData.department,
+      program: newUserData.program,
+      birthday: newUserData.birthday,
+      username: newUserData.username,
+      phone: newUserData.phone,
+      id: newUserData.id,
+      email: newUserData.email,
+    })
   );
 
   console.log("User data saved to local storage.");
 }
 
-//////////////>>>>>>>>>>>> edit user data / dashboard <<<<<<<<<<<<<<<////////////////////////////
-
-// function EditUserDataFromLocalStorage (userId, userName, userProneNum, userAddress, userEmail, userPassword, userIsAdmin){
-//   const existingUsers = LoadUserData() || [];
-//   const updatedUsers = existingUsers.map(userDetails => {
-//     if (Number(userDetails.id) === Number(userId)) {
-//       return {
-//         ...userDetails,
-//         name: userName,
-//         phoneNum: userProneNum,
-//         address: userAddress,
-//         email: userEmail,
-//         password: userPassword,
-//         isAdmin: userIsAdmin,
-//       };
-//     }
-//     return userDetails;
-//   });
-//   localStorage.setItem('userData', JSON.stringify(updatedUsers));
-//   console.log('Users edited in local storage');
-// }
+//MARK: Edit user data / dashboard 
 
 function EditUserDataFromLocalStorage(
   userId,
