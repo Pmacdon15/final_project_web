@@ -270,10 +270,6 @@ export function SaveUserData(newUserData) {
   sessionStorage.setItem(
     'BVC_Session',
     JSON.stringify({
-      // name: newUserData.name,
-      // isAdmin: newUserData.isAdmin,
-      // id: newUserData.id,
-      // email: newUserData.email
       firstName: newUserData.firstName,
       lastName: newUserData.lastName,
       department: newUserData.department,
@@ -290,26 +286,6 @@ export function SaveUserData(newUserData) {
 }
 
 //MARK: Edit user data / dashboard 
-
-// function EditUserDataFromLocalStorage (userId, userName, userProneNum, userAddress, userEmail, userPassword, userIsAdmin){
-//   const existingUsers = LoadUserData() || [];
-//   const updatedUsers = existingUsers.map(userDetails => {
-//     if (Number(userDetails.id) === Number(userId)) {
-//       return {
-//         ...userDetails,
-//         name: userName,
-//         phoneNum: userProneNum,
-//         address: userAddress,
-//         email: userEmail,
-//         password: userPassword,
-//         isAdmin: userIsAdmin,
-//       };
-//     }
-//     return userDetails;
-//   });
-//   localStorage.setItem('userData', JSON.stringify(updatedUsers));
-//   console.log('Users edited in local storage');
-// }
 
 function EditUserDataFromLocalStorage(
   userId,
