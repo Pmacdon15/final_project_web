@@ -266,24 +266,24 @@ export function SaveUserData(newUserData) {
 
   // Save updated data back to local storage
   localStorage.setItem("userData", JSON.stringify(updatedUserData));
-    //set user information to session storage
-    sessionStorage.setItem(
-      'BVC_Session',
-      JSON.stringify({
-          // name: newUserData.name,
-          // isAdmin: newUserData.isAdmin,
-          // id: newUserData.id,
-          // email: newUserData.email
-          firstName: newUserData.firstName,
-          lastName: newUserData.lastName,
-          department: newUserData.department,
-          program: newUserData.program,
-          birthday: newUserData.birthday,
-          username: newUserData.username,
-          phone: newUserData.phone,
-          id: newUserData.id,
-          email: newUserData.email,
-      })
+  //set user information to session storage
+  sessionStorage.setItem(
+    'BVC_Session',
+    JSON.stringify({
+      // name: newUserData.name,
+      // isAdmin: newUserData.isAdmin,
+      // id: newUserData.id,
+      // email: newUserData.email
+      firstName: newUserData.firstName,
+      lastName: newUserData.lastName,
+      department: newUserData.department,
+      program: newUserData.program,
+      birthday: newUserData.birthday,
+      username: newUserData.username,
+      phone: newUserData.phone,
+      id: newUserData.id,
+      email: newUserData.email,
+    })
   );
 
   console.log("User data saved to local storage.");
