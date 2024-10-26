@@ -122,7 +122,7 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
           </button>
 
           <h2 className="text-xl font-bold mb-2">Program</h2>
-          {program ? <p className="mb-2">{program.name}</p> : <p className="mb-2">No registered program!</p>}
+          {program ? <p className="mb-2">{program.name}</p> : <p className="mb-2">Software Development Diploma</p>}
           
           <h2 className="text-xl font-bold mb-2">Classes</h2>
           {classes && classes.length > 0 ? (
