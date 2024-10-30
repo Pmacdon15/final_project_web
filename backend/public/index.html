@@ -75,7 +75,7 @@
     <script>
         // Fetch All Users
         function fetchSampleData() {
-            fetch('http://localhost:5000/api/v1/sampleData')
+            fetch('http://localhost:5000/api/v1/sample-data')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('SampleData').textContent = JSON.stringify(data, null, 2);
