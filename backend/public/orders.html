@@ -1,0 +1,93 @@
+<!-- 
+HTML Form for Testing Advanced Operations
+This HTML form allows you to test the GET request for fetching users and their orders. 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced CRUD Operations</title>
+</head>
+<body>
+    <!-- Navigation Section -->
+    <nav style="margin-bottom: 20px;">
+        <a href="index.html" style="margin-right: 10px;">User Operations</a>
+        <a href="orders.html">Order Operations</a>
+    </nav>
+
+    <h1>Test Orders - Advanced Operations</h1>
+
+    <!-- Section for Fetching Users with Orders -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Fetch Users with Orders</h2>
+        <button onclick="fetchUsersWithOrders()">Get Users with Orders</button>
+        <pre id="userOrdersList"></pre>
+    </div>
+
+    <!-- Section for Fetching Users with Orders and Products -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Fetch Users with Orders and Products</h2>
+        <button onclick="fetchUsersWithOrdersAndProducts()">Get Users with Orders and Products</button>
+        <pre id="userOrdersProductsList"></pre>
+    </div>
+
+    <!-- Section for Fetching Total Amount Spent by Users -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Fetch Total Amount Spent by Users</h2>
+        <button onclick="fetchTotalAmountSpent()">Get Total Amount Spent</button>
+        <pre id="totalAmountSpentList"></pre>
+    </div>
+
+    <!-- Section for Fetching the Most Ordered Product per User -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Fetch Most Ordered Product per User</h2>
+        <button onclick="fetchMostOrderedProduct()">Get Most Ordered Product per User</button>
+        <pre id="mostOrderedProductList"></pre>
+    </div>
+
+    <script>
+        // Fetch users with their orders
+        function fetchUsersWithOrders() {
+            fetch('http://localhost:5000/api/v1/users-with-orders')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('userOrdersList').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching users with orders:', error));
+        }
+
+        // Fetch users with their orders and products
+        function fetchUsersWithOrdersAndProducts() {
+            fetch('http://localhost:5000/api/v1/users-with-orders-products')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('userOrdersProductsList').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching users with orders and products:', error));
+        }
+
+        // Fetch total amount spent by each user
+        function fetchTotalAmountSpent() {
+            fetch('http://localhost:5000/api/v1/total-amount-spent')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalAmountSpentList').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching total amount spent by users:', error));
+        }
+
+        // Fetch the most frequently ordered product per user
+        function fetchMostOrderedProduct() {
+            fetch('http://localhost:5000/api/v1/most-ordered-product')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('mostOrderedProductList').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching most ordered product:', error));
+        }
+
+    </script>
+</body>
+</html>

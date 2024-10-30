@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User CRUD Operations</title>
+</head>
+<body>
+    <!-- Navigation Section -->
+    <nav style="margin-bottom: 20px;">
+        <a href="index.html" style="margin-right: 10px;">User Operations</a>
+        <a href="orders.html">Order Operations</a>
+    </nav>
+
+    <h1>Test User - CRUD Operations</h1>
+
+    <!-- Get All Users Section -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Get All Users</h2>
+        <button onclick="fetchUsers()">Get Users</button>
+        <pre id="userList"></pre>
+    </div>
+
+    <!-- Create User Section -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Create User</h2>
+        <form action="http://localhost:5000/api/v1/users" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" step="1" min="0" required><br><br>
+            <input type="submit" value="Create User">
+        </form>
+    </div>
+
+    <!-- Update User Section -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Update User</h2>
+        <form id="updateForm">
+            <label for="updateId">User ID to update:</label>
+            <input type="number" id="updateId" name="id" required><br><br>
+            <label for="updateName">New Name:</label>
+            <input type="text" id="updateName" name="name" required><br><br>
+            <label for="updateAge">New Age:</label>
+            <input type="number" id="updateAge" name="age" step="1" min="0" required><br><br>
+            <input type="button" value="Update User" onclick="updateUser()">
+        </form>
+    </div>
+
+    <!-- Patch (Partial Update) User Section -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Patch User (Update Name or Age)</h2>
+        <form id="patchForm">
+            <label for="patchId">User ID to patch:</label>
+            <input type="number" id="patchId" name="id" required><br><br>
+            <label for="patchName">New Name (optional):</label>
+            <input type="text" id="patchName" name="name"><br><br>
+            <label for="patchAge">New Age (optional):</label>
+            <input type="number" id="patchAge" name="age" step="1" min="0"><br><br>
+            <input type="button" value="Patch User" onclick="patchUser()">
+        </form>
+    </div>
+
+
+    <!-- Delete User Section -->
+    <div style="border: 1px solid black; padding: 20px;">
+        <h2>Delete User</h2>
+        <form id="deleteForm">
+            <label for="deleteId">User ID to delete:</label>
+            <input type="number" id="deleteId" name="id" required><br><br>
+            <input type="button" value="Delete User" onclick="deleteUser()">
+        </form>
+    </div>
+
+    <script>
+        // Fetch All Users
+        function fetchUsers() {
+            fetch('http://localhost:5000/api/v1/users')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('userList').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching users:', error));
+        }
+
+        // Update User
+        function updateUser() {
+            const id = document.getElementById('updateId').value;
+            const name = document.getElementById('updateName').value;
+            const age = document.getElementById('updateAge').value;
+
+            fetch(`http://localhost:5000/api/v1/users/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, age: parseInt(age) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`User updated: ${JSON.stringify(data)}`);
+                fetchUsers(); // Refresh the user list after update
+            })
+            .catch(error => console.error('Error updating user:', error));
+        }
+
+        // Patch (Partial Update) User
+        function patchUser() {
+            const id = document.getElementById('patchId').value;
+            const name = document.getElementById('patchName').value;
+            const age = document.getElementById('patchAge').value;
+
+            const body = {};
+            if (name) body.name = name;
+            if (age) body.age = parseInt(age);
+
+            fetch(`http://localhost:5000/api/v1/users/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`User patched: ${JSON.stringify(data)}`);
+                fetchUsers(); // Refresh the user list after patching
+            })
+            .catch(error => console.error('Error patching user:', error));
+        }
+
+
+        // Delete User
+        function deleteUser() {
+            const id = document.getElementById('deleteId').value;
+
+            fetch(`http://localhost:5000/api/v1/users/${id}`, {
+                method: 'DELETE',
+            })
+
+            .then(() => {
+                alert(`User with ID ${id} deleted`);
+                fetchUsers(); // Refresh the user list after deletion
+            })
+
+            // .then(response => {
+            //     if (response.status === 204) {
+            //         alert(`User with ID ${id} was successfully deleted.`);
+            //     } else if (response.status === 404) {
+            //         return response.json().then(data => {
+            //             alert(`Error: ${data.error}`); // Show the error message from the server
+            //         });
+            //     } else {
+            //         return response.json().then(data => {
+            //             alert(`Unexpected error: ${data.error}`);
+            //         });
+            //     }
+            // })
+            .then(() => {
+                fetchUsers(); // Refresh the user list after deletion
+            })
+            .catch(error => console.error('Error deleting user:', error));
+        }
+    </script>
+</body>
+</html>
