@@ -1,7 +1,7 @@
 // ! This file is a sample controller file that demonstrates how to write CRUD operations with SQL queries.
 
 import sql from 'mssql';
-import { config } from '../config/dbConfig.js';
+import { config } from '../db/index.js'
 
 export const getSampleData = async (req, res) => {
   try {
