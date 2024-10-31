@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import sampleRoutes from './routes/sampleRoute.js';
+import sampleRoutes from './routes/sample.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
