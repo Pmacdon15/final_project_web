@@ -16,36 +16,26 @@ export default function StudentPortalMyClasses() {
     const { email } = getUserInfo();
     console.log('User email:', email);
 
-    const [allClasses, setAllClasses] = useState();
-    const [userClasses, setUserClasses] = useState();
-    const [filteredClasses, setFilteredClasses] = useState();
-    const [userTerms, setUserTerms] = useState([]);
-    const [season, setSeason] = useState();
-    const [selectedTerm, setSelectedTerm] = useState();
+    // const [season, setSeason] = useState();
     const [searchByName, setSearchByName] = useState('');
 
+    const { allClasses, userClasses, fetchAllClasses } = useGetAndSetAllClasses(email);
+    const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
+    const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
+    const { filteredClasses } = useGetAndSetFilteredClasses(season, allClasses, userClasses, searchByName);
 
-    const fetchAllClasses = useCallback(async () => {
-        const loadedAllClasses = LoadAllClasses();
-        const loadedUserClasses = LoadUserClasses();
-        setAllClasses(loadedAllClasses);
-        const filteredUserClasses = loadedUserClasses.filter(
-            userClass => userClass.userId === email
-        );
-        console.log('Filtered user classes: ', filteredUserClasses);
-        setUserClasses(filteredUserClasses);
-    }, [email])
-    ;
-    // Load all classes and user classes
-    useEffect(() => {
-        fetchAllClasses();
-    }, [selectedTerm, fetchAllClasses]);
+    // Filter user classes based on selected term
+    const filteredUserClasses = selectedTerm
+        ? userClasses?.filter(
+            userClass => userClass.userTermId === selectedTerm.userTermId
+        ) || []  // Fallback to an empty array if userClasses is undefined
+        : userClasses || [];  // Fallback to an empty array if userClasses is undefined
+
 
     const handleChangeInClasses = async (termId, termSeason) => {
         await fetchAllClasses();
         console.log('User terms: ', userTerms);
         console.log('Class added to term ID: ', termId, 'Term Season: ', termSeason);
-        setUserTerms([{ userTermId: Number(termId), termSeason: termSeason }]);
         setUserTerms(prevTerms => {
             const newTerm = { userTermId: Number(termId), termSeason: termSeason };
             const termExists = prevTerms.some(term => term.userTermId === newTerm.userTermId);
@@ -56,92 +46,6 @@ export default function StudentPortalMyClasses() {
         });
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
     };
-
-    // Get user terms without duplicates
-    useEffect(() => {
-        if (userClasses && userClasses.length > 0) {
-            const terms = [
-                ...new Set(userClasses.map(userClass => userClass.userTermId))
-            ];
-            const termsWithSeason = terms.map(term => {
-                const classInfo = userClasses.find(
-                    userClass => userClass.userTermId === term
-                );
-                return { userTermId: term, termSeason: classInfo.termSeason };
-            });
-
-            // Remove duplicates and add to existing userTerms
-            setUserTerms(prevTerms => {
-                const newTerms = termsWithSeason.filter(
-                    term => !prevTerms.some(prevTerm => prevTerm.userTermId === term.userTermId)
-                );
-                return [...prevTerms, ...newTerms];
-            });
-        }
-    }, [userClasses]);
-
-    // Filter classes based on season and user classes
-    useEffect(() => {
-        if (season && allClasses) {
-            const searchFilteredClasses = filterPrograms(
-                allClasses,
-                searchByName
-            );
-
-            let availableClasses = [];
-
-            if (season === 'Fall') {
-                availableClasses = searchFilteredClasses.filter(
-                    classItem => classItem.availableFall
-                );
-            } else if (season === 'Winter') {
-                availableClasses = searchFilteredClasses.filter(
-                    classItem => classItem.availableWinter
-                );
-            } else if (season === 'Spring') {
-                availableClasses = searchFilteredClasses.filter(
-                    classItem => classItem.availableSpring
-                );
-            } else if (season === 'Summer') {
-                availableClasses = searchFilteredClasses.filter(
-                    classItem => classItem.availableSummer
-                );
-            }
-            //Filter out classes that the user is already enrolled in
-            if (userClasses) {
-                const userClassIds = userClasses.map(
-                    userClass => userClass.classId
-                ); // Use classId from userClasses
-                availableClasses = availableClasses.filter(
-                    classItem => !userClassIds.includes(classItem.id)
-                ); // Compare with id from availableClasses
-            }
-            setFilteredClasses(availableClasses);
-        }
-    }, [season, allClasses, userClasses, searchByName]);
-
-    // Filter user classes based on selected term
-    const filteredUserClasses = selectedTerm
-        ? userClasses?.filter(
-            userClass => userClass.userTermId === selectedTerm.userTermId
-        ) || []  // Fallback to an empty array if userClasses is undefined
-        : userClasses || [];  // Fallback to an empty array if userClasses is undefined
-
-
-    // Set the selected term to the first term in the user terms
-    useEffect(() => {
-        const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
-
-        if (userTerms && userTerms.length > 0 && !selectedTerm) {
-            setSelectedTerm(sortedUserTerms[0]);
-            setSeason(sortedUserTerms[0].termSeason);
-        } else if (!userTerms.length) {
-            // Reset selected term if there are no user terms
-            setSelectedTerm(null);
-            setSeason(null);
-        }
-    }, [userTerms, selectedTerm]);
-
 
     return (
         <>
@@ -222,3 +126,116 @@ export default function StudentPortalMyClasses() {
         </>
     );
 }
+
+
+const useGetAndSetAllClasses = (email) => {
+    const [allClasses, setAllClasses] = useState();
+    const [userClasses, setUserClasses] = useState();
+
+    const fetchAllClasses = useCallback(async () => {
+        const loadedAllClasses = LoadAllClasses();
+        const loadedUserClasses = LoadUserClasses();
+
+        setAllClasses(loadedAllClasses);
+        const filteredUserClasses = loadedUserClasses.filter(
+            userClass => userClass.userId === email
+        );
+        setUserClasses(filteredUserClasses);
+
+    }, [email]);
+
+    useEffect(() => {
+        fetchAllClasses();
+    }, [fetchAllClasses]);
+    return { allClasses, userClasses, fetchAllClasses };
+
+};
+
+const useGetAndSetUserTerms = (userClasses) => {
+    const [userTerms, setUserTerms] = useState([]);
+
+    useEffect(() => {
+        if (userClasses && userClasses.length > 0) {
+            const terms = [
+                ...new Set(userClasses.map(userClass => userClass.userTermId))
+            ];
+            const termsWithSeason = terms.map(term => {
+                const classInfo = userClasses.find(
+                    userClass => userClass.userTermId === term
+                );
+                return { userTermId: term, termSeason: classInfo.termSeason };
+            });
+
+            // Remove duplicates and add to existing userTerms
+            setUserTerms(prevTerms => {
+                const newTerms = termsWithSeason.filter(
+                    term => !prevTerms.some(prevTerm => prevTerm.userTermId === term.userTermId)
+                );
+                return [...prevTerms, ...newTerms];
+            });
+        }
+    }, [userClasses]);
+    console.log('User terms: ', userTerms);
+    return { userTerms, setUserTerms };
+}
+
+const useGetAndSetFilteredClasses = (season, allClasses, userClasses, searchByName) => {
+    const [filteredClasses, setFilteredClasses] = useState();
+
+    useEffect(() => {
+        if (season && allClasses) {
+            const searchFilteredClasses = filterPrograms(
+                allClasses,
+                searchByName
+            );
+
+            let availableClasses = [];
+
+            if (season === 'Fall') {
+                availableClasses = searchFilteredClasses.filter(
+                    classItem => classItem.availableFall
+                );
+            } else if (season === 'Winter') {
+                availableClasses = searchFilteredClasses.filter(
+                    classItem => classItem.availableWinter
+                );
+            } else if (season === 'Spring') {
+                availableClasses = searchFilteredClasses.filter(
+                    classItem => classItem.availableSpring
+                );
+            } else if (season === 'Summer') {
+                availableClasses = searchFilteredClasses.filter(
+                    classItem => classItem.availableSummer
+                );
+            }
+            //Filter out classes that the user is already enrolled in
+            if (userClasses) {
+                const userClassIds = userClasses.map(
+                    userClass => userClass.classId
+                ); // Use classId from userClasses
+                availableClasses = availableClasses.filter(
+                    classItem => !userClassIds.includes(classItem.id)
+                ); // Compare with id from availableClasses
+            }
+            setFilteredClasses(availableClasses);
+        }
+    }, [season, allClasses, userClasses, searchByName]);
+
+    return { filteredClasses };
+}
+
+const useGetAndSetSelectedTermAndSeason = (userTerms) => {
+    const [selectedTerm, setSelectedTerm] = useState(null);
+    const [season, setSeason] = useState(null);
+
+    useEffect(() => {
+        if (userTerms && userTerms.length > 0) {
+            const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
+            setSelectedTerm(sortedUserTerms[0]);
+            setSeason(sortedUserTerms[0].termSeason);
+        }
+    }, [userTerms]);
+
+    return { selectedTerm, setSelectedTerm, season, setSeason };
+};
+
