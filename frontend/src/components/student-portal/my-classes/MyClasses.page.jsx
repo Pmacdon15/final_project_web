@@ -19,7 +19,7 @@ export default function StudentPortalMyClasses() {
     // const [season, setSeason] = useState();
     const [searchByName, setSearchByName] = useState('');
 
-    const { allClasses, userClasses, fetchAllClasses } = useGetAndSetAllClasses(email);
+    const { allClasses, userClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses(email);
     const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
     const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
     const { filteredClasses } = useGetAndSetFilteredClasses(season, allClasses, userClasses, searchByName);
@@ -104,23 +104,27 @@ export default function StudentPortalMyClasses() {
                     </Stack>
                 </Box>
                 <div className="flex flex-col md:flex-row h-4/6 md:h-5/6 w-full gap-2  ">
-                    <DisplayAvailableClasses
-                        filteredClasses={filteredClasses}
-                        email={email}
-                        termId={selectedTerm?.userTermId}
-                        season={season}
-                        onAddClass={handleChangeInClasses}
-                    />
+                    {isLoading ? <p>Loading...</p> :
+                        <>
+                            <DisplayAvailableClasses
+                                filteredClasses={filteredClasses}
+                                email={email}
+                                termId={selectedTerm?.userTermId}
+                                season={season}
+                                onAddClass={handleChangeInClasses}
+                            />
 
-                    {filteredClasses && filteredClasses.length > 0 && (
-                        <DisplayUserClasses
-                            userClasses={filteredUserClasses}
-                            email={email}
-                            onDropClass={handleChangeInClasses}
-                            termId={selectedTerm?.userTermId}
-                            season={season}
-                        />
-                    )}
+                            {filteredClasses && filteredClasses.length > 0 && (
+                                <DisplayUserClasses
+                                    userClasses={filteredUserClasses}
+                                    email={email}
+                                    onDropClass={handleChangeInClasses}
+                                    termId={selectedTerm?.userTermId}
+                                    season={season}
+                                />
+                            )}
+                        </>
+                    }
                 </div>
             </div>
         </>
@@ -131,8 +135,10 @@ export default function StudentPortalMyClasses() {
 const useGetAndSetAllClasses = (email) => {
     const [allClasses, setAllClasses] = useState();
     const [userClasses, setUserClasses] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchAllClasses = useCallback(async () => {
+        setIsLoading(true);
         const loadedAllClasses = LoadAllClasses();
         const loadedUserClasses = LoadUserClasses();
 
@@ -141,13 +147,14 @@ const useGetAndSetAllClasses = (email) => {
             userClass => userClass.userId === email
         );
         setUserClasses(filteredUserClasses);
+        setIsLoading(false);
 
     }, [email]);
 
     useEffect(() => {
         fetchAllClasses();
     }, [fetchAllClasses]);
-    return { allClasses, userClasses, fetchAllClasses };
+    return { allClasses, userClasses, fetchAllClasses, isLoading };
 
 };
 
