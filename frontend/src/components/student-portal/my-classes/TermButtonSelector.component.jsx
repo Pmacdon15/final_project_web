@@ -38,7 +38,15 @@ const TermButtons = ({ userTerms = [], setUserTerms, selectedTerm, setSelectedTe
         const updatedTerms = [...sortedUserTerms, newTerm]; // Create a new array with the new term
         setUserTerms(updatedTerms); // Update the userTerms state  
         setSelectedTerm(newTerm);
-        setSeason(nextTermSeason);        
+        setSeason(nextTermSeason);
+    };
+
+    const handleTermClick = (termId) => {
+        const term = sortedUserTerms.find(term => term.userTermId === termId);
+        const termSeason = term ? term.termSeason : getCurrentSeason(termId, maxTermId, getLastSeason(sortedUserTerms));
+
+        setSelectedTerm(term || { userTermId: termId, termSeason });
+        setSeason(termSeason);
     };
 
     return (
@@ -48,26 +56,18 @@ const TermButtons = ({ userTerms = [], setUserTerms, selectedTerm, setSelectedTe
                 {/* Create buttons for all term IDs up to the maximum term ID */}
                 {[...Array(maxTermId)].map((_, index) => {
                     const termId = index + 1;
-                    const term = sortedUserTerms.find(term => term.userTermId === termId); 
-                    const termSeason = term ? term.termSeason : getCurrentSeason(termId, maxTermId, sortedUserTerms[sortedUserTerms.length - 1]?.termSeason);
                     return (
                         <button
                             key={termId}
-                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110 ${selectedTerm && selectedTerm.userTermId === termId ? 'bg-blue-700' : ''}`}
-                            onClick={() => {
-                                if (term) {
-                                    setSelectedTerm(term);
-                                    setSeason(term.termSeason);
-                                } else {
-                                    setSelectedTerm({ userTermId: termId, termSeason });
-                                    setSeason(termSeason);
-                                }
-                            }}
+                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded hover:scale-110 ${selectedTerm && selectedTerm.userTermId === termId ? 'bg-blue-700' : ''
+                                }`}
+                            onClick={() => handleTermClick(termId)}
                         >
-                            Term {termId} {term ? term.termSeason : `${termSeason}`}
+                            Term {termId} {sortedUserTerms.find(term => term.userTermId === termId)?.termSeason || getCurrentSeason(termId, maxTermId, getLastSeason(sortedUserTerms))}
                         </button>
                     );
                 })}
+
 
                 {/* Button to add the next term */}
                 {userTerms.length ? (

@@ -9,43 +9,33 @@ import FirstSeasonSelector from './FirstSeasonSelector.component';
 import TermButtonSelector from './TermButtonSelector.component';
 import PageHeader from '../../page-header/PageHeader.component';
 import getUserInfo from '../../../utils/get-user-info';
-import { Box, Stack, TextField } from '@mui/material';
 import filterPrograms from '../../../utils/search-filter';
+import SearchFilters from './SearchFliters';
 
 export default function StudentPortalMyClasses() {
     const { email } = getUserInfo();
     console.log('User email:', email);
 
-    const [allClasses, setAllClasses] = useState();
-    const [userClasses, setUserClasses] = useState();
-    const [filteredClasses, setFilteredClasses] = useState();
-    const [userTerms, setUserTerms] = useState([]);
-    const [season, setSeason] = useState();
-    const [selectedTerm, setSelectedTerm] = useState();
+    // const [season, setSeason] = useState();
     const [searchByName, setSearchByName] = useState('');
 
+    const { allClasses, userClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses(email);
+    const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
+    const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
+    const { filteredClasses } = useGetAndSetFilteredClasses(season, allClasses, userClasses, searchByName);
 
-    const fetchAllClasses = useCallback(async () => {
-        const loadedAllClasses = LoadAllClasses();
-        const loadedUserClasses = LoadUserClasses();
-        setAllClasses(loadedAllClasses);
-        const filteredUserClasses = loadedUserClasses.filter(
-            userClass => userClass.userId === email
-        );
-        console.log('Filtered user classes: ', filteredUserClasses);
-        setUserClasses(filteredUserClasses);
-    }, [email])
-    ;
-    // Load all classes and user classes
-    useEffect(() => {
-        fetchAllClasses();
-    }, [selectedTerm, fetchAllClasses]);
+    // Filter user classes based on selected term
+    const filteredUserClasses = selectedTerm
+        ? userClasses?.filter(
+            userClass => userClass.userTermId === selectedTerm.userTermId
+        ) || []  // Fallback to an empty array if userClasses is undefined
+        : userClasses || [];  // Fallback to an empty array if userClasses is undefined
+
 
     const handleChangeInClasses = async (termId, termSeason) => {
         await fetchAllClasses();
         console.log('User terms: ', userTerms);
         console.log('Class added to term ID: ', termId, 'Term Season: ', termSeason);
-        setUserTerms([{ userTermId: Number(termId), termSeason: termSeason }]);
         setUserTerms(prevTerms => {
             const newTerm = { userTermId: Number(termId), termSeason: termSeason };
             const termExists = prevTerms.some(term => term.userTermId === newTerm.userTermId);
@@ -57,7 +47,83 @@ export default function StudentPortalMyClasses() {
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
     };
 
-    // Get user terms without duplicates
+    return (
+        <>
+            <PageHeader title={'My Classes'} />
+            <div className="flex flex-col bg-blue-200 w-full shadow-lg items-center h-5/6 gap-4 p-2 md:p-4 border rounded-lg text-center">
+                {!selectedTerm && (
+                    <FirstSeasonSelector
+                        setSeason={setSeason}
+                        setSelectedTerm={setSelectedTerm}
+                        setUserTerms={setUserTerms}
+                    />
+                )}
+                <TermButtonSelector
+                    userTerms={userTerms}
+                    setUserTerms={setUserTerms}
+                    selectedTerm={selectedTerm}
+                    setSelectedTerm={setSelectedTerm}
+                    setSeason={setSeason}
+                />
+                <SearchFilters searchByName={searchByName} setSearchByName={setSearchByName} />
+                <div className="flex flex-col md:flex-row h-4/6 md:h-5/6 w-full gap-2  ">
+                    {isLoading ? <p>Loading...</p> :
+                        <>
+                            <DisplayAvailableClasses
+                                filteredClasses={filteredClasses}
+                                email={email}
+                                termId={selectedTerm?.userTermId}
+                                season={season}
+                                onAddClass={handleChangeInClasses}
+                            />
+
+                            {filteredClasses && filteredClasses.length > 0 && (
+                                <DisplayUserClasses
+                                    userClasses={filteredUserClasses}
+                                    email={email}
+                                    onDropClass={handleChangeInClasses}
+                                    termId={selectedTerm?.userTermId}
+                                    season={season}
+                                />
+                            )}
+                        </>
+                    }
+                </div>
+            </div>
+        </>
+    );
+}
+
+
+const useGetAndSetAllClasses = (email) => {
+    const [allClasses, setAllClasses] = useState();
+    const [userClasses, setUserClasses] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+
+    const fetchAllClasses = useCallback(async () => {
+        setIsLoading(true);
+        const loadedAllClasses = LoadAllClasses();
+        const loadedUserClasses = LoadUserClasses();
+
+        setAllClasses(loadedAllClasses);
+        const filteredUserClasses = loadedUserClasses.filter(
+            userClass => userClass.userId === email
+        );
+        setUserClasses(filteredUserClasses);
+        setIsLoading(false);
+
+    }, [email]);
+
+    useEffect(() => {
+        fetchAllClasses();
+    }, [fetchAllClasses]);
+    return { allClasses, userClasses, fetchAllClasses, isLoading };
+
+};
+
+const useGetAndSetUserTerms = (userClasses) => {
+    const [userTerms, setUserTerms] = useState([]);
+
     useEffect(() => {
         if (userClasses && userClasses.length > 0) {
             const terms = [
@@ -79,8 +145,13 @@ export default function StudentPortalMyClasses() {
             });
         }
     }, [userClasses]);
+    console.log('User terms: ', userTerms);
+    return { userTerms, setUserTerms };
+}
 
-    // Filter classes based on season and user classes
+const useGetAndSetFilteredClasses = (season, allClasses, userClasses, searchByName) => {
+    const [filteredClasses, setFilteredClasses] = useState();
+
     useEffect(() => {
         if (season && allClasses) {
             const searchFilteredClasses = filterPrograms(
@@ -120,105 +191,21 @@ export default function StudentPortalMyClasses() {
         }
     }, [season, allClasses, userClasses, searchByName]);
 
-    // Filter user classes based on selected term
-    const filteredUserClasses = selectedTerm
-        ? userClasses?.filter(
-            userClass => userClass.userTermId === selectedTerm.userTermId
-        ) || []  // Fallback to an empty array if userClasses is undefined
-        : userClasses || [];  // Fallback to an empty array if userClasses is undefined
+    return { filteredClasses };
+}
 
+const useGetAndSetSelectedTermAndSeason = (userTerms) => {
+    const [selectedTerm, setSelectedTerm] = useState(null);
+    const [season, setSeason] = useState(null);
 
-    // Set the selected term to the first term in the user terms
     useEffect(() => {
-        const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
-
-        if (userTerms && userTerms.length > 0 && !selectedTerm) {
+        if (userTerms && userTerms.length > 0) {
+            const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
             setSelectedTerm(sortedUserTerms[0]);
             setSeason(sortedUserTerms[0].termSeason);
-        } else if (!userTerms.length) {
-            // Reset selected term if there are no user terms
-            setSelectedTerm(null);
-            setSeason(null);
         }
-    }, [userTerms, selectedTerm]);
+    }, [userTerms]);
 
+    return { selectedTerm, setSelectedTerm, season, setSeason };
+};
 
-    return (
-        <>
-            <PageHeader title={'My Classes'} />
-            <div className="flex flex-col bg-blue-200 w-full shadow-lg items-center h-5/6 gap-4 p-2 md:p-4 border rounded-lg text-center">
-                {!selectedTerm && (
-                    <FirstSeasonSelector
-                        setSeason={setSeason}
-                        setSelectedTerm={setSelectedTerm}
-                        setUserTerms={setUserTerms}
-                    />
-                )}
-                <TermButtonSelector
-                    userTerms={userTerms}
-                    setUserTerms={setUserTerms}
-                    selectedTerm={selectedTerm}
-                    setSelectedTerm={setSelectedTerm}
-                    setSeason={setSeason}
-                />
-                <Box
-                    className="w-full "
-                    component="fieldset"
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-
-                        '> legend': {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                            marginBottom: '.5rem'
-                        },
-
-                        'div > div': {
-                            background: 'white'
-                        },
-
-                        input: {
-                            borderRadius: '0.25rem'
-                        }
-                    }}
-                >
-                    <Stack spacing={2} direction="row">
-                        <TextField
-                            color="black"
-                            id="search-by-name"
-                            label="Class Name"
-                            value={searchByName}
-                            onChange={typedByUser => {
-                                setSearchByName(
-                                    typedByUser.target.value.toLocaleLowerCase()
-                                );
-                            }}
-                            sx={{ flex: 1 }}
-                            className="p-2 rounded-lg"
-                        />
-                    </Stack>
-                </Box>
-                <div className="flex flex-col md:flex-row h-4/6 md:h-5/6 w-full gap-2  ">
-                    <DisplayAvailableClasses
-                        filteredClasses={filteredClasses}
-                        email={email}
-                        termId={selectedTerm?.userTermId}
-                        season={season}
-                        onAddClass={handleChangeInClasses}
-                    />
-
-                    {filteredClasses && filteredClasses.length > 0 && (
-                        <DisplayUserClasses
-                            userClasses={filteredUserClasses}
-                            email={email}
-                            onDropClass={handleChangeInClasses}
-                            termId={selectedTerm?.userTermId}
-                            season={season}
-                        />
-                    )}
-                </div>
-            </div>
-        </>
-    );
-}
