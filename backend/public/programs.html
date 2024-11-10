@@ -23,7 +23,7 @@
     <script>
         // Fetch All Users
         function fetchAllPrograms() {
-            fetch('http://localhost:5000/api/v1/get-all-programs')
+            fetch('http://localhost:5000/api/v1/programs/get-all-programs')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
