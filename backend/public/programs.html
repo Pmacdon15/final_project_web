@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Programs</title>
+</head>
+
+<body>
+
+    <h1>Show All Programs</h1>
+
+    <!-- Get All Users Section -->
+    <div style="border: 1px solid black; padding: 20px; margin-bottom: 20px;">
+        <h2>Show All Programs</h2>
+        <button onclick="fetchAllPrograms()">GetData</button>
+        <pre id="AllPrograms"></pre>
+    </div>
+
+
+
+    <script>
+        // Fetch All Users
+        function fetchAllPrograms() {
+            fetch('http://localhost:5000/api/v1/get-all-programs')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('AllPrograms').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error fetching Programs:', error));
+        }
+    </script>
+</body>
+
+</html>

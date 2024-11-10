@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import sampleRoutes from './routes/sample.routes.js';
+// import sampleRoutes from './routes/sample.routes.js';
+import programs from './routes/programs.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -21,11 +22,18 @@ app.use(express.urlencoded({ extended: true })); // Middleware for form data (UR
 app.use(express.static('public'));
 
 // Use the user and order routes
-app.use('/api/v1', sampleRoutes);
+// app.use('/api/v1', sampleRoutes);
+
+// New Schema Routes
+app.use('/api/v1', programs);
 
 // Default root route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+app.get('/all-programs', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/programs.html'));
 });
 
 export default app;
