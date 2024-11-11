@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 // import sampleRoutes from './routes/sample.routes.js';
 import programs from './routes/programs.routes.js';
+import courses from './routes/courses.routes.js';
 import user from './routes/user.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -27,6 +28,7 @@ app.use(express.static('public'));
 
 // New Schema Routes
 app.use('/api/v1/programs', programs);
+app.use('/api/v1/courses', courses);
 app.use('/api/v1/user', user);
 
 // Default root route
