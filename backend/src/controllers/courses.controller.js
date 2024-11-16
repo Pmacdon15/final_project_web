@@ -22,7 +22,7 @@ export const addUserCourse = async (req, res) => {
     await sql.connect(config);
     const result = await sql.query`INSERT INTO user_courses (userId, courseId, userTermId, termSeasonId) VALUES (${userId}, ${courseId}, ${userTermId}, (select id from term where season = ${termSeason}))`;
     console.log('Query result:', result);
-    res.status(201).json({ message: 'User course added successfully' });
+    res.status(201).json({ message: 'User course added successfully', data: result });
   } catch (err) {
     console.error('Error adding user course:', err);
     res.status(500).json({ error: 'Failed to add user course' });

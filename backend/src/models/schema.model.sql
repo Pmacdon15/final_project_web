@@ -110,15 +110,12 @@ CREATE TABLE user_courses (
     id INT IDENTITY (1, 1) PRIMARY KEY,
     userId VARCHAR(10) NOT NULL,
     courseId INT NOT NULL,
-    programId INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
     userTermId INT NOT NULL,
     termSeasonId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES users (id),
     FOREIGN KEY (courseId) REFERENCES courses (id),
-    FOREIGN KEY (programId) REFERENCES user_programs (id),
     FOREIGN KEY (termSeasonId) REFERENCES terms (id)
+    -- We will use the other tables to derive the data such as program ID course name, and description and any other data we need to attach
 );
 
 -- Insert data into the programs table
@@ -396,63 +393,15 @@ INSERT INTO
     user_courses (
         userId,
         courseId,
-        programId,
-        name,
-        description,
+        -- programId,
+        -- name,
+        -- description,
         userTermId,
         termSeasonId
     )
-VALUES (
-        'SD000001',
-        1,
-        1,
-        'Math For the Computer Industry',
-        'This course is designed to provide students with the mathematical knowledge and skills required to solve problems in the computer industry. Topics include: algebra. Students will learn to apply mathematical concepts to solve problems in computer programming, networking, and database management.',
-        1,
-        1
-    ),
-    (
-        'SD000001',
-        2,
-        1,
-        'Essential skills for teams collaboration',
-        'This course is designed to provide students with the essential skills required to work effectively in a team environment. Topics include: team dynamics, communication, problem solving, and conflict resolution. Students will learn to apply these skills to work effectively in a team environment.',
-        1,
-        1
-    ),
-    (
-        'SD000001',
-        3,
-        1,
-        'Programming fundamentals',
-        'This course is designed to provide students with the fundamental concepts of programming. Topics include: programming languages, data types, control structures, and functions. Students will learn to write programs to solve problems in the computer industry.',
-        1,
-        1
-    ),
-    (
-        'SD000001',
-        4,
-        1,
-        'Internet of things',
-        'This course is designed to provide students with the fundamental concepts of the Internet of things. Topics include: sensors, actuators, microcontrollers, and communication protocols. Students will learn to design and implement Internet of things applications.',
-        1,
-        1
-    ),
-    (
-        'SD000001',
-        5,
-        1,
-        'Web and Internet fundamentals',
-        'This course is designed to provide students with the fundamental concepts of the Web and Internet. Topics include: HTML, CSS, JavaScript, and web development tools. Students will learn to design and implement web applications.',
-        1,
-        1
-    ),
-    (
-        'SD000001',
-        6,
-        1,
-        'Introduction to relational databases',
-        'This course is designed to provide students with the fundamental concepts of relational databases. Topics include: database design, SQL, and database management systems. Students will learn to design and implement relational databases.',
-        1,
-        2
-    );
+VALUES ('SD000001', 1, 1, 1),
+    ('SD000001', 2, 1, 1),
+    ('SD000001', 3, 1, 1),
+    ('SD000001', 4, 1, 1),
+    ('SD000001', 5, 1, 1),
+    ('SD000001', 6, 1, 2);
