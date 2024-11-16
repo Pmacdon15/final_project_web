@@ -3,7 +3,7 @@ import { getAllCourses, removeUserCourse } from '../controllers/courses.controll
 const router = express.Router();
 
 router.get('/get-all-courses', getAllCourses);
-router.get('/remove-user-course/userId/:userId/courseId/:courseId', removeUserCourse);
+router.delete('/remove-user-course/userId/:userId/courseId/:courseId', removeUserCourse);
 
 export default router;
 
