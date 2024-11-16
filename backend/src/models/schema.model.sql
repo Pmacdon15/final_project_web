@@ -392,10 +392,7 @@ VALUES ('SD000001', 1),
 INSERT INTO
     user_courses (
         userId,
-        courseId,
-        -- programId,
-        -- name,
-        -- description,
+        courseId,        
         userTermId,
         termSeasonId
     )
@@ -404,4 +401,4 @@ VALUES ('SD000001', 1, 1, 1),
     ('SD000001', 3, 1, 1),
     ('SD000001', 4, 1, 1),
     ('SD000001', 5, 1, 1),
-    ('SD000001', 6, 1, 2);
+    ('SD000001', 6, 2, 2);
