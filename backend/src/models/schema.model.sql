@@ -32,7 +32,6 @@ IF NOT EXISTS (
 )
 BEGIN
 CREATE DATABASE BVC_Portal;
-
 END;
 
 GO
@@ -43,7 +42,7 @@ GO
 -- Create the programs table
 CREATE TABLE programs (
     id INT IDENTITY (1, 1) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     durationTerms INT NOT NULL,
     tuition DECIMAL(10, 2) NOT NULL
