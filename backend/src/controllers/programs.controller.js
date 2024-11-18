@@ -1,10 +1,10 @@
 import sql from 'mssql';
 import { config } from '../db/index.js'
-import {  getAllProgramsModel } from '../models/programs.model.js';
+import { getAllProgramsModel, addProgramModel } from '../models/programs.model.js';
 
 export const getAllPrograms = async (req, res) => {
   try {
-    const result =  await getAllProgramsModel();
+    const result = await getAllProgramsModel();
     console.log('Query result:', result);
     res.status(200).json(result.recordset);
 
@@ -18,18 +18,12 @@ export const getAllPrograms = async (req, res) => {
 export const addProgram = async (req, res) => {
   try {
     console.log('addProgram called');
-    await sql.connect(config);
-
     const { name, description, durationTerms, tuition } = req.body;
-    
+
     if (!name || !description || !durationTerms || !tuition) {
       return res.status(400).json({ error: 'All fields are required' });
-    }
-
-    const result = await sql.query`
-        INSERT INTO programs (name, description, durationTerms, tuition)
-        VALUES (${name}, ${description}, ${durationTerms}, ${tuition});        
-      `;
+    }    
+    const result = await addProgramModel(name, description, durationTerms, tuition);
     if (result.rowsAffected[0] !== 1) {
       throw new Error('Failed to insert program');
     }
@@ -65,7 +59,7 @@ export const updateProgram = async (req, res) => {
     }
     console.log('Query result:', result);
     res.status(200).json({ message: 'Program updated successfully' });
-      } catch (err) {
+  } catch (err) {
     console.error('Error updating program:', err);
     res.status(500).json({ error: 'Failed to update program' });
   }
