@@ -7,7 +7,9 @@ export const getAllPrograms = async (req, res) => {
     await sql.connect(config);
     const result = await sql.query('SELECT * FROM programs');
     console.log('Query result:', result.recordset);
+
     res.status(200).json(result.recordset);
+
   } catch (err) {
     console.error('Error fetching programs data:', err);
     res.status(500).json({ error: 'Failed to retrieve programs data' });
@@ -21,7 +23,7 @@ export const addProgram = async (req, res) => {
     await sql.connect(config);
 
     const { name, description, durationTerms, tuition } = req.body;
-
+    
     if (!name || !description || !durationTerms || !tuition) {
       return res.status(400).json({ error: 'All fields are required' });
     }
@@ -41,6 +43,7 @@ export const addProgram = async (req, res) => {
     res.status(500).json({ error: 'Failed to add program' });
   }
 }
+
 //TODO: Maybe change this to patch, The benefit is debatable.
 //MARK: Update a program
 export const updateProgram = async (req, res) => {
@@ -69,6 +72,7 @@ export const updateProgram = async (req, res) => {
     res.status(500).json({ error: 'Failed to update program' });
   }
 }
+
 //MARK: Remove program
 export const removeProgram = async (req, res) => {
   try {
@@ -85,4 +89,5 @@ export const removeProgram = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete program' });
   }
 };
+
 
