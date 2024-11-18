@@ -1,5 +1,5 @@
 -- Switch to the master database
-USE master
+USE master;
 
 GO
 -- Terminate connections to the BVC_Portal database
@@ -19,8 +19,8 @@ IF EXISTS (
 )
 BEGIN
 DROP DATABASE BVC_Portal;
-
 END;
+
 
 GO
 -- Create the BVC_Portal database if it doesn't exist
@@ -32,7 +32,6 @@ IF NOT EXISTS (
 )
 BEGIN
 CREATE DATABASE BVC_Portal;
-
 END;
 
 GO
@@ -67,7 +66,7 @@ CREATE TABLE courses_available_terms (
     id INT IDENTITY (1, 1) PRIMARY KEY,
     courseId INT NOT NULL,
     termSeason INT NOT NULL,
-    FOREIGN KEY (courseId) REFERENCES courses (id),
+    FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
     FOREIGN KEY (termSeason) REFERENCES terms (id)
 );
 
@@ -90,8 +89,8 @@ CREATE TABLE users (
     birthday VARCHAR(8) NOT NULL,
     phone VARCHAR(15) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    department VARCHAR(255) NOT NULL,
-    program VARCHAR(255) NOT NULL,
+    department VARCHAR(255) NOT NULL, --TODO: Remove this field
+    program VARCHAR(255) NOT NULL, --TODO: Remove this field
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
@@ -106,18 +105,16 @@ CREATE TABLE user_programs (
 );
 
 -- Create the user_classes table
-CREATE TABLE user_classes (
+CREATE TABLE user_courses (
     id INT IDENTITY (1, 1) PRIMARY KEY,
     userId VARCHAR(10) NOT NULL,
-    classId INT NOT NULL,
-    programId INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
+    courseId INT NOT NULL,
     userTermId INT NOT NULL,
-    termSeason VARCHAR(50) NOT NULL,
+    termSeasonId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES users (id),
-    FOREIGN KEY (classId) REFERENCES courses (id),
-    FOREIGN KEY (programId) REFERENCES user_programs (id)
+    FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
+    FOREIGN KEY (termSeasonId) REFERENCES terms (id)
+    -- We will use the other tables to derive the data such as program ID course name, and description and any other data we need to attach
 );
 
 -- Insert data into the programs table
@@ -288,9 +285,16 @@ VALUES (1, 1),
 (10, 3),
 (10, 4),
 
-(11, 1), (12, 1), (13, 1), (14, 1), (15, 1),
-
-(16, 2), (17, 2), (18, 2), (19, 2), (20, 2);
+(11, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(16, 2),
+(17, 2),
+(18, 2),
+(19, 2),
+(20, 2);
 
 -- Insert data into the users table
 INSERT INTO
@@ -382,4 +386,19 @@ VALUES ('SD000001', 1),
     ('SD000004', 1),
     ('SD926181', 1);
 
--- select * from programs;
+-- Insert data into the user_classes table
+
+INSERT INTO
+    user_courses (
+        userId,
+        courseId,
+        userTermId,
+        termSeasonId
+    )
+VALUES ('SD000001', 1, 1, 1),
+    ('SD000001', 2, 1, 1),
+    ('SD000001', 3, 1, 1),
+    ('SD000001', 4, 1, 1),
+    ('SD000001', 5, 1, 1),
+    ('SD000001', 6, 2, 2);
+
