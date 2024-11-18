@@ -1,13 +1,11 @@
 import sql from 'mssql';
 import { config } from '../db/index.js'
+import {  getAllProgramsModel } from '../models/programs.model.js';
 
 export const getAllPrograms = async (req, res) => {
   try {
-    console.log('getAllPrograms called');
-    await sql.connect(config);
-    const result = await sql.query('SELECT * FROM programs');
-    console.log('Query result:', result.recordset);
-
+    const result =  await getAllProgramsModel();
+    console.log('Query result:', result);
     res.status(200).json(result.recordset);
 
   } catch (err) {

@@ -27,9 +27,9 @@ app.use(express.static('public'));
 // app.use('/api/v1', sampleRoutes);
 
 // New Schema Routes
-app.use('/api/v1/programs', programs);
-app.use('/api/v1/courses', courses);
-app.use('/api/v1/user', user);
+app.use('/api/v1/', programs);
+app.use('/api/v1/', courses);
+app.use('/api/v1/', user);
 
 // Default root route
 app.get('/', (req, res) => {

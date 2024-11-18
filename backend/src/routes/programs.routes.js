@@ -7,7 +7,7 @@ router.get('/get-all-programs', getAllPrograms);
 router.post('/add-program', addProgram);
 router.delete('/remove-program/:id', removeProgram);
 router.put('/update-program/id/:id', updateProgram);
-router.post('/add-program', addProgram);
+// router.post('/add-program', addProgram);
 
 export default router;
 
