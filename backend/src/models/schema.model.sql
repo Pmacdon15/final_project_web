@@ -67,7 +67,7 @@ CREATE TABLE courses_available_terms (
     id INT IDENTITY (1, 1) PRIMARY KEY,
     courseId INT NOT NULL,
     termSeason INT NOT NULL,
-    FOREIGN KEY (courseId) REFERENCES courses (id),
+    FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
     FOREIGN KEY (termSeason) REFERENCES terms (id)
 );
 
@@ -113,7 +113,7 @@ CREATE TABLE user_courses (
     userTermId INT NOT NULL,
     termSeasonId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES users (id),
-    FOREIGN KEY (courseId) REFERENCES courses (id),
+    FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
     FOREIGN KEY (termSeasonId) REFERENCES terms (id)
     -- We will use the other tables to derive the data such as program ID course name, and description and any other data we need to attach
 );
@@ -392,7 +392,7 @@ VALUES ('SD000001', 1),
 INSERT INTO
     user_courses (
         userId,
-        courseId,        
+        courseId,
         userTermId,
         termSeasonId
     )
@@ -403,4 +403,3 @@ VALUES ('SD000001', 1, 1, 1),
     ('SD000001', 5, 1, 1),
     ('SD000001', 6, 2, 2);
 
-    select * from user_courses;

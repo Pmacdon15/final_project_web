@@ -14,6 +14,25 @@ export const getAllCourses = async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve courses data' });
   }
 };
+// MARK: Remove course
+export const removeCourse = async (req, res) => {
+  const { courseId } = req.params;
+  try {
+    console.log('removeCourse called');
+    await sql.connect(config);
+    const result = await sql.query`DELETE FROM courses WHERE id = ${courseId}`;
+    console.log('Query result:', result);
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+    res.status(200).json({ message: 'Course removed successfully' });
+  } catch (err) {
+    console.error('Error removing course:', err);
+    res.status(500).json({ error: 'Failed to remove course' });
+  }
+};
+
+
 //MARK: Add User Course
 export const addUserCourse = async (req, res) => {
   const { userId, courseId, userTermId, termSeason } = req.params;
