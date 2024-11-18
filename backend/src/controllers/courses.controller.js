@@ -1,6 +1,7 @@
 import sql from 'mssql';
 import { config } from '../db/index.js'
 
+//MARK: Get All Courses
 export const getAllCourses = async (req, res) => {
   try {
     console.log('getAllCourses called');
@@ -13,7 +14,25 @@ export const getAllCourses = async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve courses data' });
   }
 };
+//MARK: Add User Course
+export const addUserCourse = async (req, res) => {
+  const { userId, courseId, userTermId, termSeason } = req.params;
+  try {
+    console.log('addUserCourse called');
+    await sql.connect(config);
+    const result = await sql.query`INSERT INTO user_courses (userId, courseId, userTermId, termSeasonId) VALUES (${userId}, ${courseId}, ${userTermId}, (select id from terms where season = ${termSeason}))`;
+    console.log('Query result:', result);
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({ error: 'User course not added' });
+    }
+    res.status(201).json({ message: 'User course added successfully' });
+  } catch (err) {
+    console.error('Error adding user course:', err);
+    res.status(500).json({ error: 'Failed to add user course' });
+  }
+};
 
+//MARK: Remove User Course
 export const removeUserCourse = async (req, res) => {
   const { userId, courseId } = req.params;
   try {
