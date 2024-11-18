@@ -19,8 +19,8 @@ IF EXISTS (
 )
 BEGIN
 DROP DATABASE BVC_Portal;
-
 END;
+
 
 GO
 -- Create the BVC_Portal database if it doesn't exist

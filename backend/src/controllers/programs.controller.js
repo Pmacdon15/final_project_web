@@ -21,7 +21,7 @@ export const addProgram = async (req, res) => {
   try {
     console.log('addProgram called');
     await sql.connect(config);
-    
+
     const { name, description, durationTerms, tuition } = req.body;
     
     if (!name || !description || !durationTerms || !tuition) {
@@ -37,9 +37,39 @@ export const addProgram = async (req, res) => {
     }
     console.log('Query result:', result);
     res.status(201).json({ message: 'Program added successfully' });
-      } catch (err) {
+
+  } catch (err) {
     console.error('Error adding program:', err);
     res.status(500).json({ error: 'Failed to add program' });
+  }
+}
+
+//TODO: Maybe change this to patch, The benefit is debatable.
+//MARK: Update a program
+export const updateProgram = async (req, res) => {
+  try {
+    console.log('updateProgram called');
+    await sql.connect(config);
+    const { id } = req.params;
+    const { name, description, durationTerms, tuition } = req.body;
+
+    if (!id || !name || !description || !durationTerms || !tuition) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const result = await sql.query`
+        UPDATE programs
+        SET name = ${name}, description = ${description}, durationTerms = ${durationTerms}, tuition = ${tuition}
+        WHERE id = ${id};
+      `;
+    if (result.rowsAffected[0] !== 1) {
+      throw new Error('Failed to update program');
+    }
+    console.log('Query result:', result);
+    res.status(200).json({ message: 'Program updated successfully' });
+      } catch (err) {
+    console.error('Error updating program:', err);
+    res.status(500).json({ error: 'Failed to update program' });
   }
 }
 
