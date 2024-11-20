@@ -23,3 +23,9 @@ export async function updateProgramModel(id, name, description, durationTerms, t
         WHERE id = ${id};
       `;
 }
+
+export async function removeProgramModel(id) {
+    await sql.connect(config);
+    const result = await sql.query`DELETE FROM programs WHERE id = ${id}`;
+    return result;
+}

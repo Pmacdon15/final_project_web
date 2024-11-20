@@ -1,6 +1,6 @@
 import sql from 'mssql';
 import { config } from '../db/index.js'
-import { getAllProgramsModel, addProgramModel, updateProgramModel } from '../models/programs.model.js';
+import { getAllProgramsModel, addProgramModel, updateProgramModel, removeProgramModel } from '../models/programs.model.js';
 
 export const getAllPrograms = async (req, res) => {
   try {
@@ -64,8 +64,7 @@ export const updateProgram = async (req, res) => {
 export const removeProgram = async (req, res) => {
   try {
     console.log('removeProgram called');
-    await sql.connect(config);
-    const result = await sql.query`DELETE FROM programs WHERE id = ${req.params.id}`;
+    const result = await removeProgramModel(req.params.id);
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ error: 'Program not found' });
     }
