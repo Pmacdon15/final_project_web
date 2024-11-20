@@ -1,12 +1,13 @@
 import sql from 'mssql';
 import { config } from '../db/index.js'
 
+import { getAllCoursesModel, removeCourseModel, addUserCourseModel , removeUserCourseModel} from '../models/courses.model.js';
+
 //MARK: Get All Courses
 export const getAllCourses = async (req, res) => {
   try {
     console.log('getAllCourses called');
-    await sql.connect(config);
-    const result = await sql.query('SELECT * FROM courses');
+    const result = await getAllCoursesModel();
     console.log('Query result:', result.recordset);
     res.status(200).json(result.recordset);
   } catch (err) {
@@ -19,8 +20,7 @@ export const removeCourse = async (req, res) => {
   const { courseId } = req.params;
   try {
     console.log('removeCourse called');
-    await sql.connect(config);
-    const result = await sql.query`DELETE FROM courses WHERE id = ${courseId}`;
+    const result = await removeCourseModel(courseId);
     console.log('Query result:', result);
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ error: 'Course not found' });
@@ -38,8 +38,8 @@ export const addUserCourse = async (req, res) => {
   const { userId, courseId, userTermId, termSeason } = req.params;
   try {
     console.log('addUserCourse called');
-    await sql.connect(config);
-    const result = await sql.query`INSERT INTO user_courses (userId, courseId, userTermId, termSeasonId) VALUES (${userId}, ${courseId}, ${userTermId}, (select id from terms where season = ${termSeason}))`;
+    console.log('userId:', userId);
+    const result = await addUserCourseModel(userId, courseId, userTermId, termSeason);
     console.log('Query result:', result);
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ error: 'User course not added' });
@@ -56,8 +56,7 @@ export const removeUserCourse = async (req, res) => {
   const { userId, courseId } = req.params;
   try {
     console.log('removeUserCourse called');
-    await sql.connect(config);
-    const result = await sql.query`DELETE FROM user_courses WHERE userId = ${userId} AND courseId = ${courseId}`;
+    const result = await removeUserCourseModel(userId, courseId);
     // console.log('Query result:', result);
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ error: 'User course not found' });

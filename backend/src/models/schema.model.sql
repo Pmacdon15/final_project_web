@@ -54,7 +54,7 @@ CREATE TABLE courses (
     programId INT,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    FOREIGN KEY (programId) REFERENCES programs (id)
+    FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
 );
 
 CREATE TABLE terms (
@@ -101,7 +101,7 @@ CREATE TABLE user_programs (
     userId VARCHAR(10) NOT NULL,
     programId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES users (id),
-    FOREIGN KEY (programId) REFERENCES programs (id)
+    FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
 );
 
 -- Create the user_classes table
