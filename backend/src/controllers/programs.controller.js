@@ -1,6 +1,6 @@
 import sql from 'mssql';
 import { config } from '../db/index.js'
-import { getAllProgramsModel, addProgramModel } from '../models/programs.model.js';
+import { getAllProgramsModel, addProgramModel, updateProgramModel } from '../models/programs.model.js';
 
 export const getAllPrograms = async (req, res) => {
   try {
@@ -41,7 +41,6 @@ export const addProgram = async (req, res) => {
 export const updateProgram = async (req, res) => {
   try {
     console.log('updateProgram called');
-    await sql.connect(config);
     const { id } = req.params;
     const { name, description, durationTerms, tuition } = req.body;
 
@@ -49,11 +48,7 @@ export const updateProgram = async (req, res) => {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const result = await sql.query`
-        UPDATE programs
-        SET name = ${name}, description = ${description}, durationTerms = ${durationTerms}, tuition = ${tuition}
-        WHERE id = ${id};
-      `;
+    const result = await updateProgramModel(id, name, description, durationTerms, tuition);
     if (result.rowsAffected[0] !== 1) {
       throw new Error('Failed to update program');
     }
