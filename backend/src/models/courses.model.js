@@ -8,6 +8,12 @@ export const getAllCoursesModel = async () => {
     return result;
 };
 
+//MARK: Remove course
+export const removeCourseModel = async (courseId) => {
+    await sql.connect(config);
+    return await sql.query`DELETE FROM courses WHERE id = ${courseId}`;
+};
+
 
 //MARK: Add Course
 export const addUserCourseModel = async (userId,courseId,userTermId, termSeason) => {
