@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 // import sampleRoutes from './routes/sample.routes.js';
 import programs from './routes/programs.routes.js';
 import courses from './routes/courses.routes.js';
-import user from './routes/user.routes.js';
+import users from './routes/user.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -29,7 +29,7 @@ app.use(express.static('public'));
 // New Schema Routes
 app.use('/api/v1/', programs);
 app.use('/api/v1/', courses);
-app.use('/api/v1/', user);
+app.use('/api/v1/', users);
 
 // Default root route
 app.get('/', (req, res) => {
