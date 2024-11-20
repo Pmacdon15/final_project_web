@@ -1,7 +1,7 @@
 import sql from 'mssql';
 import { config } from '../db/index.js'
 
-import { getAllCoursesModel, removeCourseModel, addUserCourseModel } from '../models/courses.model.js';
+import { getAllCoursesModel, removeCourseModel, addUserCourseModel , removeUserCourseModel} from '../models/courses.model.js';
 
 //MARK: Get All Courses
 export const getAllCourses = async (req, res) => {
@@ -56,8 +56,7 @@ export const removeUserCourse = async (req, res) => {
   const { userId, courseId } = req.params;
   try {
     console.log('removeUserCourse called');
-    await sql.connect(config);
-    const result = await sql.query`DELETE FROM user_courses WHERE userId = ${userId} AND courseId = ${courseId}`;
+    const result = await removeUserCourseModel(userId, courseId);
     // console.log('Query result:', result);
     if (result.rowsAffected[0] === 0) {
       return res.status(404).json({ error: 'User course not found' });

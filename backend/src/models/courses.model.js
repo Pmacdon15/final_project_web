@@ -22,3 +22,10 @@ export const addUserCourseModel = async (userId,courseId,userTermId, termSeason)
     (userId, courseId, userTermId, termSeasonId) VALUES (${userId}, ${courseId}, ${userTermId}, 
     (select id from terms where season = ${termSeason}))`;
 };
+
+
+//MARK: Remove User Course
+export const removeUserCourseModel = async (userId, courseId) => {
+    await sql.connect(config);
+    return await sql.query`DELETE FROM user_courses WHERE userId = ${userId} AND courseId = ${courseId}`;
+};
