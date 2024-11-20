@@ -1,12 +1,10 @@
-import sql from 'mssql';
-import { config } from '../db/index.js'
+import { getUserModel } from "../models/users.model.js";
 
 export const getUser = async (req, res) => {
     try {
       const userId = req.params.id;
       console.log(`getUser called with id: ${userId}`);
-      await sql.connect(config);
-      const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
+      const result = await getUserModel(userId);
       console.log('Query result:', result.recordset);
       if (result.recordset.length === 0) {
         res.status(404).json({ error: 'User not found' });
