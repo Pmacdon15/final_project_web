@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import programs from './routes/programs.routes.js';
 import courses from './routes/courses.routes.js';
 import users from './routes/user.routes.js';
+import adminRoutes from './routes/admin.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -30,6 +31,7 @@ app.use(express.static('public'));
 app.use('/api/v1/', programs);
 app.use('/api/v1/', courses);
 app.use('/api/v1/', users);
+app.use('/api/v1/admin', adminRoutes);
 
 // Default root route
 app.get('/', (req, res) => {
