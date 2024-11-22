@@ -6,9 +6,11 @@ import courses from './routes/courses.routes.js';
 import users from './routes/user.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import signUp from "./routes/signUp.routes.js";
+import authRoutes from './routes/auth.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { authenticateToken } from './middlewares/auth.middleware.js'; // **Import Middleware**
 
 
 // Load .env file
@@ -33,7 +35,12 @@ app.use('/api/v1/', programs);
 app.use('/api/v1/', courses);
 app.use('/api/v1/', users);
 app.use("/api/v1/", signUp);
-app.use('/api/v1/admin', adminRoutes);
+
+// Authentication Routes
+app.use('/api/v1/', authRoutes);
+
+// Protected Admin Routes
+app.use('/api/v1/admin', authenticateToken, adminRoutes); // **Apply Authentication Middleware**
 
 // Default root route
 app.get("/", (req, res) => {
