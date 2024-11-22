@@ -1,13 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
 // import sampleRoutes from './routes/sample.routes.js';
-import programs from "./routes/programs.routes.js";
-import courses from "./routes/courses.routes.js";
-import users from "./routes/user.routes.js";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+import programs from './routes/programs.routes.js';
+import courses from './routes/courses.routes.js';
+import users from './routes/user.routes.js';
+import adminRoutes from './routes/admin.routes.js';
 import signUp from "./routes/signUp.routes.js";
+import authRoutes from './routes/auth.routes.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { authenticateToken } from './middlewares/auth.middleware.js'; // **Import Middleware**
+
 
 // Load .env file
 dotenv.config();
@@ -27,10 +31,16 @@ app.use(express.static("public"));
 // app.use('/api/v1', sampleRoutes);
 
 // New Schema Routes
-app.use("/api/v1/", programs);
-app.use("/api/v1/", courses);
-app.use("/api/v1/", users);
+app.use('/api/v1/', programs);
+app.use('/api/v1/', courses);
+app.use('/api/v1/', users);
 app.use("/api/v1/", signUp);
+
+// Authentication Routes
+app.use('/api/v1/', authRoutes);
+
+// Protected Admin Routes
+app.use('/api/v1/admin', authenticateToken, adminRoutes); // **Apply Authentication Middleware**
 
 // Default root route
 app.get("/", (req, res) => {
