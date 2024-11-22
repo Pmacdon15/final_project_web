@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 // import sampleRoutes from './routes/sample.routes.js';
 import programs from './routes/programs.routes.js';
 import courses from './routes/courses.routes.js';
-import users from './routes/user.routes.js';
+import users from './routes/users.routes.js';
 import adminRoutes from './routes/admin.routes.js';
-import signUp from "./routes/signUp.routes.js";
+import signUp from "./routes/users.routes.js";
 import authRoutes from './routes/auth.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -34,7 +34,7 @@ app.use(express.static("public"));
 app.use('/api/v1/', programs);
 app.use('/api/v1/', courses);
 app.use('/api/v1/', users);
-app.use("/api/v1/", signUp);
+// app.use("/api/v1/", signUp);
 
 // Authentication Routes
 app.use('/api/v1/', authRoutes);

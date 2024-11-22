@@ -19,7 +19,7 @@ export const getUserByUsername = async (username) => {
   }
 };
 
-export const createUser = async (userData) => {
+export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
   
   // Hash the password before storing
@@ -37,3 +37,13 @@ export const createUser = async (userData) => {
     throw err;
   }
 };
+
+// Delete a user
+export const deleteUserModel = async (id) => {
+  await connectToDB();
+  await pool
+    .request()
+    .input("id", sql.VarChar, id)
+    .query("DELETE FROM users WHERE id = @id");
+};
+

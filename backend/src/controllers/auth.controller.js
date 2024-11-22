@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { createUser, getUserByUsername } from '../models/users.model.js';
+import { createUserModel, getUserByUsername } from '../models/users.model.js';
 
 /**
  * User login controller.
@@ -52,7 +52,7 @@ export const register = async (req, res) => {
     }
 
     // Create new user
-    await createUser({ id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password });
+    await createUserModel({ id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password });
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
