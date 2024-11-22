@@ -4,13 +4,16 @@ import { isAdmin, getAllCourses, addCourse, updateCourse, deleteCourse } from '.
 
 const router = express.Router();
 
-router.use(authenticateToken); // Apply authentication middleware
-router.use(isAdmin); // Apply admin check middleware
+// Apply token authentication middleware first
+router.use(authenticateToken);
 
+// Apply admin check middleware to all admin routes
+router.use(isAdmin);
+
+// Admin-specific CRUD operations
 router.get('/courses', getAllCourses);
 router.post('/courses', addCourse);
 router.put('/courses/:courseId', updateCourse);
 router.delete('/courses/:courseId', deleteCourse);
 
 export default router;
-
