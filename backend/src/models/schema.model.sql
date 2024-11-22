@@ -364,16 +364,16 @@ VALUES (
         '1234'
     ),
     (
-        'SD926181',
+        'SD000005',
         0,
-        'Bia',
-        'Dias',
+        'Arshdeep',
+        'Kaur',
         '01011990',
         '1234567890',
-        'bia@bvc.com',
+        'arshdeep@bvc.com',
         'Software Development',
         'SD diploma',
-        'biadias',
+        'arshdeep',
         '1234'
     );
 
@@ -384,7 +384,7 @@ VALUES ('SD000001', 1),
     ('SD000002', 1),
     ('SD000003', 1),
     ('SD000004', 1),
-    ('SD926181', 1);
+    ('SD000005', 1);
 
 -- Insert data into the user_classes table
 

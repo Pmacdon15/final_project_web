@@ -1,13 +1,15 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import express from "express";
+import dotenv from "dotenv";
 // import sampleRoutes from './routes/sample.routes.js';
 import programs from './routes/programs.routes.js';
 import courses from './routes/courses.routes.js';
 import users from './routes/user.routes.js';
 import adminRoutes from './routes/admin.routes.js';
+import signUp from "./routes/signUp.routes.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+
 
 // Load .env file
 dotenv.config();
@@ -20,9 +22,8 @@ const app = express();
 app.use(express.json()); // Middleware for JSON parsing
 app.use(express.urlencoded({ extended: true })); // Middleware for form data (URL-encoded)
 
-
 // Serve static HTML files from the "public" folder (any file inside the public folder can be accessed by the browser directly)
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 // Use the user and order routes
 // app.use('/api/v1', sampleRoutes);
@@ -31,15 +32,16 @@ app.use(express.static('public'));
 app.use('/api/v1/', programs);
 app.use('/api/v1/', courses);
 app.use('/api/v1/', users);
+app.use("/api/v1/", signUp);
 app.use('/api/v1/admin', adminRoutes);
 
 // Default root route
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-app.get('/all-programs', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/programs.html'));
+app.get("/all-programs", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/programs.html"));
 });
 
 export default app;
