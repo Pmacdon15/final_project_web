@@ -9,11 +9,18 @@ export const getAllCoursesModel = async () => {
 
 // Add a new course
 export const addCourseModel = async (programId, name, description) => {
-  await sql.connect(config);
-  return await sql.query`
-    INSERT INTO courses (programId, name, description)
-    VALUES (${programId}, ${name}, ${description})
-  `;
+  try {
+    await sql.connect(config);
+    const result = await sql.query`
+      INSERT INTO courses (programId, name, description)
+      VALUES (${programId}, ${name}, ${description});
+      SELECT SCOPE_IDENTITY() AS insertId;
+    `;
+    return result;
+  } catch (err) {
+    console.error('Database error during course insertion:', err);
+    throw err;
+  }
 };
 
 // Update an existing course
