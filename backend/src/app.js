@@ -2,10 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 // import sampleRoutes from './routes/sample.routes.js';
 import programs from './routes/programs.routes.js';
-import courses from './routes/courses.routes.js';
+// import courses from './routes/courses.routes.js';
+import adminCoursesRoutes from './routes/adminCourses.routes.js';
 import users from './routes/users.routes.js';
-import adminRoutes from './routes/admin.routes.js';
-import signUp from "./routes/users.routes.js";
 import authRoutes from './routes/auth.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -27,20 +26,15 @@ app.use(express.urlencoded({ extended: true })); // Middleware for form data (UR
 // Serve static HTML files from the "public" folder (any file inside the public folder can be accessed by the browser directly)
 app.use(express.static("public"));
 
-// Use the user and order routes
-// app.use('/api/v1', sampleRoutes);
 
-// New Schema Routes
 app.use('/api/v1/', programs);
-app.use('/api/v1/', courses);
-app.use('/api/v1/', users);
-// app.use("/api/v1/", signUp);
 
 // Authentication Routes
 app.use('/api/v1/', authRoutes);
 
 // Protected Admin Routes
-app.use('/api/v1/admin', authenticateToken, adminRoutes); // **Apply Authentication Middleware**
+app.use('/api/v1/admin', authenticateToken,  adminCoursesRoutes); // **Apply Authentication Middleware**
+app.use('/api/v1/client', authenticateToken , users); 
 
 // Default root route
 app.get("/", (req, res) => {
