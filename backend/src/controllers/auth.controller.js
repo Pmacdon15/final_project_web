@@ -24,7 +24,7 @@ export const login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: user.id, isAdmin: user.isAdmin },
+      { id: results.id, isAdmin: results.isAdmin },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -59,10 +59,8 @@ export const register = async (req, res) => {
     }
 
     // Create new user
-    const results = await createUserModel({ id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password });
-    if (!results) {
-      return res.status(409).json({ error: 'Failed to create user' });
-    }
+    const user = await createUserModel({ id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password });
+    
     // Generate JWT token
     const token = jwt.sign(
       { id: user.id, isAdmin: user.isAdmin },
