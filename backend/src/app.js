@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import programs from './routes/programs.routes.js';
 // import courses from './routes/courses.routes.js';
 import adminCoursesRoutes from './routes/adminCourses.routes.js';
-import users from './routes/users.routes.js';
+import AdminUsersRoutes from './routes/AdminUsers.routes.js';
+import clientUsersRoutes from './routes/clientUsers.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -33,8 +34,10 @@ app.use('/api/v1/', programs);
 app.use('/api/v1/', authRoutes);
 
 // Protected Admin Routes
-app.use('/api/v1/admin', authenticateToken,  adminCoursesRoutes); // **Apply Authentication Middleware**
-app.use('/api/v1/client', authenticateToken , users); 
+app.use('/api/v1/admin', authenticateToken, adminCoursesRoutes); // **Apply Authentication Middleware**
+app.use('/api/v1/admin', authenticateToken, AdminUsersRoutes);
+
+app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 
 // Default root route
 app.get("/", (req, res) => {
