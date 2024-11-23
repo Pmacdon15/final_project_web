@@ -1,6 +1,4 @@
-import sql from 'mssql';
-import { config } from '../db/index.js'
-import { getAllProgramsModel, addProgramModel, updateProgramModel, removeProgramModel } from '../models/programs.model.js';
+import { getAllProgramsModel, addProgramModel, updateProgramModel, removeProgramModel } from '../models/adminPrograms.model.js';
 
 export const getAllPrograms = async (req, res) => {
   try {

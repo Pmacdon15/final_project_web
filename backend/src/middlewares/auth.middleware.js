@@ -6,13 +6,6 @@ import jwt from 'jsonwebtoken';
  */
 export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  
-  // Token is expected to be in the format "Bearer <token>"
-  // const token = authHeader && authHeader.split(' ')[1];
-  // console.log('Token:', token);
-  // if (!token) {
-  //   return res.status(401).json({ error: 'No token provided. Unauthorized access.' });
-  // }
 
   jwt.verify(authHeader, process.env.JWT_SECRET, (err, user) => {
     if (err) {
