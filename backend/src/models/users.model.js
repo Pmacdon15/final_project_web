@@ -73,10 +73,19 @@ export const updateUserModel = async (id, userData) => {
 
 // Delete a user
 export const deleteUserModel = async (id) => {
-  await connectToDB();
-  await pool
-    .request()
-    .input("id", sql.VarChar, id)
-    .query("DELETE FROM users WHERE id = @id");
+  await sql.connect(config);
+  try {
+    await sql.connect(config);
+    const result = await sql.query`
+      DELETE FROM users WHERE id = ${id}
+    `;
+   if (result.rowsAffected[0] === 0) {
+      throw new Error('User not found');
+    }
+    return result;
+  } catch (err) {
+    console.error('Error deleting user:', err);
+    throw err;
+  }
 };
 
