@@ -52,7 +52,7 @@ CREATE TABLE programs (
 CREATE TABLE courses (
     id INT IDENTITY (1, 1) PRIMARY KEY,
     programId INT,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
 );
