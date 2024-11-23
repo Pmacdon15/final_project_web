@@ -3,8 +3,8 @@ import { addUserCourse, removeUserCourse,  } from '../controllers/courses.contro
 
 const router = express.Router();
 
-router.post('/add-user-course/userId/:userId/courseId/:courseId/userTermId/:userTermId/termSeason/:termSeason', addUserCourse);
-router.delete('/remove-user-course/userId/:userId/courseId/:courseId', removeUserCourse);
+router.post('/courses/userId/:userId/courseId/:courseId/userTermId/:userTermId/termSeason/:termSeason', addUserCourse);
+router.delete('/courses/userId/:userId/courseId/:courseId', removeUserCourse);
 
 export default router;
 
