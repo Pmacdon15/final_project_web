@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { createUser, getUserByUsername } from '../models/users.model.js';
+import { createUserModel, getUserByUsername } from '../models/users.model.js';
 
 /**
  * User login controller.
@@ -29,6 +29,13 @@ export const login = async (req, res) => {
       { expiresIn: '1h' }
     );
 
+    // Set JWT token as a cookie
+    res.cookie('authorization', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      maxAge: 3600000 // 1 hour
+    });
+
     res.json({ token });
   } catch (err) {
     console.error('Error during login:', err);
@@ -52,7 +59,21 @@ export const register = async (req, res) => {
     }
 
     // Create new user
-    await createUser({ id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password });
+    const user = await createUserModel({ id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password });
+    
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: user.id, isAdmin: user.isAdmin },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    // Set JWT token as a cookie
+    res.cookie('authorization', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      maxAge: 3600000 // 1 hour
+    });
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {

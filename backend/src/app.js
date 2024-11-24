@@ -1,15 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
-// import sampleRoutes from './routes/sample.routes.js';
-import programs from './routes/programs.routes.js';
-import courses from './routes/courses.routes.js';
-import users from './routes/user.routes.js';
-import adminRoutes from './routes/admin.routes.js';
-import signUp from "./routes/signUp.routes.js";
+import adminPrograms from './routes/adminPrograms.routes.js';
+import adminCoursesRoutes from './routes/adminCourses.routes.js';
+import adminUsersRoutes from './routes/AdminUsers.routes.js';
+import clientCoursesRoutes from './routes/clientCourses.routes.js';
+import clientUsersRoutes from './routes/clientUsers.routes.js';
 import authRoutes from './routes/auth.routes.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+// import { fileURLToPath } from 'url';
+// import { dirname } from 'path';
 import { authenticateToken } from './middlewares/auth.middleware.js'; // **Import Middleware**
 
 
@@ -17,38 +15,24 @@ import { authenticateToken } from './middlewares/auth.middleware.js'; // **Impor
 dotenv.config();
 
 // Setup for __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url); // Converts the URL of the current module (import.meta.url) into a file path.
-const __dirname = dirname(__filename); // Extracts the directory path of the current file.
+// const __filename = fileURLToPath(import.meta.url); // Converts the URL of the current module (import.meta.url) into a file path.
+// const __dirname = dirname(__filename); // Extracts the directory path of the current file.
 
 const app = express();
 app.use(express.json()); // Middleware for JSON parsing
 app.use(express.urlencoded({ extended: true })); // Middleware for form data (URL-encoded)
 
-// Serve static HTML files from the "public" folder (any file inside the public folder can be accessed by the browser directly)
-app.use(express.static("public"));
-
-// Use the user and order routes
-// app.use('/api/v1', sampleRoutes);
-
-// New Schema Routes
-app.use('/api/v1/', programs);
-app.use('/api/v1/', courses);
-app.use('/api/v1/', users);
-app.use("/api/v1/", signUp);
-
 // Authentication Routes
 app.use('/api/v1/', authRoutes);
 
 // Protected Admin Routes
-app.use('/api/v1/admin', authenticateToken, adminRoutes); // **Apply Authentication Middleware**
+app.use('/api/v1/admin', authenticateToken, adminUsersRoutes); // **Apply Authentication Middleware**
+app.use('/api/v1/admin', authenticateToken, adminCoursesRoutes);
+app.use('/api/v1/admin', authenticateToken, adminPrograms);
 
-// Default root route
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"));
-});
+// Protected Client Routes
+app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
+app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
 
-app.get("/all-programs", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/programs.html"));
-});
 
 export default app;

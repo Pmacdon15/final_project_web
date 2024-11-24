@@ -52,7 +52,7 @@ CREATE TABLE programs (
 CREATE TABLE courses (
     id INT IDENTITY (1, 1) PRIMARY KEY,
     programId INT,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
 );
@@ -108,7 +108,7 @@ CREATE TABLE user_programs (
 CREATE TABLE user_courses (
     id INT IDENTITY (1, 1) PRIMARY KEY,
     userId VARCHAR(10) NOT NULL,
-    courseId INT NOT NULL,
+    courseId INT NOT NULL UNIQUE,
     userTermId INT NOT NULL,
     termSeasonId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES users (id),
@@ -402,3 +402,4 @@ VALUES ('SD000001', 1, 1, 1),
     ('SD000001', 5, 1, 1),
     ('SD000001', 6, 2, 2);
 
+select * from user_courses

@@ -19,7 +19,19 @@ export const getUserByUsername = async (username) => {
   }
 };
 
-export const createUser = async (userData) => {
+export const getAllUsersModel = async () => { 
+  await sql.connect(config);
+  const result = await sql.query`SELECT * FROM users`;
+  return result.recordset;
+};
+
+export const getUserByIdModel = async (id) => {
+  await sql.connect(config);
+  const result = await sql.query`SELECT * FROM users WHERE id = ${id}`;
+  return result.recordset[0];
+}
+
+export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
   
   // Hash the password before storing
@@ -37,3 +49,43 @@ export const createUser = async (userData) => {
     throw err;
   }
 };
+
+//Update  by ID
+export const updateUserModel = async (id, userData) => {
+  const { isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
+  
+  // Hash the password before storing
+  const hashedPassword = await bcrypt.hash(password, 10);
+  
+  try {
+    await sql.connect(config);
+    const result = await sql.query`
+      UPDATE users
+      SET isAdmin = ${isAdmin}, firstName = ${firstName}, lastName = ${lastName}, birthday = ${birthday}, phone = ${phone}, email = ${email}, department = ${department}, program = ${program}, username = ${username}, password = ${hashedPassword}
+      WHERE id = ${id}
+    `;
+    return result;
+  } catch (err) {
+    console.error('Error updating user:', err);
+    throw err;
+  }
+};
+
+// Delete a user
+export const deleteUserModel = async (id) => {
+  await sql.connect(config);
+  try {
+    await sql.connect(config);
+    const result = await sql.query`
+      DELETE FROM users WHERE id = ${id}
+    `;
+   if (result.rowsAffected[0] === 0) {
+      throw new Error('User not found');
+    }
+    return result;
+  } catch (err) {
+    console.error('Error deleting user:', err);
+    throw err;
+  }
+};
+
