@@ -1,3 +1,4 @@
+import asyncHandler from '../utils/asyncHandler.js';
 import { getAllCoursesModel, addCourseModel, updateCourseModel, deleteCourseModel } from '../models/admin.model.js';
 
 /**
@@ -15,58 +16,37 @@ export const isAdmin = (req, res, next) => {
   }
   next();
 };
-  
 
 // Get all courses
-export const getAllCourses = async (req, res) => {
-  try {
-    const result = await getAllCoursesModel();
-    res.status(200).json(result.recordset);
-  } catch (err) {
-    console.error('Error fetching courses:', err);
-    res.status(500).json({ error: 'Failed to fetch courses' });
-  }
-};
+export const getAllCourses = asyncHandler(async (req, res) => {
+  const result = await getAllCoursesModel();
+  res.status(200).json(result.recordset);
+});
 
 // Add a new course
-export const addCourse = async (req, res) => {
+export const addCourse = asyncHandler(async (req, res) => {
   const { programId, name, description } = req.body;
-  try {
-    const result = await addCourseModel(programId, name, description);
-    res.status(201).json({ message: 'Course added successfully', courseId: result.recordset.insertId });
-  } catch (err) {
-    console.error('Error adding course:', err);
-    res.status(500).json({ error: 'Failed to add course' });
-  }
-};
+  const result = await addCourseModel(programId, name, description);
+  res.status(201).json({ message: 'Course added successfully', courseId: result.recordset.insertId });
+});
 
 // Update an existing course
-export const updateCourse = async (req, res) => {
+export const updateCourse = asyncHandler(async (req, res) => {
   const { courseId } = req.params;
   const { programId, name, description } = req.body;
-  try {
-    const result = await updateCourseModel(courseId, programId, name, description);
-    if (result.rowsAffected[0] === 0) {
-      return res.status(404).json({ error: 'Course not found' });
-    }
-    res.status(200).json({ message: 'Course updated successfully' });
-  } catch (err) {
-    console.error('Error updating course:', err);
-    res.status(500).json({ error: 'Failed to update course' });
+  const result = await updateCourseModel(courseId, programId, name, description);
+  if (result.rowsAffected[0] === 0) {
+    return res.status(404).json({ error: 'Course not found' });
   }
-};
+  res.status(200).json({ message: 'Course updated successfully' });
+});
 
 // Delete a course
-export const deleteCourse = async (req, res) => {
+export const deleteCourse = asyncHandler(async (req, res) => {
   const { courseId } = req.params;
-  try {
-    const result = await deleteCourseModel(courseId);
-    if (result.rowsAffected[0] === 0) {
-      return res.status(404).json({ error: 'Course not found' });
-    }
-    res.status(200).json({ message: 'Course deleted successfully' });
-  } catch (err) {
-    console.error('Error deleting course:', err);
-    res.status(500).json({ error: 'Failed to delete course' });
+  const result = await deleteCourseModel(courseId);
+  if (result.rowsAffected[0] === 0) {
+    return res.status(404).json({ error: 'Course not found' });
   }
-};
+  res.status(200).json({ message: 'Course deleted successfully' });
+});

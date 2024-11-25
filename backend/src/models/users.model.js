@@ -3,10 +3,10 @@ import { config } from '../db/index.js';
 import bcrypt from 'bcrypt';
 
 export const getUserModel = async (userId) => {
-    await sql.connect(config);
-    const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
-    return result;
-}
+  await sql.connect(config);
+  const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
+  return result;
+};
 
 export const getUserByUsername = async (username) => {
   try {
@@ -19,7 +19,7 @@ export const getUserByUsername = async (username) => {
   }
 };
 
-export const getAllUsersModel = async () => { 
+export const getAllUsersModel = async () => {
   await sql.connect(config);
   const result = await sql.query`SELECT * FROM users`;
   return result.recordset;
@@ -29,14 +29,14 @@ export const getUserByIdModel = async (id) => {
   await sql.connect(config);
   const result = await sql.query`SELECT * FROM users WHERE id = ${id}`;
   return result.recordset[0];
-}
+};
 
 export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
-  
+
   // Hash the password before storing
   const hashedPassword = await bcrypt.hash(password, 10);
-  
+
   try {
     await sql.connect(config);
     const result = await sql.query`
@@ -50,13 +50,13 @@ export const createUserModel = async (userData) => {
   }
 };
 
-//Update  by ID
+// Update user by ID
 export const updateUserModel = async (id, userData) => {
   const { isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
-  
+
   // Hash the password before storing
   const hashedPassword = await bcrypt.hash(password, 10);
-  
+
   try {
     await sql.connect(config);
     const result = await sql.query`
@@ -75,11 +75,10 @@ export const updateUserModel = async (id, userData) => {
 export const deleteUserModel = async (id) => {
   await sql.connect(config);
   try {
-    await sql.connect(config);
     const result = await sql.query`
       DELETE FROM users WHERE id = ${id}
     `;
-   if (result.rowsAffected[0] === 0) {
+    if (result.rowsAffected[0] === 0) {
       throw new Error('User not found');
     }
     return result;
@@ -89,3 +88,24 @@ export const deleteUserModel = async (id) => {
   }
 };
 
+// Update user password
+export const updateUserPasswordModel = async (id, newPassword) => {
+  // Hash the new password
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  try {
+    await sql.connect(config);
+    const result = await sql.query`
+      UPDATE users
+      SET password = ${hashedPassword}
+      WHERE id = ${id}
+    `;
+    if (result.rowsAffected[0] === 0) {
+      throw new Error('User not found or password not updated');
+    }
+    return result;
+  } catch (err) {
+    console.error('Error updating password:', err);
+    throw err;
+  }
+};

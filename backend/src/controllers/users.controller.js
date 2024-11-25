@@ -1,3 +1,4 @@
+import asyncHandler from '../utils/asyncHandler.js';
 import {
   getAllUsersModel,
   getUserByIdModel,
@@ -6,60 +7,39 @@ import {
 } from "../models/users.model.js";
 
 // Get all users
-export const getAllUsers = async (req, res) => {
-  try {
-    const users = await getAllUsersModel();
-    res.status(200).json(users);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error retrieving users", error: error.message });
-  }
-};
+export const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await getAllUsersModel();
+  res.status(200).json(users);
+});
 
 // Get a user by ID
-export const getUserById = async (req, res) => {
-  try {
-    const user = await getUserByIdModel(req.params.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.status(200).json(user);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error retrieving user", error: error.message });
+export const getUserById = asyncHandler(async (req, res) => {
+  const user = await getUserByIdModel(req.params.id);
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+    return;
   }
-};
+  res.status(200).json(user);
+});
 
 // Create a new user
-export const createUser = async (req, res) => {
-  try {
-    await createUserModel(req.body);
-    res.status(201).json({ message: "User created successfully" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating user", error: error.message });
-  }
-};
+export const createUser = asyncHandler(async (req, res) => {
+  await createUserModel(req.body);
+  res.status(201).json({ message: "User created successfully" });
+});
 
 // Update a user
-export const updateUser = async (req, res) => {
-  try {
-    await getUserByIdModel(req.params.id, req.body);
-    res.status(200).json({ message: "User updated successfully" });
-  } catch (error) {
-    res.status(404).json({ message: "User not found", error: error.message });
+export const updateUser = asyncHandler(async (req, res) => {
+  const updatedUser = await getUserByIdModel(req.params.id, req.body);
+  if (!updatedUser) {
+    res.status(404).json({ message: "User not found" });
+    return;
   }
-};
+  res.status(200).json({ message: "User updated successfully" });
+});
 
 // Delete a user
-export const deleteUser = async (req, res) => {
-  try {
-    await deleteUserModel(req.params.id);
-    res.status(200).json({ message: "User deleted successfully" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error deleting user", error: error.message });
-  }
-};
+export const deleteUser = asyncHandler(async (req, res) => {
+  await deleteUserModel(req.params.id);
+  res.status(200).json({ message: "User deleted successfully" });
+});
