@@ -1,4 +1,8 @@
-import express from "express";
+import express, {urlencoded, json} from "express";
+import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
+import cors from 'cors'
+import dotenv from 'dotenv';
 import dotenv from "dotenv";
 import adminPrograms from './routes/adminPrograms.routes.js';
 import adminCoursesRoutes from './routes/adminCourses.routes.js';
@@ -24,11 +28,58 @@ dotenv.config();
 // const __dirname = dirname(__filename); // Extracts the directory path of the current file.
 
 const app = express();
-app.use(express.json()); // Middleware for JSON parsing
-app.use(express.urlencoded({ extended: true })); // Middleware for form data (URL-encoded)
+
+// Middleware for rate-limiting requests
+// Protects the server against excessive requests (e.g., DoS attacks).
+const limiter = rateLimit({
+    limit: 100, // Maximum number of requests allowed per IP
+    windowMs: 15 * 60 * 1000, // 15-minute window
+    message: "Too many requests from this IP address, please try again later", // Response message for rate-limiting
+    headers: true // Include rate limit headers in the response
+  });
+  
+// Serve static HTML files from the "public" folder (any file inside the public folder can be accessed by the browser directly)
+app.use(express.static('public'));
+
+
+// Middleware for JSON parsing with size limits
+app.use(json({
+    limit: "16kb", // Maximum size of the JSON body
+    extended: true
+  }));
+  
+  // Middleware for URL-encoded form data with size limits
+  app.use(urlencoded({
+    limit: "16kb", // Maximum size of form data
+    extended: true
+  }));
+  
+
+// Middleware for enabling Cross-Origin Resource Sharing (CORS)
+// Allows restricted resources to be accessed by client applications from a different domain
+app.use(cors({
+    origin: process.env.CORS_ORIGIN, // Allow requests from this specific origin
+    credentials: true // Allow credentials (e.g., cookies) to be included in requests
+  }));
+
+
+  // Middleware for parsing cookies
+// Makes cookies sent by the client available in `req.cookies`
+app.use(cookieParser());
+
+app.use(limiter);
 
 // Authentication Routes
 app.use('/api/v1/', authRoutes);
+
+// Handle the errors
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+      error: err.message || "Internal Server Error",
+    });
+  });
+  
 
 // Protected Admin Routes
 app.use('/api/v1/admin', authenticateToken, adminUsersRoutes); // **Apply Authentication Middleware**

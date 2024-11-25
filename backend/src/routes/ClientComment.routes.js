@@ -1,12 +1,19 @@
-import express from "express";
-import { createNewUserComment} from "../controllers/clientComment.controller.js";
-import { commentRateLimiter} from "../middlewares/comment.middleware.js";
-
+import express from 'express';
+import {
+  createNewUserComment,
+  updateUserComment,
+  deleteUserComment
+} from '../controllers/clientComment.controller.js';
 
 const router = express.Router();
 
-router.post("/comment", commentRateLimiter, createNewUserComment);
+// Route to create a new user comment
+router.post('/comments', createNewUserComment);
 
+// Route to update an existing user comment by ID
+router.put('/comments/:commentId', updateUserComment);
 
+// Route to delete a user comment by ID
+router.delete('/comments/:commentId', deleteUserComment);
 
 export default router;
