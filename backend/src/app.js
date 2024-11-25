@@ -5,7 +5,12 @@ import adminCoursesRoutes from './routes/adminCourses.routes.js';
 import adminUsersRoutes from './routes/AdminUsers.routes.js';
 import clientCoursesRoutes from './routes/clientCourses.routes.js';
 import clientUsersRoutes from './routes/clientUsers.routes.js';
+import clientCommentRoutes from './routes/ClientComment.routes.js';
+import adminCommentsRoutes from './routes/adminComment.routes.js';
+
 import authRoutes from './routes/auth.routes.js';
+
+
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 import { authenticateToken } from './middlewares/auth.middleware.js'; // **Import Middleware**
@@ -29,10 +34,13 @@ app.use('/api/v1/', authRoutes);
 app.use('/api/v1/admin', authenticateToken, adminUsersRoutes); // **Apply Authentication Middleware**
 app.use('/api/v1/admin', authenticateToken, adminCoursesRoutes);
 app.use('/api/v1/admin', authenticateToken, adminPrograms);
+app.use('/api/v1/admin', authenticateToken, adminCommentsRoutes);
 
 // Protected Client Routes
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
+app.use('/api/v1/client', authenticateToken, clientCommentRoutes);
+
 
 
 export default app;
