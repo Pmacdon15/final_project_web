@@ -3,7 +3,6 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
 import dotenv from 'dotenv';
-import dotenv from "dotenv";
 import adminPrograms from './routes/adminPrograms.routes.js';
 import adminCoursesRoutes from './routes/adminCourses.routes.js';
 import adminUsersRoutes from './routes/AdminUsers.routes.js';
