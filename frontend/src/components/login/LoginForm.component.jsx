@@ -26,7 +26,6 @@ export default function LoginForm({ loginType }) {
             window.location.href = '/admin/dashboard';
             return;
         }
-
         window.location.href = '/student/dashboard';
     }
 
@@ -44,15 +43,14 @@ export default function LoginForm({ loginType }) {
 
     const { vertical, horizontal, open, errorMessage } = toastState;
 
-    function handleLogin(event) {
+    async function handleLogin(event) {
         event.preventDefault();
 
         const username = event.target.userEmail.value;
         const password = event.target.password.value;
 
         try {
-            const userExists = handleLoginAction(username, password);
-
+            const userExists = await handleLoginAction(username, password);            
             if (!userExists) {
                 setToastState(oldState => ({
                     ...oldState,
@@ -66,7 +64,8 @@ export default function LoginForm({ loginType }) {
                     open: false,
                     errorMessage: ''
                 }));
-
+                
+                // await new Promise(resolve => setTimeout(resolve, 10000));
                 //Should redirect the user to the homepage
                 if (userExists.isAdmin) {
                     window.location.href = `/admin/all-programs`;

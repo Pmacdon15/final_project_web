@@ -35,13 +35,13 @@ export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
 
   // Hash the password before storing
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     await sql.connect(config);
     const result = await sql.query`
       INSERT INTO users (id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password)
-      VALUES (${id}, ${isAdmin}, ${firstName}, ${lastName}, ${birthday}, ${phone}, ${email}, ${department}, ${program}, ${username}, ${hashedPassword})
+      VALUES (${id}, ${isAdmin}, ${firstName}, ${lastName}, ${birthday}, ${phone}, ${email}, ${department}, ${program}, ${username}, ${password})
     `;
     return result;
   } catch (err) {

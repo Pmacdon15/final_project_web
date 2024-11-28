@@ -1,39 +1,34 @@
-// import users from './user.data.json';
-import { LoadUserData } from "../load-data/loadData.action";
-const users = LoadUserData();
 
-function handleLogin(username, password) {
+async function handleLogin(username, password) {
     if (!username || !password) {
         throw new Error('Username and Password should not be empty !');
     }
 
-    const userExists = users.find(function (user) {
-        if (user.email === username && user.password === password) {
-            return true;
-        }
+    console.log(username, password);
+    try {
+        const login = await fetch('http://localhost:5000/api/v1/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "username": username, "password": password }),
+            credentials: 'include'
+        });
 
-        return false;
-    });
 
-    if (!userExists) {
-        return false;
+        const responseData = await login.json();
+        return {
+            name: responseData.user.username,
+            isAdmin: responseData.user.isAdmin
+        };
+
+        // console.log(response);
+    } catch (error) {
+        console.log(error);
     }
 
-    //set user information to session storage
-    sessionStorage.setItem(
-        'BVC_Session',
-        JSON.stringify({
-            name: userExists.name,
-            isAdmin: userExists.isAdmin,
-            id: userExists.id,
-            email: userExists.email
-        })
-    );
 
-    return {
-        name: userExists.name,
-        isAdmin: userExists.isAdmin
-    };
+
 }
 
 export default handleLogin;

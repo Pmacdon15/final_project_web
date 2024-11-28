@@ -33,41 +33,41 @@ function App() {
                     <Route
                         path="dashboard"
                         element={
-                            <RouteWrapper>
+                            // <RouteWrapper>
                                 <StudentPortalDashboard />
-                            </RouteWrapper>
+                            //{/* </RouteWrapper> */}
                         }
                     />
                     <Route
                         path="all-programs"
                         element={
-                            <RouteWrapper>
+                            // <RouteWrapper>
                                 <StudentPortalAllPrograms />
-                            </RouteWrapper>
+                            //{/* </RouteWrapper> */}
                         }
                     />
                     <Route
                         path="all-classes"
                         element={
-                            <RouteWrapper>
+                            // <RouteWrapper>
                                 <StudentPortalAllClasses />
-                            </RouteWrapper>
+                            //{/* </RouteWrapper> */}
                         }
                     />
                     <Route
                         path="my-classes"
                         element={
-                            <RouteWrapper>
+                            // <RouteWrapper>
                                 <StudentPortalMyClasses />
-                            </RouteWrapper>
+                            //{/* </RouteWrapper> */}
                         }
                     />
                     <Route
                         path="comments"
                         element={
-                            <RouteWrapper>
+                            // <RouteWrapper>
                                 <StudentPortalComments />
-                            </RouteWrapper>
+                            //{/* </RouteWrapper> */}
                         }
                     />
                 </Route>
@@ -76,41 +76,41 @@ function App() {
                     <Route
                         path="dashboard"
                         element={
-                            <RouteWrapper adminOnly>
+                            // <RouteWrapper adminOnly>
                                 <AdminPortalDashBoard />
-                            </RouteWrapper>
+                            // </RouteWrapper> 
                         }
                     />
                     <Route
                         path="view-students"
                         element={
-                            <RouteWrapper adminOnly>
+                            //<RouteWrapper adminOnly>
                                 <AdminPortalViewStudents />
-                            </RouteWrapper>
+                            //</RouteWrapper>
                         }
                     />
                     <Route
                         path="comments"
                         element={
-                            <RouteWrapper adminOnly>
+                            //<RouteWrapper adminOnly>
                                 <AdminPortalComments />
-                            </RouteWrapper>
+                           // </RouteWrapper>
                         }
                     />
                     <Route
                         path="all-programs"
                         element={
-                            <RouteWrapper adminOnly>
+                           // <RouteWrapper adminOnly>
                                 <AdminPortalAllPrograms  />
-                            </RouteWrapper>
+                            //</RouteWrapper>
                         }
                     />
                     <Route
                         path="all-classes"
                         element={
-                            <RouteWrapper adminOnly>
+                            //<RouteWrapper adminOnly>
                                 <AdminPortalAllClasses />
-                            </RouteWrapper>
+                            //</RouteWrapper>
                         }
                     />
                 </Route>

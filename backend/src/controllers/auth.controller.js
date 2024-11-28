@@ -11,14 +11,14 @@ export const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   // Fetch user by username
-  const user = await getUserByUsername(username);
+  let user = await getUserByUsername(username);
   if (!user) {
     res.status(401).json({ error: 'Invalid credentials' });
     return;
   }
 
   // Compare passwords
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(password, user.password);  
   if (!isPasswordValid) {
     res.status(401).json({ error: 'Invalid credentials' });
     return;
@@ -37,8 +37,8 @@ export const login = asyncHandler(async (req, res) => {
     secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
     maxAge: 3600000, // 1 hour
   });
-
-  res.status(200).json({ message: 'Login successful', token });
+  user = { ...user, password: undefined }
+  res.status(200).json({ user: user, message: 'Login successful', token });
 });
 
 /**
@@ -72,6 +72,8 @@ export const register = asyncHandler(async (req, res) => {
     username,
     password: hashedPassword,
   });
+
+  // console.log(user);
 
   // Generate JWT token
   const token = jwt.sign(

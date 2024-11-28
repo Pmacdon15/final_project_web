@@ -402,4 +402,6 @@ VALUES ('SD000001', 1, 1, 1),
     ('SD000001', 5, 1, 1),
     ('SD000001', 6, 2, 2);
 
-select * from user_courses
+select * from users;
+
+SELECT * FROM users WHERE username = 'admin12'
