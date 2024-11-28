@@ -34,18 +34,39 @@ export const removeCourse = asyncHandler(async (req, res) => {
 // Add User Course
 export const addUserCourse = asyncHandler(async (req, res) => {
   const { userId, courseId, userTermId, termSeason } = req.params;
-  console.log("addUserCourse called");
-  console.log("userId:", userId);
 
-  const result = await addUserCourseModel(userId, courseId, userTermId, termSeason);
-  console.log("Query result:", result);
+  const enrolledCourses = await getUserCourseModel(userId);
 
-  if (result.rowsAffected[0] === 0) {
-    res.status(404).json({ error: "User course not added" });
+  const coursesCountByTerm = enrolledCourses.recordset.reduce(
+    (acc, current) => {
+      acc[current.userTermId] = ++acc[current.userTermId] || 1;
+      return acc;
+    },
+    {}
+  );
+
+  console.log(coursesCountByTerm);
+
+  if (coursesCountByTerm[userTermId] >= 5) {
+    res
+      .status(403)
+      .json({ error: 'You have reached the maximum courses by term.' });
     return;
   }
 
-  res.status(201).json({ message: "User course added successfully" });
+  const result = await addUserCourseModel(
+    userId,
+    courseId,
+    userTermId,
+    termSeason
+  );
+
+  if (result.rowsAffected[0] === 0) {
+    res.status(404).json({ error: 'User course not added' });
+    return;
+  }
+
+  res.status(201).json({ message: 'User course added successfully' });
 });
 
 // Remove User Course
@@ -59,5 +80,12 @@ export const removeUserCourse = asyncHandler(async (req, res) => {
     return;
   }
 
-  res.status(200).json({ message: "User course removed successfully" });
+
+export const getUserCourses = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+  console.log('getUserCourses called', userId);
+
+  const result = await getUserCourseModel(userId);
+
+  res.status(200).json(result.recordset);
 });
