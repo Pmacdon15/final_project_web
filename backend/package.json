@@ -21,5 +21,9 @@
     "mssql": "^11.0.1",
     "nodemon": "^3.1.7"
   },
-  "type": "module"
+  "type": "module",
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
 }
