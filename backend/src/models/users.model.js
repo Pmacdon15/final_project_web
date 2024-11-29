@@ -44,11 +44,25 @@ export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
 
   try {
-    await sql.connect(config);
-    const result = await sql.query`
-      INSERT INTO users (id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password)
-      VALUES (${id}, ${isAdmin}, ${firstName}, ${lastName}, ${birthday}, ${phone}, ${email}, ${department}, ${program}, ${username}, ${password})
-    `;
+    //await sql.connect(config);
+    //const result = await sql.query`
+    //  INSERT INTO users (id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password)
+    //  VALUES (${id}, ${isAdmin}, ${firstName}, ${lastName}, ${birthday}, ${phone}, ${email}, ${department}, ${program}, ${username}, ${password})
+    //`;
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('id', sql.VarChar, id) // Bind user input safely
+      .input('isAdmin', sql.Bit, isAdmin) // Bind user input safely
+      .input('firstName', sql.VarChar, firstName) // Bind user input safely
+      .input('lastName', sql.VarChar, lastName) // Bind user input safely
+      .input('birthday', sql.VarChar, birthday) // Bind user input safely
+      .input('phone', sql.VarChar, phone) // Bind user input safely
+      .input('email', sql.VarChar, email) // Bind user input safely
+      .input('department', sql.VarChar, department) // Bind user input safely
+      .input('program', sql.VarChar, program) // Bind user input safely
+      .input('username', sql.VarChar, username) // Bind user input safely
+      .input('password', sql.VarChar, password) // Bind user input safely
+      .query('INSERT INTO users (id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password) VALUES (@id, @isAdmin, @firstName, @lastName, @birthday, @phone, @email, @department, @program, @username, @password)'); // Execute secure query
     return result;
   } catch (err) {
     console.error('Error creating user:', err);
@@ -79,11 +93,15 @@ export const updateUserModel = async (id, userData) => {
 
 // Delete a user
 export const deleteUserModel = async (id) => {
-  await sql.connect(config);
+  //await sql.connect(config);
+  const pool = await poolPromise;
   try {
-    const result = await sql.query`
-      DELETE FROM users WHERE id = ${id}
-    `;
+    //const result = await sql.query`
+    //  DELETE FROM users WHERE id = ${id}
+    //`;
+    const result = await pool.request()
+    .input('id', sql.VarChar, id) // Bind user input safely
+    .query('DELETE FROM users WHERE id = @id'); // Execute secure query
     if (result.rowsAffected[0] === 0) {
       throw new Error('User not found');
     }
