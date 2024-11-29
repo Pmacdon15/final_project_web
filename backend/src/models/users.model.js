@@ -1,6 +1,7 @@
 import sql from 'mssql';
 import { config } from '../db/index.js';
 import bcrypt from 'bcrypt';
+import { poolPromise } from '../db/index.js';
 
 export const getUserModel = async (userId) => {
   await sql.connect(config);
@@ -26,8 +27,12 @@ export const getAllUsersModel = async () => {
 };
 
 export const getUserByIdModel = async (id) => {
-  await sql.connect(config);
-  const result = await sql.query`SELECT * FROM users WHERE id = ${id}`;
+  //await sql.connect(config);
+  //const result = await sql.query`SELECT * FROM users WHERE id = ${id}`;
+  const pool = await poolPromise;
+  const result = await pool.request()
+    .input('id', sql.VarChar, id)
+    .query('SELECT * FROM users WHERE id = @id');
   return result.recordset[0];
 };
 
