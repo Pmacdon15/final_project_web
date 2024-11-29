@@ -3,16 +3,20 @@ import { config } from '../db/index.js';
 import bcrypt from 'bcrypt';
 import { poolPromise } from '../db/index.js';
 
-export const getUserModel = async (userId) => {
-  await sql.connect(config);
-  const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
-  return result;
-};
+//export const getUserModel = async (userId) => {
+//  await sql.connect(config);
+//  const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
+//  return result;
+//};
 
 export const getUserByUsername = async (username) => {
   try {
-    await sql.connect(config);
-    const result = await sql.query`SELECT * FROM users WHERE username = ${username}`;
+    //await sql.connect(config);
+    //const result = await sql.query`SELECT * FROM users WHERE username = ${username}`;
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('username', sql.VarChar, username) // Bind user input safely
+      .query('SELECT * FROM users WHERE username = @username'); // Execute secure query
     return result.recordset[0] || null;
   } catch (err) {
     console.error('Error fetching user by username:', err);
@@ -31,8 +35,8 @@ export const getUserByIdModel = async (id) => {
   //const result = await sql.query`SELECT * FROM users WHERE id = ${id}`;
   const pool = await poolPromise;
   const result = await pool.request()
-    .input('id', sql.VarChar, id)
-    .query('SELECT * FROM users WHERE id = @id');
+    .input('id', sql.VarChar, id) // Bind user input safely
+    .query('SELECT * FROM users WHERE id = @id'); // Execute secure query
   return result.recordset[0];
 };
 
