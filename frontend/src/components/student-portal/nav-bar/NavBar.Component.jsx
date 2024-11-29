@@ -21,8 +21,8 @@ const commonPages = ['All Programs', 'All Classes', 'Comments'];
 
 const guestPages = [...commonPages];
 
-const adminPages = ['Dashboard', 'View Students', ...commonPages];
-const studentPages = ['Dashboard', 'My Classes', ...commonPages];
+const adminPages = [ 'View Students', ...commonPages];
+const studentPages = [ 'My Classes', ...commonPages];
 
 function NavBar({ isAdminPage = false, isGuest = false }) {
     const currentUser = JSON.parse(sessionStorage.getItem('BVC_Session'));

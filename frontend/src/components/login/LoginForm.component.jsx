@@ -23,7 +23,7 @@ export default function LoginForm({ loginType }) {
     //Prevent authenticated user from accessing this page
     if (currentUser) {
         if (currentUser.isAdmin) {
-            window.location.href = '/admin/dashboard';
+            window.location.href = 'admin/all-programs';
             return;
         }
         window.location.href = '/student/dashboard';
@@ -50,7 +50,8 @@ export default function LoginForm({ loginType }) {
         const password = event.target.password.value;
 
         try {
-            const userExists = await handleLoginAction(username, password);            
+            const userExists = await handleLoginAction(username, password);
+            // console.log(userExists);            
             if (!userExists) {
                 setToastState(oldState => ({
                     ...oldState,
@@ -64,7 +65,7 @@ export default function LoginForm({ loginType }) {
                     open: false,
                     errorMessage: ''
                 }));
-                
+
                 // await new Promise(resolve => setTimeout(resolve, 10000));
                 //Should redirect the user to the homepage
                 if (userExists.isAdmin) {

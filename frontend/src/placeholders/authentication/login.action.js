@@ -3,8 +3,7 @@ async function handleLogin(username, password) {
     if (!username || !password) {
         throw new Error('Username and Password should not be empty !');
     }
-
-    console.log(username, password);
+    
     try {
         const login = await fetch('http://localhost:5000/api/v1/auth/login', {
             method: 'POST',
@@ -15,8 +14,9 @@ async function handleLogin(username, password) {
             credentials: 'include'
         });
 
-
         const responseData = await login.json();
+        sessionStorage.setItem('BVC_Session', JSON.stringify({ firstName: responseData.user.username, isAdmin: responseData.user.isAdmin }));        
+        
         return {
             name: responseData.user.username,
             isAdmin: responseData.user.isAdmin

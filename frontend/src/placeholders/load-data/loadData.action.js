@@ -1,4 +1,4 @@
-import programs from "./programs.data.json";
+
 // import userPrograms from '../load-data/userPrograms.data.json';
 import allClasses from "./allClasses.data.json";
 import userClasses from "./userClasses.data.json";
@@ -6,25 +6,25 @@ import userData from "../authentication/user.data.json";
 
 //MARK: Program data 
 
-function LoadAllProgramsToLocalStorage() {
-  const existingPrograms =
-    JSON.parse(localStorage.getItem("allPrograms")) || [];
-  const newPrograms = programs.filter(
-    (newProgram) =>
-      existingPrograms &&
-      !existingPrograms.some(
-        (existingProgram) => existingProgram.id === newProgram.id
-      )
-  );
-  const updatedPrograms = [...existingPrograms, ...newPrograms];
-  if (existingPrograms.length === 0) {
-    localStorage.setItem("allPrograms", JSON.stringify(updatedPrograms));
-    console.log("Programs loaded to local storage without duplicates");
-  }
-  console.log("Programs loaded to local storage without duplicates");
-}
+// function LoadAllProgramsToLocalStorage() {
+//   const existingPrograms =
+//     JSON.parse(localStorage.getItem("allPrograms")) || [];
+//   const newPrograms = programs.filter(
+//     (newProgram) =>
+//       existingPrograms &&
+//       !existingPrograms.some(
+//         (existingProgram) => existingProgram.id === newProgram.id
+//       )
+//   );
+//   const updatedPrograms = [...existingPrograms, ...newPrograms];
+//   if (existingPrograms.length === 0) {
+//     localStorage.setItem("allPrograms", JSON.stringify(updatedPrograms));
+//     console.log("Programs loaded to local storage without duplicates");
+//   }
+//   console.log("Programs loaded to local storage without duplicates");
+// }
 
-LoadAllProgramsToLocalStorage();
+// LoadAllProgramsToLocalStorage();
 
 // function LoadAllPrograms() {
 //   const storedPrograms = localStorage.getItem("allPrograms");
