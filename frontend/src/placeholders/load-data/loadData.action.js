@@ -74,15 +74,39 @@ async function AddProgram(program) {
   } 
 }
 
+async function EditProgramInLocalStorage(updatedProgram) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/programs`, {
+      method: "UPDATE",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedProgram),
+      credentials: "include",
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-function EditProgramInLocalStorage(updatedProgram) {
-  const existingPrograms = LoadAllPrograms() || [];
-  const updatedPrograms = existingPrograms.map((program) =>
-    program.id === updatedProgram.id ? updatedProgram : program
-  );
-  localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
-  console.log('Program edited in local storage');
+    const newProgram = await response.json();
+    console.log('Program added: '+newProgram);
+    return newProgram;
+  } catch (error) {
+    console.error("Failed to add program:", error);
+    return null;
+  } 
 }
+
+
+// function EditProgramInLocalStorage(updatedProgram) {
+//   const existingPrograms = LoadAllPrograms() || [];
+//   const updatedPrograms = existingPrograms.map((program) =>
+//     program.id === updatedProgram.id ? updatedProgram : program
+//   );
+//   localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
+//   console.log('Program edited in local storage');
+// }
 
 async function DeleteProgram(programId) {
   try {
