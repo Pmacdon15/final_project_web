@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { AddProgramToLocalStorage, EditProgramInLocalStorage } from '../../../placeholders/load-data/loadData.action';
+import { AddProgram, EditProgramInLocalStorage } from '../../../placeholders/load-data/loadData.action';
 
-export default function ProgramForm({ program, onCreate, onEdit, onClose }) {
+export default function ProgramForm({ program, onCreate, onEdit }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [durationTerms, setDurationTerms] = useState('');
@@ -30,7 +30,7 @@ export default function ProgramForm({ program, onCreate, onEdit, onClose }) {
           EditProgramInLocalStorage(newProgram);
           onEdit(newProgram);
         } else {
-          AddProgramToLocalStorage(newProgram);
+          AddProgram(newProgram);
           onCreate();
         }
       };
@@ -68,7 +68,7 @@ export default function ProgramForm({ program, onCreate, onEdit, onClose }) {
             <div>
             <button className="bg-green-600 w-24 mx-4 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700"
           type="submit">Submit</button>
-            <button type="button" onClick={onClose} className="bg-red-600 w-24 mx-4 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700">Cancel</button>
+            <button type="button"  className="bg-red-600 w-24 mx-4 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700">Cancel</button>
             </div>
         </form>
     );

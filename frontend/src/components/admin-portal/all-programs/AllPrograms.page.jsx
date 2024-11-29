@@ -13,8 +13,8 @@ export default function AdminPortalAllPrograms() {
   const [isFormVisible, setFormVisible] = useState(false);
 
 
-  const createProgram = () => {
-    fetchPrograms();
+  const createProgram = async () => {
+    await fetchPrograms(); // Fetch updated programs
     setFormVisible(false);
   };
 
@@ -56,17 +56,15 @@ export default function AdminPortalAllPrograms() {
           program={selectedProgram}
           onCreate={createProgram}
           onEdit={editProgram}
-          onClose={() => setFormVisible(false)}
         />
       )}
-      {programs &&
-        <DisplayAllPrograms
-          programs={programs}
-          onEdit={openForm}
-          onDelete={deleteProgram}
-          isAdmin={true}
-        />
-      }
+      <DisplayAllPrograms
+        programs={programs}
+        onEdit={openForm}
+        onDelete={deleteProgram}
+        isAdmin={true}
+      />
+
     </>
   );
 }
@@ -85,7 +83,7 @@ const useFetchPrograms = () => {
 
   useEffect(() => {
     fetchPrograms();
-  }, []); // Fetch programs on mount
+  }, []);
 
-  return { programs, fetchPrograms, setPrograms };
+  return { programs, fetchPrograms, setPrograms }
 };

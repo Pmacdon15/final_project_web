@@ -50,21 +50,30 @@ async function LoadAllPrograms() {
 }
 
 
-function AddProgramToLocalStorage(program) {
-  const existingPrograms = LoadAllPrograms() || [];
-  const lastProgramId =
-    existingPrograms.length > 0
-      ? Math.max(...existingPrograms.map((prog) => prog.id))
-      : 0;
-  const newProgram = {
-    id: lastProgramId + 1,
-    ...program,
-  };
+async function AddProgram(program) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/programs`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(program),
+      credentials: "include",
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-  const updatedPrograms = [...existingPrograms, newProgram];
-  localStorage.setItem("allPrograms", JSON.stringify(updatedPrograms));
-  console.log("Program added to local storage");
+    const newProgram = await response.json();
+    console.log('Program added: '+newProgram);
+    return newProgram;
+  } catch (error) {
+    console.error("Failed to add program:", error);
+    return null;
+  } 
 }
+
 
 function EditProgramInLocalStorage(updatedProgram) {
   const existingPrograms = LoadAllPrograms() || [];
@@ -75,7 +84,7 @@ function EditProgramInLocalStorage(updatedProgram) {
   console.log('Program edited in local storage');
 }
 
-async function DeleteProgramFromLocalStorage(programId) {
+async function DeleteProgram(programId) {
   try {
     const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${programId}`, {
       method: "DELETE",   
@@ -354,9 +363,9 @@ function EditUserDataFromLocalStorage(
 
 export {
   LoadAllPrograms,
-  AddProgramToLocalStorage,
+  AddProgram,
   EditProgramInLocalStorage,
-  DeleteProgramFromLocalStorage,
+  DeleteProgram,
   LoadAllClasses,
   LoadUserClasses,
   AddClassToLocalStorage,
