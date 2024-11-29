@@ -12,8 +12,12 @@ export default function AdminPortalAllPrograms() {
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [isFormVisible, setFormVisible] = useState(false);
 
+  document.cookie.split(';').forEach(cookie => {
+    console.log(cookie.trim());
+  });
+
   const fetchPrograms = async () => {
-    const loadedPrograms = LoadAllPrograms();
+    const loadedPrograms = await LoadAllPrograms();
     setPrograms(loadedPrograms);
   };
   useEffect(() => {

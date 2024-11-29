@@ -26,10 +26,29 @@ function LoadAllProgramsToLocalStorage() {
 
 LoadAllProgramsToLocalStorage();
 
-function LoadAllPrograms() {
-  const storedPrograms = localStorage.getItem("allPrograms");
-  return storedPrograms ? JSON.parse(storedPrograms) : null;
+// function LoadAllPrograms() {
+//   const storedPrograms = localStorage.getItem("allPrograms");
+//   return storedPrograms ? JSON.parse(storedPrograms) : null;
+// }
+async function LoadAllPrograms() {
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/admin/programs", {
+      method: "GET",   
+      credentials: "include",
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to load programs:", error);
+    return null;
+  }
 }
+
 
 function AddProgramToLocalStorage(program) {
   const existingPrograms = LoadAllPrograms() || [];
