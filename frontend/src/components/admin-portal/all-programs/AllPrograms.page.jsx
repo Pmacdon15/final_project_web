@@ -8,21 +8,10 @@ import React, { useEffect, useState } from "react";
 import ProgramForm from "./AddPrograms.component"; // New component for creating/editing
 
 export default function AdminPortalAllPrograms() {
-  const [programs, setPrograms] = useState([]);
+  const { programs, fetchPrograms, setPrograms } = useFetchPrograms();
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [isFormVisible, setFormVisible] = useState(false);
 
-  document.cookie.split(';').forEach(cookie => {
-    console.log(cookie.trim());
-  });
-
-  const fetchPrograms = async () => {
-    const loadedPrograms = await LoadAllPrograms();
-    setPrograms(loadedPrograms);
-  };
-  useEffect(() => {
-    fetchPrograms();
-  }, []);
 
   const createProgram = () => {
     fetchPrograms();
@@ -70,13 +59,33 @@ export default function AdminPortalAllPrograms() {
           onClose={() => setFormVisible(false)}
         />
       )}
-
-      <DisplayAllPrograms
-        programs={programs}
-        onEdit={openForm}
-        onDelete={deleteProgram}
-        isAdmin={true}
-      />
+      {programs &&
+        <DisplayAllPrograms
+          programs={programs}
+          onEdit={openForm}
+          onDelete={deleteProgram}
+          isAdmin={true}
+        />
+      }
     </>
   );
 }
+
+const useFetchPrograms = () => {
+  const [programs, setPrograms] = useState([]);
+
+  const fetchPrograms = async () => {
+    try {
+      const loadedPrograms = await LoadAllPrograms();
+      setPrograms(loadedPrograms);
+    } catch (error) {
+      console.error("Failed to fetch programs:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPrograms();
+  }, []); // Fetch programs on mount
+
+  return { programs, fetchPrograms, setPrograms };
+};

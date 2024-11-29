@@ -29,10 +29,7 @@ export default function DisplayAllPrograms({ programs, isAdmin, onEdit, onDelete
                     <div>No data to load</div>
                 ) : (
                     filteredPrograms.map((program, index) => (
-                        // <div >
-                            <DisplayProgram key={index} program={program} isAdmin={isAdmin} onEdit={onEdit} onDelete={onDelete}/>
-                            
-                        // </div>
+                        <DisplayProgram key={index} program={program} isAdmin={isAdmin} onEdit={onEdit} onDelete={onDelete} />
                     ))
                 )}
             </div>
