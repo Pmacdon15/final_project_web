@@ -75,13 +75,23 @@ function EditProgramInLocalStorage(updatedProgram) {
   console.log('Program edited in local storage');
 }
 
-function DeleteProgramFromLocalStorage(programId) {
-  const existingPrograms = LoadAllPrograms() || [];
-  const updatedPrograms = existingPrograms.filter(
-    (program) => program.id !== programId
-  );
-  localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
-  console.log('Program deleted from local storage');
+async function DeleteProgramFromLocalStorage(programId) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${programId}`, {
+      method: "DELETE",   
+      credentials: "include",
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to load programs:", error);
+    return null;
+  }
 }
 
 //MARK: User data 
