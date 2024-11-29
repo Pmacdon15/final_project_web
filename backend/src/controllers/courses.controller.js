@@ -79,6 +79,7 @@ export const removeUserCourse = asyncHandler(async (req, res) => {
     res.status(404).json({ error: "User course not found" });
     return;
   }
+});
 
 
 export const getUserCourses = asyncHandler(async (req, res) => {
