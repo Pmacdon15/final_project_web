@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AddProgram, EditProgramInLocalStorage } from '../../../placeholders/load-data/loadData.action';
+import { AddProgram, EditProgram } from '../../../placeholders/load-data/loadData.action';
 
 export default function ProgramForm({ program, onCreate, onEdit }) {
     const [name, setName] = useState('');
@@ -27,7 +27,7 @@ export default function ProgramForm({ program, onCreate, onEdit }) {
       
         if (program) {
             newProgram.id = program.id
-          EditProgramInLocalStorage(newProgram);
+          EditProgram(newProgram);
           onEdit(newProgram);
         } else {
           AddProgram(newProgram);

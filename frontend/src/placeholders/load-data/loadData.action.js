@@ -1,35 +1,10 @@
 
-// import userPrograms from '../load-data/userPrograms.data.json';
 import allClasses from "./allClasses.data.json";
 import userClasses from "./userClasses.data.json";
 import userData from "../authentication/user.data.json";
 
 //MARK: Program data 
 
-// function LoadAllProgramsToLocalStorage() {
-//   const existingPrograms =
-//     JSON.parse(localStorage.getItem("allPrograms")) || [];
-//   const newPrograms = programs.filter(
-//     (newProgram) =>
-//       existingPrograms &&
-//       !existingPrograms.some(
-//         (existingProgram) => existingProgram.id === newProgram.id
-//       )
-//   );
-//   const updatedPrograms = [...existingPrograms, ...newPrograms];
-//   if (existingPrograms.length === 0) {
-//     localStorage.setItem("allPrograms", JSON.stringify(updatedPrograms));
-//     console.log("Programs loaded to local storage without duplicates");
-//   }
-//   console.log("Programs loaded to local storage without duplicates");
-// }
-
-// LoadAllProgramsToLocalStorage();
-
-// function LoadAllPrograms() {
-//   const storedPrograms = localStorage.getItem("allPrograms");
-//   return storedPrograms ? JSON.parse(storedPrograms) : null;
-// }
 async function LoadAllPrograms() {
   try {
     const response = await fetch("http://localhost:5000/api/v1/admin/programs", {
@@ -73,11 +48,12 @@ async function AddProgram(program) {
     return null;
   } 
 }
-
-async function EditProgramInLocalStorage(updatedProgram) {
+//MARK: Edit program
+async function EditProgram(updatedProgram) {
+ console.log('Updated program: '+updatedProgram);
   try {
-    const response = await fetch(`http://localhost:5000/api/v1/admin/programs`, {
-      method: "UPDATE",
+    const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${updatedProgram.id}`, {
+      method: "PUT",
       headers: {
         'Content-Type': 'application/json'
       },
@@ -97,17 +73,7 @@ async function EditProgramInLocalStorage(updatedProgram) {
     return null;
   } 
 }
-
-
-// function EditProgramInLocalStorage(updatedProgram) {
-//   const existingPrograms = LoadAllPrograms() || [];
-//   const updatedPrograms = existingPrograms.map((program) =>
-//     program.id === updatedProgram.id ? updatedProgram : program
-//   );
-//   localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
-//   console.log('Program edited in local storage');
-// }
-
+//MARK: Delete program
 async function DeleteProgram(programId) {
   try {
     const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${programId}`, {
@@ -309,11 +275,14 @@ function DropUserClass(classId, email) {
 //MARK: User sign up data 
 
 // Function to load user data from local storage after signup
+// export function LoadUserData() {
+//   const storedUserData = localStorage.getItem("userData");
+//   return storedUserData ? JSON.parse(storedUserData) : [];
+// }
 export function LoadUserData() {
   const storedUserData = localStorage.getItem("userData");
   return storedUserData ? JSON.parse(storedUserData) : [];
 }
-
 // Function to save user data to local storage
 export function SaveUserData(newUserData) {
   const existingUserData = LoadUserData();
@@ -388,7 +357,7 @@ function EditUserDataFromLocalStorage(
 export {
   LoadAllPrograms,
   AddProgram,
-  EditProgramInLocalStorage,
+  EditProgram,
   DeleteProgram,
   LoadAllClasses,
   LoadUserClasses,
