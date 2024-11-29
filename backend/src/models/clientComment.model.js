@@ -10,11 +10,6 @@ export const createUserCommentModel = async (userCommentData) => {
   const { name, email, comment } = userCommentData;
 
   try {
-    //await sql.connect(config);
-    //const result = await sql.query`
-    //  INSERT INTO comments (name, email, comment, date)
-    //  VALUES (${name}, ${email}, ${comment}, GETDATE())
-    //`;
     const pool = await poolPromise;
     const result = await pool.request()
       .input('name', sql.VarChar, name) // Bind user input safely
@@ -37,12 +32,6 @@ export const updateUserCommentModel = async (commentId, updatedCommentData) => {
   const { name, email, comment } = updatedCommentData;
 
   try {
-    //await sql.connect(config);
-    //const result = await sql.query`
-    //  UPDATE comments
-    //  SET name = ${name}, email = ${email}, comment = ${comment}, date = GETDATE()
-    //  WHERE id = ${commentId}
-    //`;
     const pool = await poolPromise;
     const result = await pool.request()
       .input('commentId', sql.Int, commentId) // Bind user input safely
@@ -66,10 +55,6 @@ export const updateUserCommentModel = async (commentId, updatedCommentData) => {
  */
 export const deleteUserCommentModel = async (commentId) => {
   try {
-    //await sql.connect(config);
-    //const result = await sql.query`
-    //  DELETE FROM comments WHERE id = ${commentId}
-    //`;
     const pool = await poolPromise;
     const result = await pool.request()
       .input('commentId', sql.Int, commentId) // Bind user input safely

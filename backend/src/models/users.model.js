@@ -3,16 +3,14 @@ import { config } from '../db/index.js';
 import bcrypt from 'bcrypt';
 import { poolPromise } from '../db/index.js';
 
-//export const getUserModel = async (userId) => {
-//  await sql.connect(config);
-//  const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
-//  return result;
-//};
+export const getUserModel = async (userId) => {
+  await sql.connect(config);
+  const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
+  return result;
+};
 
 export const getUserByUsername = async (username) => {
   try {
-    //await sql.connect(config);
-    //const result = await sql.query`SELECT * FROM users WHERE username = ${username}`;
     const pool = await poolPromise;
     const result = await pool.request()
       .input('username', sql.VarChar, username) // Bind user input safely
@@ -31,8 +29,6 @@ export const getAllUsersModel = async () => {
 };
 
 export const getUserByIdModel = async (id) => {
-  //await sql.connect(config);
-  //const result = await sql.query`SELECT * FROM users WHERE id = ${id}`;
   const pool = await poolPromise;
   const result = await pool.request()
     .input('id', sql.VarChar, id) // Bind user input safely
@@ -44,11 +40,6 @@ export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
 
   try {
-    //await sql.connect(config);
-    //const result = await sql.query`
-    //  INSERT INTO users (id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password)
-    //  VALUES (${id}, ${isAdmin}, ${firstName}, ${lastName}, ${birthday}, ${phone}, ${email}, ${department}, ${program}, ${username}, ${password})
-    //`;
     const pool = await poolPromise;
     const result = await pool.request()
       .input('id', sql.VarChar, id) // Bind user input safely
@@ -93,12 +84,8 @@ export const updateUserModel = async (id, userData) => {
 
 // Delete a user
 export const deleteUserModel = async (id) => {
-  //await sql.connect(config);
   const pool = await poolPromise;
   try {
-    //const result = await sql.query`
-    //  DELETE FROM users WHERE id = ${id}
-    //`;
     const result = await pool.request()
     .input('id', sql.VarChar, id) // Bind user input safely
     .query('DELETE FROM users WHERE id = @id'); // Execute secure query
