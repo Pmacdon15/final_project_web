@@ -6,22 +6,15 @@ import filterPrograms from '../../../utils/search-filter';
 import { Box, Stack, TextField } from '@mui/material';
 
 export default function AdminPortalAllClasses() {
-    const [allClasses, setAllClasses] = useState([]);
 
-    const [searchByName, setSearchByName] = useState('');
+    const {allClasses, fetchAllClasses} = useFetchAllClasses();
+    const [searchByName, setSearchByName] = useState('');    
 
-    const fetchAllClasses = async () => {
-        const loadedAllClasses = LoadAllClasses();
-        setAllClasses(loadedAllClasses);
-    };
-    useEffect(() => {
-        fetchAllClasses();
-    }, []);
+    const filteredClasses = allClasses?.length 
+    ? filterPrograms(allClasses, searchByName) 
+    : [];
 
-    const filteredClasses = filterPrograms(allClasses, searchByName);
-
-    // console.log(JSON.stringify(allClasses, null, 2));
-
+   
     return (
         <>
             <div className=" bg-blue-100  shadow-lg gap-4  p-4 md:p-8 border rounded-lg">
@@ -68,3 +61,18 @@ export default function AdminPortalAllClasses() {
         </>
     );
 }
+
+const useFetchAllClasses = () => {
+    const [allClasses, setAllClasses] = useState([]);
+
+    const fetchAllClasses = async () => {
+        const loadedAllClasses = await LoadAllClasses();
+        setAllClasses(loadedAllClasses);
+    };
+
+    useEffect(() => {
+        fetchAllClasses();
+    }, []);
+
+    return { allClasses, fetchAllClasses };
+};

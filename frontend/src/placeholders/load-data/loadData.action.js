@@ -7,10 +7,10 @@ import userData from "../authentication/user.data.json";
 async function LoadAllPrograms() {
   try {
     const response = await fetch("http://localhost:5000/api/v1/admin/programs", {
-      method: "GET",   
+      method: "GET",
       credentials: "include",
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -34,22 +34,22 @@ async function AddProgram(program) {
       body: JSON.stringify(program),
       credentials: "include",
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const newProgram = await response.json();
-    console.log('Program added: '+newProgram);
+    console.log('Program added: ' + newProgram);
     return newProgram;
   } catch (error) {
     console.error("Failed to add program:", error);
     return null;
-  } 
+  }
 }
 //MARK: Edit program
 async function EditProgram(updatedProgram) {
- console.log('Updated program: '+updatedProgram);
+  console.log('Updated program: ' + updatedProgram);
   try {
     const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${updatedProgram.id}`, {
       method: "PUT",
@@ -59,27 +59,27 @@ async function EditProgram(updatedProgram) {
       body: JSON.stringify(updatedProgram),
       credentials: "include",
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
     const newProgram = await response.json();
-    console.log('Program added: '+newProgram);
+    console.log('Program added: ' + newProgram);
     return newProgram;
   } catch (error) {
     console.error("Failed to add program:", error);
     return null;
-  } 
+  }
 }
 //MARK: Delete program
 async function DeleteProgram(programId) {
   try {
     const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${programId}`, {
-      method: "DELETE",   
+      method: "DELETE",
       credentials: "include",
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -92,46 +92,47 @@ async function DeleteProgram(programId) {
   }
 }
 
-//MARK: User data 
-function LoadUserDataToLocalStorage() {
-  const existingUserData = JSON.parse(localStorage.getItem("userData")) || [];
-  const newUserData = userData.filter(
-    (newUser) =>
-      existingUserData &&
-      !existingUserData.some(
-        (existingUser) => existingUser.email === newUser.email
-      )
-  );
-  const updatedUserData = [...existingUserData, ...newUserData];
-  if (existingUserData.length === 0) {
-    console.log("No existing user data found in local storage");
-    localStorage.setItem("userData", JSON.stringify(updatedUserData));
-    console.log("User data loaded to local storage without duplicates");
-  }
-}
-LoadUserDataToLocalStorage();
 
 //MARK: Classes data 
 
-function LoadAllClassesToLocalStorage() {
-  const existingClasses = JSON.parse(localStorage.getItem("allClasses")) || [];
-  const newClasses = allClasses.filter(
-    (newClass) =>
-      existingClasses &&
-      !existingClasses.some((existingClass) => existingClass.id === newClass.id)
-  );
-  const updatedClasses = [...existingClasses, ...newClasses];
-  if (existingClasses.length === 0) {
-    localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
+// function LoadAllClassesToLocalStorage() {
+//   const existingClasses = JSON.parse(localStorage.getItem("allClasses")) || [];
+//   const newClasses = allClasses.filter(
+//     (newClass) =>
+//       existingClasses &&
+//       !existingClasses.some((existingClass) => existingClass.id === newClass.id)
+//   );
+//   const updatedClasses = [...existingClasses, ...newClasses];
+//   if (existingClasses.length === 0) {
+//     localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
+//   }
+//   console.log("All classes loaded to local storage without duplicates");
+// }
+
+// LoadAllClassesToLocalStorage();
+
+// function LoadAllClasses() {
+//   const storedClasses = localStorage.getItem("allClasses");
+//   return storedClasses ? JSON.parse(storedClasses) : null;
+// }
+
+async function LoadAllClasses() {
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/admin/Courses", {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to loading  Courses:", error);
+    return null;
   }
-  console.log("All classes loaded to local storage without duplicates");
-}
-
-LoadAllClassesToLocalStorage();
-
-function LoadAllClasses() {
-  const storedClasses = localStorage.getItem("allClasses");
-  return storedClasses ? JSON.parse(storedClasses) : null;
 }
 
 function AddClassToLocalStorage(
@@ -303,14 +304,14 @@ export function SaveUserData(newUserData) {
   console.log("User data saved to local storage.");
 }
 
-//MARK Load Users data
+//MARK: Load Users data
 async function LoadUserData() {
   try {
     const response = await fetch("http://localhost:5000/api/v1/admin/users", {
-      method: "GET",   
+      method: "GET",
       credentials: "include",
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -323,7 +324,6 @@ async function LoadUserData() {
   }
 }
 //MARK: Edit user data / dashboard 
-
 function EditUserDataFromLocalStorage(
   userId,
   firstName,

@@ -143,6 +143,7 @@ VALUES (
         2,
         6000
     );
+    
 
 INSERT INTO
     courses (programId, name, description)
