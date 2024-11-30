@@ -15,7 +15,7 @@ async function handleLogin(username, password) {
         });
 
         const responseData = await login.json();
-        sessionStorage.setItem('BVC_Session', JSON.stringify({ firstName: responseData.user.username, isAdmin: responseData.user.isAdmin }));        
+        sessionStorage.setItem('BVC_Session', JSON.stringify({ username: responseData.user.username, isAdmin: responseData.user.isAdmin }));        
         
         return {
             name: responseData.user.username,

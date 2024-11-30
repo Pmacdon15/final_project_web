@@ -110,38 +110,8 @@ async function LoadAllClasses() {
     return null;
   }
 }
-//MARK: HERE!!!!!!!!!!!!
-// function AddClassToLocalStorage(
-//   programId,
-//   description,
-//   className,
-//   availableFall,
-//   availableWinter,
-//   availableSpring,
-//   availableSummer
-// ) {
-//   const existingClasses = LoadAllClasses() || [];
-//   const lastClassId =
-//     existingClasses.length > 0
-//       ? Math.max(...existingClasses.map((cls) => cls.id))
-//       : 0;
-//   const newClass = {
-//     id: lastClassId + 1,
-//     programId: Number(programId),
-//     name: className,
-//     description: description,
-//     availableFall: availableFall,
-//     availableWinter: availableWinter,
-//     availableSpring: availableSpring,
-//     availableSummer: availableSummer,
-//   };
-
-//   const updatedClasses = [...existingClasses, newClass];
-//   localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-//   console.log("Class added to local storage");
-// }
-
-async function AddClassToLocalStorage(
+//MARK: Add class
+async function AddClassFunction(
   programId,
   description,
   className,
@@ -360,6 +330,25 @@ async function LoadUserData() {
     return null;
   }
 }
+//MARK: Load user data by username
+async function LoadUserDataByUsername(username) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/users/username/${username}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to load users:", error);
+    return null;
+  }
+}
 //MARK: Edit user data / dashboard 
 function EditUserDataFromLocalStorage(
   userId,
@@ -404,11 +393,12 @@ export {
   DeleteProgram,
   LoadAllClasses,
   LoadUserClasses,
-  AddClassToLocalStorage,
+  AddClassFunction,
   RemoveCourse,
   EditCourse,
   AddToUserClasses,
   DropUserClass,
   LoadUserData,
+  LoadUserDataByUsername,
   EditUserDataFromLocalStorage
 };

@@ -30,6 +30,12 @@ export const getUserByIdModel = async (id) => {
   const result = await sql.query`SELECT * FROM users WHERE id = ${id}`;
   return result.recordset[0];
 };
+//Get user by username
+export const getUserByUsernameModel = async (username) => {
+  await sql.connect(config);
+  const result = await sql.query`SELECT * FROM users WHERE username = ${username}`;
+  return result.recordset[0];
+};
 
 export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;

@@ -73,14 +73,14 @@ function App() {
                 </Route>
                 {/* Admin Routes */}
                 <Route path="/admin">
-                    {/* <Route
+                    <Route
                         path="dashboard"
                         element={
                             <RouteWrapper adminOnly>
                                 <AdminPortalDashBoard />
                             </RouteWrapper> 
                         }
-                    /> */}
+                    />
                     <Route
                         path="view-students"
                         element={

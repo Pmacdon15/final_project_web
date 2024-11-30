@@ -24,6 +24,7 @@ export const login = asyncHandler(async (req, res) => {
     return;
   }
 
+
   // Generate JWT token
   const token = jwt.sign(
     { id: user.id, isAdmin: user.isAdmin },

@@ -2,6 +2,7 @@ import asyncHandler from '../utils/asyncHandler.js';
 import {
   getAllUsersModel,
   getUserByIdModel,
+  getUserByUsernameModel,
   createUserModel,
   deleteUserModel,
 } from "../models/users.model.js";
@@ -21,6 +22,16 @@ export const getUserById = asyncHandler(async (req, res) => {
   }
   res.status(200).json(user);
 });
+// GetUserByUsername
+export const getUserByUsername = asyncHandler(async (req, res) => {
+  const user = await getUserByUsernameModel(req.params.username);
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+    return;
+  }
+  res.status(200).json(user);
+});
+
 
 // Create a new user
 export const createUser = asyncHandler(async (req, res) => {

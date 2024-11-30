@@ -17,7 +17,7 @@ import BVCWhiteImage from '../../bvc-image/BvcWhiteImage.component';
 import { useNavigate } from 'react-router-dom';
 import handleLogout from '../../../placeholders/authentication/logout.action';
 
-const commonPages = ['All Programs', 'All Classes', 'Comments'];
+const commonPages = ['Dashboard','All Programs', 'All Classes', 'Comments'];
 
 const guestPages = [...commonPages];
 
