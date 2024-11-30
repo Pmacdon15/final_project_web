@@ -1,5 +1,5 @@
 import {
-  RemoveClassFromLocalStorage,
+  RemoveCourse,
   EditClassFromLocalStorage,
 } from "../../../placeholders/load-data/loadData.action";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     const classId = Number(formData.get("classId")); // Convert to number
     const className = formData.get("className");
     console.log("Removing class: ", className);
-    await RemoveClassFromLocalStorage(classId);
+    await RemoveCourse(classId);
     onFormAction(className);
   }
 

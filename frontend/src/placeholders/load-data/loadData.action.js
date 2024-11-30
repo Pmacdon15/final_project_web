@@ -87,35 +87,13 @@ async function DeleteProgram(programId) {
     const programs = await response.json();
     return programs;
   } catch (error) {
-    console.error("Failed to load programs:", error);
+    console.error("Failed to delete programs:", error);
     return null;
   }
 }
 
 
 //MARK: Classes data 
-
-// function LoadAllClassesToLocalStorage() {
-//   const existingClasses = JSON.parse(localStorage.getItem("allClasses")) || [];
-//   const newClasses = allClasses.filter(
-//     (newClass) =>
-//       existingClasses &&
-//       !existingClasses.some((existingClass) => existingClass.id === newClass.id)
-//   );
-//   const updatedClasses = [...existingClasses, ...newClasses];
-//   if (existingClasses.length === 0) {
-//     localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-//   }
-//   console.log("All classes loaded to local storage without duplicates");
-// }
-
-// LoadAllClassesToLocalStorage();
-
-// function LoadAllClasses() {
-//   const storedClasses = localStorage.getItem("allClasses");
-//   return storedClasses ? JSON.parse(storedClasses) : null;
-// }
-
 async function LoadAllClasses() {
   try {
     const response = await fetch("http://localhost:5000/api/v1/admin/Courses", {
@@ -165,14 +143,23 @@ function AddClassToLocalStorage(
   console.log("Class added to local storage");
 }
 
-function RemoveClassFromLocalStorage(classId) {
-  const existingClasses = LoadAllClasses() || [];
-  console.log("ClassId=", classId);
-  const updatedClasses = existingClasses.filter(
-    (classDetails) => Number(classDetails.id) !== Number(classId)
-  );
-  localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-  console.log("Class removed from local storage");
+async function RemoveCourse(courseId) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/courses/${courseId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to delete courses:", error);
+    return null;
+  }
 }
 
 function EditClassFromLocalStorage(
@@ -368,7 +355,7 @@ export {
   LoadAllClasses,
   LoadUserClasses,
   AddClassToLocalStorage,
-  RemoveClassFromLocalStorage,
+  RemoveCourse,
   EditClassFromLocalStorage,
   AddToUserClasses,
   DropUserClass,
