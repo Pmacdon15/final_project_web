@@ -159,33 +159,41 @@ async function RemoveCourse(courseId) {
     return null;
   }
 }
+//MARK: Edit course
+async function EditCourse(classId, className, description, availableFall, availableWinter, availableSpring, availableSummer) {
+  const updatedClass = {
+    id: classId, // Assuming classId is the identifier for the class
+    name: className,
+    description, // Shorthand property assignment
+    available: {
+      fall: availableFall,
+      winter: availableWinter,
+      spring: availableSpring,
+      summer: availableSummer,
+    },
+  };
 
-function EditClassFromLocalStorage(
-  classId,
-  className,
-  description,
-  availableFall,
-  availableWinter,
-  availableSpring,
-  availableSummer
-) {
-  const existingClasses = LoadAllClasses() || [];
-  const updatedClasses = existingClasses.map((classDetails) => {
-    if (Number(classDetails.id) === Number(classId)) {
-      return {
-        ...classDetails,
-        name: className,
-        description: description,
-        availableFall: availableFall,
-        availableWinter: availableWinter,
-        availableSpring: availableSpring,
-        availableSummer: availableSummer,
-      };
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/courses/${classId}`, { // Use classId in the URL
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedClass),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return classDetails;
-  });
-  localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-  console.log("Class edited in local storage");
+
+    const editedClass = await response.json();
+    console.log('Class edited:', editedClass);
+    return editedClass; // Return the edited class data
+  } catch (error) {
+    console.error("Failed to edit class:", error);
+    return null; // Indicate failure by returning null
+  }
 }
 
 //MARK: User classes data 
@@ -354,7 +362,7 @@ export {
   LoadUserClasses,
   AddClassToLocalStorage,
   RemoveCourse,
-  EditClassFromLocalStorage,
+  EditCourse,
   AddToUserClasses,
   DropUserClass,
   LoadUserData,

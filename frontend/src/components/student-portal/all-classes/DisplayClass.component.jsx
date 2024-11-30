@@ -1,6 +1,6 @@
 import {
   RemoveCourse,
-  EditClassFromLocalStorage,
+  EditCourse,
 } from "../../../placeholders/load-data/loadData.action";
 import { useState } from "react";
 
@@ -28,7 +28,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     const availableSpring = formData.get("availableSpring");
     const availableSummer = formData.get("availableSummer");
     console.log("Editing class: ", className);
-    await EditClassFromLocalStorage(
+    await EditCourse(
       classId,
       className,
       description,
