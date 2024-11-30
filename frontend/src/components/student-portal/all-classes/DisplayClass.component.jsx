@@ -16,11 +16,12 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     await RemoveCourse(classId);
     onFormAction(className);
   }
-
+  console.log(JSON.stringify(classDetails))
   async function handleOnEdit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const classId = formData.get("classId");
+    const programId = classDetails.programId;
     const className = formData.get("className");
     const description = formData.get("description");
     const availableFall = formData.get("availableFall");
@@ -30,6 +31,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     console.log("Editing class: ", className);
     await EditCourse(
       classId,
+      programId,
       className,
       description,
       availableFall,

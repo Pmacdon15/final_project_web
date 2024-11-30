@@ -110,8 +110,38 @@ async function LoadAllClasses() {
     return null;
   }
 }
+//MARK: HERE!!!!!!!!!!!!
+// function AddClassToLocalStorage(
+//   programId,
+//   description,
+//   className,
+//   availableFall,
+//   availableWinter,
+//   availableSpring,
+//   availableSummer
+// ) {
+//   const existingClasses = LoadAllClasses() || [];
+//   const lastClassId =
+//     existingClasses.length > 0
+//       ? Math.max(...existingClasses.map((cls) => cls.id))
+//       : 0;
+//   const newClass = {
+//     id: lastClassId + 1,
+//     programId: Number(programId),
+//     name: className,
+//     description: description,
+//     availableFall: availableFall,
+//     availableWinter: availableWinter,
+//     availableSpring: availableSpring,
+//     availableSummer: availableSummer,
+//   };
 
-function AddClassToLocalStorage(
+//   const updatedClasses = [...existingClasses, newClass];
+//   localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
+//   console.log("Class added to local storage");
+// }
+
+async function AddClassToLocalStorage(
   programId,
   description,
   className,
@@ -120,25 +150,38 @@ function AddClassToLocalStorage(
   availableSpring,
   availableSummer
 ) {
-  const existingClasses = LoadAllClasses() || [];
-  const lastClassId =
-    existingClasses.length > 0
-      ? Math.max(...existingClasses.map((cls) => cls.id))
-      : 0;
   const newClass = {
-    id: lastClassId + 1,
-    programId: Number(programId),
+    programId: programId,
     name: className,
     description: description,
-    availableFall: availableFall,
-    availableWinter: availableWinter,
-    availableSpring: availableSpring,
-    availableSummer: availableSummer,
+    available: {
+      fall: availableFall,
+      winter: availableWinter,
+      spring: availableSpring,
+      summer: availableSummer,
+    },
   };
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/courses`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newClass),
+      credentials: "include",
+    });
 
-  const updatedClasses = [...existingClasses, newClass];
-  localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-  console.log("Class added to local storage");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const newProgram = await response.json();
+    console.log('Program added: ' + newProgram);
+    return newProgram;
+  } catch (error) {
+    console.error("Failed to add program:", error);
+    return null;
+  }
 }
 
 async function RemoveCourse(courseId) {
@@ -160,9 +203,10 @@ async function RemoveCourse(courseId) {
   }
 }
 //MARK: Edit course
-async function EditCourse(classId, className, description, availableFall, availableWinter, availableSpring, availableSummer) {
+async function EditCourse(classId, programId ,className, description, availableFall, availableWinter, availableSpring, availableSummer) {
   const updatedClass = {
     id: classId, // Assuming classId is the identifier for the class
+    programId: programId,
     name: className,
     description, // Shorthand property assignment
     available: {
