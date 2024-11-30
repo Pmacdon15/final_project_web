@@ -2,15 +2,7 @@ import { LoadUserData } from '../../../placeholders/load-data/loadData.action';
 import { useState, useEffect } from 'react';
 
 export default function AdminPortalViewStudents() {
-    const [students, setStudents] = useState([]);
-    useEffect(() => {
-        const fetchStudents = () => {
-            const fetchStudents = LoadUserData();
-            setStudents(fetchStudents);
-            console.log(fetchStudents);
-        }
-        fetchStudents();
-    }, []);
+    const {students} = useFetchUsers();    
 
     return (
         <div className='flex flex-col p-2 md:p-4 gap-4 w-full justify-center items-center ' >
@@ -33,4 +25,17 @@ export default function AdminPortalViewStudents() {
             </div>
         </div>
     )
+}
+
+const useFetchUsers = () => {
+    const [students, setStudents] = useState([]);
+    useEffect(() => {
+        const fetchStudents = async () => {
+            const fetchStudents = await LoadUserData();
+            setStudents(fetchStudents);
+            console.log(fetchStudents);
+        }
+        fetchStudents();
+    }, []);
+    return { students };
 }

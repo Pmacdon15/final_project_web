@@ -4,7 +4,6 @@ import userClasses from "./userClasses.data.json";
 import userData from "../authentication/user.data.json";
 
 //MARK: Program data 
-
 async function LoadAllPrograms() {
   try {
     const response = await fetch("http://localhost:5000/api/v1/admin/programs", {
@@ -24,7 +23,7 @@ async function LoadAllPrograms() {
   }
 }
 
-
+//MARK: Add program
 async function AddProgram(program) {
   try {
     const response = await fetch(`http://localhost:5000/api/v1/admin/programs`, {
@@ -94,7 +93,6 @@ async function DeleteProgram(programId) {
 }
 
 //MARK: User data 
-
 function LoadUserDataToLocalStorage() {
   const existingUserData = JSON.parse(localStorage.getItem("userData")) || [];
   const newUserData = userData.filter(
@@ -205,7 +203,6 @@ function EditClassFromLocalStorage(
 }
 
 //MARK: User classes data 
-
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses =
     JSON.parse(localStorage.getItem("userClasses")) || [];
@@ -223,6 +220,7 @@ function LoadUserClassesToLocalStorage() {
 }
 
 LoadUserClassesToLocalStorage();
+
 
 function LoadUserClasses() {
   const storedUserClasses = localStorage.getItem("userClasses");
@@ -272,17 +270,6 @@ function DropUserClass(classId, email) {
   localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
 }
 
-//MARK: User sign up data 
-
-// Function to load user data from local storage after signup
-// export function LoadUserData() {
-//   const storedUserData = localStorage.getItem("userData");
-//   return storedUserData ? JSON.parse(storedUserData) : [];
-// }
-export function LoadUserData() {
-  const storedUserData = localStorage.getItem("userData");
-  return storedUserData ? JSON.parse(storedUserData) : [];
-}
 // Function to save user data to local storage
 export function SaveUserData(newUserData) {
   const existingUserData = LoadUserData();
@@ -316,6 +303,25 @@ export function SaveUserData(newUserData) {
   console.log("User data saved to local storage.");
 }
 
+//MARK Load Users data
+async function LoadUserData() {
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/admin/users", {
+      method: "GET",   
+      credentials: "include",
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to load users:", error);
+    return null;
+  }
+}
 //MARK: Edit user data / dashboard 
 
 function EditUserDataFromLocalStorage(
@@ -366,5 +372,6 @@ export {
   EditClassFromLocalStorage,
   AddToUserClasses,
   DropUserClass,
+  LoadUserData,
   EditUserDataFromLocalStorage
 };
