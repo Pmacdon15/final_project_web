@@ -349,9 +349,57 @@ async function LoadUserDataByUsername(username) {
     return null;
   }
 }
+//MARK: HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+
 //MARK: Edit user data / dashboard 
-function EditUserDataFromLocalStorage(
+// function EditUserDataFromLocalStorage(
+//   userId,
+//   firstName,
+//   lastName,
+//   phone,
+//   department,
+//   email,
+//   password,
+//   birthday,
+//   program,
+//   username
+// ) {
+//   const existingUsers = LoadUserData() || [];
+//   const updatedUsers = existingUsers.map((userDetails) => {
+//     if (String(userDetails.id) === String(userId)) {
+//       return {
+//         ...userDetails,
+//         firstName: firstName,
+//         lastName: lastName,
+//         phone: phone,
+//         department: department,
+//         email: email,
+//         password: password,
+//         birthday: birthday,
+//         program: program,
+//         username: username,
+//       };
+//     }
+//     return userDetails;
+//   });
+
+//   localStorage.setItem("userData", JSON.stringify(updatedUsers));
+//   console.log("User data edited in local storage");
+// }
+
+
+
+async function EditUserDataFromLocalStorage(
   userId,
+  username,
   firstName,
   lastName,
   phone,
@@ -359,30 +407,41 @@ function EditUserDataFromLocalStorage(
   email,
   password,
   birthday,
-  program,
-  username
+  program
 ) {
-  const existingUsers = LoadUserData() || [];
-  const updatedUsers = existingUsers.map((userDetails) => {
-    if (String(userDetails.id) === String(userId)) {
-      return {
-        ...userDetails,
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        department: department,
-        email: email,
-        password: password,
-        birthday: birthday,
-        program: program,
-        username: username,
-      };
-    }
-    return userDetails;
-  });
+  const updatedUser = {
+    id: userId,
+    username: username,
+    firstName: firstName,
+    lastName: lastName,
+    phone: phone,
+    department: department,
+    email: email,
+    password: password,
+    birthday: birthday,
+    program: program,
+  };
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/users/${userId}`, { // Use classId in the URL
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedUser),
+      credentials: "include",
+    });
 
-  localStorage.setItem("userData", JSON.stringify(updatedUsers));
-  console.log("User data edited in local storage");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const editedClass = await response.json();
+    // console.log('Class edited:', editedClass);
+    return editedClass; // Return the edited class data
+  } catch (error) {
+    console.error("Failed to edit class:", error);
+    return null; // Indicate failure by returning null
+  }
 }
 
 

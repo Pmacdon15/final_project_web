@@ -58,16 +58,13 @@ export const createUserModel = async (userData) => {
 
 // Update user by ID
 export const updateUserModel = async (id, userData) => {
-  const { isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
-
-  // Hash the password before storing
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const { firstName, lastName, birthday, phone, email,  program, } = userData;
 
   try {
     await sql.connect(config);
     const result = await sql.query`
       UPDATE users
-      SET isAdmin = ${isAdmin}, firstName = ${firstName}, lastName = ${lastName}, birthday = ${birthday}, phone = ${phone}, email = ${email}, department = ${department}, program = ${program}, username = ${username}, password = ${hashedPassword}
+      SET firstName = ${firstName}, lastName = ${lastName}, birthday = ${birthday}, phone = ${phone}, email = ${email}
       WHERE id = ${id}
     `;
     return result;

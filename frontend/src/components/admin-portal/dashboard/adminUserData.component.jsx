@@ -18,9 +18,10 @@ export default function DisplayUserAdminInfo({
     const program = formData.get("program");
     const username = formData.get("username");
 
-    console.log("Editing user:", firstName, lastName);
+    console.log("Editing user:", userInfos.id);
     await EditUserDataFromLocalStorage(
       userInfos.id,
+      userInfos.username,
       firstName,
       lastName,
       phone,
@@ -37,7 +38,7 @@ export default function DisplayUserAdminInfo({
 
   return (
     <div className="flex flex-col w-full items-center bg-white">
-      {isEditing ? (
+      {isEditing  ? (
         <form
           onSubmit={handleOnEdit}
           className="flex flex-col h-fit items-center border border-black shadow-lg rounded-lg p-4 w-full md:w-2/6"
@@ -78,7 +79,7 @@ export default function DisplayUserAdminInfo({
             defaultValue={userInfos.birthday}
             className="text-center w-5/6 md:w-5/6 border rounded-lg p-2 mb-2"
           />
-          
+
           <label>Username:</label>
           <input
             type="text"
@@ -107,6 +108,9 @@ export default function DisplayUserAdminInfo({
           </h1>
           <p className="mb-2">ID: {userInfos.id}</p>
           <p className="mb-2">Email: {userInfos.email}</p>
+          <p className="mb-2">Username: {userInfos.username}</p>
+          <p className="mb-2">First name: {userInfos.firstName}</p>
+          <p className="mb-2">Last name: {userInfos.lastName}</p>
           <p className="mb-2">Phone: {userInfos.phone}</p>
           <p className="mb-2">Department: {userInfos.department}</p>
           <p className="mb-2">Birthday: {userInfos.birthday}</p>
