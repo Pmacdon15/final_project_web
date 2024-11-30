@@ -1,13 +1,8 @@
 import { LoadComments } from '../../../placeholders/comments/comments.action';
 import { useState, useEffect } from 'react';
 export default function AdminPortalComments() {
-    const [comments, setComments] = useState([]);
 
-    useEffect(() => {
-        const fetchComments = LoadComments();
-        setComments(fetchComments);
-        console.log(fetchComments);
-    }, []);
+    const { comments } = useFetchComments();
 
     return (
         <>
@@ -16,14 +11,14 @@ export default function AdminPortalComments() {
                 <p>Here you will be able to View comments from users.</p>
             </div>
 
-            {comments.map((comment, index) => (
+            {comments && comments.map((comment, index) => (
                 <div
                     key={index}
                     className="flex flex-col w-full md:w-4/6 bg-blue-100 shadow-lg p-4 border rounded-lg mb-8"
                 >
                     <div className="bg-white w-full rounded-lg p-4">
                         <div className="flex flex-col w-full h-fit  rounded-lg ">
-                        <p className="flex flex-row border-2 border-gray-300 p-2 w-full rounded-lg">
+                            <p className="flex flex-row border-2 border-gray-300 p-2 w-full rounded-lg">
                                 Name: {comment.name}
                             </p>
                             <p className="flex flex-row border-2 border-gray-300 p-2 w-full rounded-lg">
@@ -39,6 +34,27 @@ export default function AdminPortalComments() {
                     </div>
                 </div>
             ))}
+            {comments.length < 1 && <div>No comments to load</div>}
         </>
     );
+}
+
+const useFetchComments = () => {
+    const [comments, setComments] = useState([]);
+
+    const fetchComments = async () => {
+        try {
+            const fetchComments = await LoadComments();
+            setComments(fetchComments);
+            console.log(fetchComments);
+        } catch (error) {
+            console.error("Failed to load comments:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchComments();
+    }, []);
+
+    return { comments };
 }
