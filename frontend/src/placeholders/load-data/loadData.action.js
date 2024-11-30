@@ -1,7 +1,5 @@
 
-import allClasses from "./allClasses.data.json";
 import userClasses from "./userClasses.data.json";
-import userData from "../authentication/user.data.json";
 
 //MARK: Program data 
 async function LoadAllPrograms() {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AddProgram, EditProgram } from '../../../placeholders/load-data/loadData.action';
 
-export default function ProgramForm({ program, onCreate, onEdit }) {
+export default function ProgramForm({ program, onCreate, onEdit, onCloseForm }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [durationTerms, setDurationTerms] = useState('');
@@ -68,7 +68,7 @@ export default function ProgramForm({ program, onCreate, onEdit }) {
             <div>
             <button className="bg-green-600 w-24 mx-4 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700"
           type="submit">Submit</button>
-            <button type="button"  className="bg-red-600 w-24 mx-4 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700">Cancel</button>
+            <button type="button" onClick={()=>onCloseForm()} className="bg-red-600 w-24 mx-4 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-green-700">Cancel</button>
             </div>
         </form>
     );

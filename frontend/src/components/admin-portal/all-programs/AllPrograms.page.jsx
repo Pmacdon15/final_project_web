@@ -56,6 +56,7 @@ export default function AdminPortalAllPrograms() {
           program={selectedProgram}
           onCreate={createProgram}
           onEdit={editProgram}
+          onCloseForm={() => setFormVisible(false)}
         />
       )}
       <DisplayAllPrograms
