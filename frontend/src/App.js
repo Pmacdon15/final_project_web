@@ -43,7 +43,7 @@ function App() {
                         element={
                             <RouteWrapper>
                                 <StudentPortalAllPrograms />
-                            </RouteWrapper>
+                            //</RouteWrapper>
                         }
                     />
                     <Route
@@ -78,7 +78,7 @@ function App() {
                         element={
                             <RouteWrapper adminOnly>
                                 <AdminPortalDashBoard />
-                            </RouteWrapper>
+                            </RouteWrapper> 
                         }
                     />
                     <Route
@@ -94,13 +94,13 @@ function App() {
                         element={
                             <RouteWrapper adminOnly>
                                 <AdminPortalComments />
-                            </RouteWrapper>
+                           </RouteWrapper>
                         }
                     />
                     <Route
                         path="all-programs"
                         element={
-                            <RouteWrapper adminOnly>
+                           <RouteWrapper adminOnly>
                                 <AdminPortalAllPrograms  />
                             </RouteWrapper>
                         }

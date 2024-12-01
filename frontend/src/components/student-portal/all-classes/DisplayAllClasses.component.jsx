@@ -19,19 +19,7 @@ export default function DisplayAllClasses({
     };
     return (
         <div className="flex flex-col w-full md:w-4/6 bg-blue-100 shadow-lg gap-4 p-4 md:p-8 border rounded-lg mb-8">
-            {Array.isArray(allClasses) && allClasses.length ? (
-                allClasses.map((classDetails, index) => (
-                    <DisplayClass
-                        key={index}
-                        classDetails={classDetails}
-                        isAdmin={isAdmin}
-                        onFormAction={onFormAction}
-                    />
-                ))
-            ) : (
-                <div>No data to load</div>
-            )}
-            {isAdmin && (
+             {isAdmin && (
                 <div className="flex flex-col w-full items-center">
                     <button
                         className={`bg-blue-500 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 mr-2 ${
@@ -44,6 +32,19 @@ export default function DisplayAllClasses({
                 </div>
             )}
             {showAddClass && <AddClass onFormAction={handleOnAdd} />}
+            {Array.isArray(allClasses) && allClasses.length ? (
+                allClasses.map((classDetails, index) => (
+                    <DisplayClass
+                        key={index}
+                        classDetails={classDetails}
+                        isAdmin={isAdmin}
+                        onFormAction={onFormAction}
+                    />
+                ))
+            ) : (
+                <div>No data to load</div>
+            )}
+           
         </div>
     );
 }

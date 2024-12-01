@@ -1,7 +1,8 @@
-import express, { urlencoded, json } from 'express';
-import rateLimit from 'express-rate-limit';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
+import express, { urlencoded, json } from "express";
+import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
+import cors from 'cors'
+
 import dotenv from 'dotenv';
 import adminPrograms from './routes/adminPrograms.routes.js';
 import adminCoursesRoutes from './routes/adminCourses.routes.js';
@@ -31,14 +32,15 @@ const app = express();
 const limiter = rateLimit({
   limit: 100, // Maximum number of requests allowed per IP
   windowMs: 15 * 60 * 1000, // 15-minute window
-  message: 'Too many requests from this IP address, please try again later', // Response message for rate-limiting
-  headers: true, // Include rate limit headers in the response
+
+  message: "Too many requests from this IP address, please try again later", // Response message for rate-limiting
+  headers: true // Include rate limit headers in the response
+
 });
 
 // Serve static HTML files from the "public" folder (any file inside the public folder can be accessed by the browser directly)
 app.use(express.static('public'));
 
-// Middleware for JSON parsing with size limits
 app.use(
   json({
     limit: '16kb', // Maximum size of the JSON body
@@ -76,9 +78,10 @@ app.use('/api/v1/', authRoutes);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
-    error: err.message || 'Internal Server Error',
+    error: err.message || "Internal Server Error",
   });
 });
+
 
 // Protected Admin Routes
 app.use('/api/v1/admin', authenticateToken, adminUsersRoutes); // **Apply Authentication Middleware**

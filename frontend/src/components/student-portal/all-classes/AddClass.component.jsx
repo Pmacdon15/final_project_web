@@ -1,4 +1,4 @@
-import { AddClassToLocalStorage } from '../../../placeholders/load-data/loadData.action';
+import { AddClassFunction } from '../../../placeholders/load-data/loadData.action';
 
 export default function AddClass({ onFormAction }) {
   const handleOnAdd = async (event) => {
@@ -15,7 +15,7 @@ export default function AddClass({ onFormAction }) {
     const availableSummer = event.target.availableSummer.checked;
 
     console.log("Adding class: ", className);
-    await AddClassToLocalStorage(programId, description, className, availableFall, availableWinter, availableSpring, availableSummer);
+    await AddClassFunction(programId, description, className, availableFall, availableWinter, availableSpring, availableSummer);
     onFormAction(className);
   }
 

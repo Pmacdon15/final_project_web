@@ -7,7 +7,7 @@ export default function AdminLogin() {
     //Prevent authenticated user from accessing this page
     if (currentUser) {
         if (currentUser.isAdmin) {
-            window.location.href = '/admin/dashboard';
+            window.location.href = 'admin/all-programs';
             return;
         }
 

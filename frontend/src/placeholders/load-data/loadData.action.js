@@ -1,114 +1,117 @@
-import programs from "./programs.data.json";
-// import userPrograms from '../load-data/userPrograms.data.json';
-import allClasses from "./allClasses.data.json";
+
 import userClasses from "./userClasses.data.json";
-import userData from "../authentication/user.data.json";
 
 //MARK: Program data 
+async function LoadAllPrograms() {
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/admin/programs", {
+      method: "GET",
+      credentials: "include",
+    });
 
-function LoadAllProgramsToLocalStorage() {
-  const existingPrograms =
-    JSON.parse(localStorage.getItem("allPrograms")) || [];
-  const newPrograms = programs.filter(
-    (newProgram) =>
-      existingPrograms &&
-      !existingPrograms.some(
-        (existingProgram) => existingProgram.id === newProgram.id
-      )
-  );
-  const updatedPrograms = [...existingPrograms, ...newPrograms];
-  if (existingPrograms.length === 0) {
-    localStorage.setItem("allPrograms", JSON.stringify(updatedPrograms));
-    console.log("Programs loaded to local storage without duplicates");
-  }
-  console.log("Programs loaded to local storage without duplicates");
-}
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-LoadAllProgramsToLocalStorage();
-
-function LoadAllPrograms() {
-  const storedPrograms = localStorage.getItem("allPrograms");
-  return storedPrograms ? JSON.parse(storedPrograms) : null;
-}
-
-function AddProgramToLocalStorage(program) {
-  const existingPrograms = LoadAllPrograms() || [];
-  const lastProgramId =
-    existingPrograms.length > 0
-      ? Math.max(...existingPrograms.map((prog) => prog.id))
-      : 0;
-  const newProgram = {
-    id: lastProgramId + 1,
-    ...program,
-  };
-
-  const updatedPrograms = [...existingPrograms, newProgram];
-  localStorage.setItem("allPrograms", JSON.stringify(updatedPrograms));
-  console.log("Program added to local storage");
-}
-
-function EditProgramInLocalStorage(updatedProgram) {
-  const existingPrograms = LoadAllPrograms() || [];
-  const updatedPrograms = existingPrograms.map((program) =>
-    program.id === updatedProgram.id ? updatedProgram : program
-  );
-  localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
-  console.log('Program edited in local storage');
-}
-
-function DeleteProgramFromLocalStorage(programId) {
-  const existingPrograms = LoadAllPrograms() || [];
-  const updatedPrograms = existingPrograms.filter(
-    (program) => program.id !== programId
-  );
-  localStorage.setItem('allPrograms', JSON.stringify(updatedPrograms));
-  console.log('Program deleted from local storage');
-}
-
-//MARK: User data 
-
-function LoadUserDataToLocalStorage() {
-  const existingUserData = JSON.parse(localStorage.getItem("userData")) || [];
-  const newUserData = userData.filter(
-    (newUser) =>
-      existingUserData &&
-      !existingUserData.some(
-        (existingUser) => existingUser.email === newUser.email
-      )
-  );
-  const updatedUserData = [...existingUserData, ...newUserData];
-  if (existingUserData.length === 0) {
-    console.log("No existing user data found in local storage");
-    localStorage.setItem("userData", JSON.stringify(updatedUserData));
-    console.log("User data loaded to local storage without duplicates");
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to load programs:", error);
+    return null;
   }
 }
-LoadUserDataToLocalStorage();
+
+//MARK: Add program
+async function AddProgram(program) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/programs`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(program),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const newProgram = await response.json();
+    console.log('Program added: ' + newProgram);
+    return newProgram;
+  } catch (error) {
+    console.error("Failed to add program:", error);
+    return null;
+  }
+}
+//MARK: Edit program
+async function EditProgram(updatedProgram) {
+  console.log('Updated program: ' + updatedProgram);
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${updatedProgram.id}`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedProgram),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const newProgram = await response.json();
+    console.log('Program added: ' + newProgram);
+    return newProgram;
+  } catch (error) {
+    console.error("Failed to add program:", error);
+    return null;
+  }
+}
+//MARK: Delete program
+async function DeleteProgram(programId) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/programs/${programId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to delete programs:", error);
+    return null;
+  }
+}
+
 
 //MARK: Classes data 
+async function LoadAllClasses() {
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/admin/Courses", {
+      method: "GET",
+      credentials: "include",
+    });
 
-function LoadAllClassesToLocalStorage() {
-  const existingClasses = JSON.parse(localStorage.getItem("allClasses")) || [];
-  const newClasses = allClasses.filter(
-    (newClass) =>
-      existingClasses &&
-      !existingClasses.some((existingClass) => existingClass.id === newClass.id)
-  );
-  const updatedClasses = [...existingClasses, ...newClasses];
-  if (existingClasses.length === 0) {
-    localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to loading  Courses:", error);
+    return null;
   }
-  console.log("All classes loaded to local storage without duplicates");
 }
-
-LoadAllClassesToLocalStorage();
-
-function LoadAllClasses() {
-  const storedClasses = localStorage.getItem("allClasses");
-  return storedClasses ? JSON.parse(storedClasses) : null;
-}
-
-function AddClassToLocalStorage(
+//MARK: Add class
+async function AddClassFunction(
   programId,
   description,
   className,
@@ -117,67 +120,97 @@ function AddClassToLocalStorage(
   availableSpring,
   availableSummer
 ) {
-  const existingClasses = LoadAllClasses() || [];
-  const lastClassId =
-    existingClasses.length > 0
-      ? Math.max(...existingClasses.map((cls) => cls.id))
-      : 0;
   const newClass = {
-    id: lastClassId + 1,
-    programId: Number(programId),
+    programId: programId,
     name: className,
     description: description,
-    availableFall: availableFall,
-    availableWinter: availableWinter,
-    availableSpring: availableSpring,
-    availableSummer: availableSummer,
+    available: {
+      fall: availableFall,
+      winter: availableWinter,
+      spring: availableSpring,
+      summer: availableSummer,
+    },
+  };
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/courses`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newClass),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const newProgram = await response.json();
+    console.log('Program added: ' + newProgram);
+    return newProgram;
+  } catch (error) {
+    console.error("Failed to add program:", error);
+    return null;
+  }
+}
+
+async function RemoveCourse(courseId) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/courses/${courseId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to delete courses:", error);
+    return null;
+  }
+}
+//MARK: Edit course
+async function EditCourse(classId, programId ,className, description, availableFall, availableWinter, availableSpring, availableSummer) {
+  const updatedClass = {
+    id: classId, // Assuming classId is the identifier for the class
+    programId: programId,
+    name: className,
+    description, // Shorthand property assignment
+    available: {
+      fall: availableFall,
+      winter: availableWinter,
+      spring: availableSpring,
+      summer: availableSummer,
+    },
   };
 
-  const updatedClasses = [...existingClasses, newClass];
-  localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-  console.log("Class added to local storage");
-}
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/courses/${classId}`, { // Use classId in the URL
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedClass),
+      credentials: "include",
+    });
 
-function RemoveClassFromLocalStorage(classId) {
-  const existingClasses = LoadAllClasses() || [];
-  console.log("ClassId=", classId);
-  const updatedClasses = existingClasses.filter(
-    (classDetails) => Number(classDetails.id) !== Number(classId)
-  );
-  localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-  console.log("Class removed from local storage");
-}
-
-function EditClassFromLocalStorage(
-  classId,
-  className,
-  description,
-  availableFall,
-  availableWinter,
-  availableSpring,
-  availableSummer
-) {
-  const existingClasses = LoadAllClasses() || [];
-  const updatedClasses = existingClasses.map((classDetails) => {
-    if (Number(classDetails.id) === Number(classId)) {
-      return {
-        ...classDetails,
-        name: className,
-        description: description,
-        availableFall: availableFall,
-        availableWinter: availableWinter,
-        availableSpring: availableSpring,
-        availableSummer: availableSummer,
-      };
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return classDetails;
-  });
-  localStorage.setItem("allClasses", JSON.stringify(updatedClasses));
-  console.log("Class edited in local storage");
+
+    const editedClass = await response.json();
+    console.log('Class edited:', editedClass);
+    return editedClass; // Return the edited class data
+  } catch (error) {
+    console.error("Failed to edit class:", error);
+    return null; // Indicate failure by returning null
+  }
 }
 
 //MARK: User classes data 
-
 function LoadUserClassesToLocalStorage() {
   const existingUserClasses =
     JSON.parse(localStorage.getItem("userClasses")) || [];
@@ -195,6 +228,7 @@ function LoadUserClassesToLocalStorage() {
 }
 
 LoadUserClassesToLocalStorage();
+
 
 function LoadUserClasses() {
   const storedUserClasses = localStorage.getItem("userClasses");
@@ -244,14 +278,6 @@ function DropUserClass(classId, email) {
   localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
 }
 
-//MARK: User sign up data 
-
-// Function to load user data from local storage after signup
-export function LoadUserData() {
-  const storedUserData = localStorage.getItem("userData");
-  return storedUserData ? JSON.parse(storedUserData) : [];
-}
-
 // Function to save user data to local storage
 export function SaveUserData(newUserData) {
   const existingUserData = LoadUserData();
@@ -285,10 +311,95 @@ export function SaveUserData(newUserData) {
   console.log("User data saved to local storage.");
 }
 
-//MARK: Edit user data / dashboard 
+//MARK: Load Users data
+async function LoadUserData() {
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/admin/users", {
+      method: "GET",
+      credentials: "include",
+    });
 
-function EditUserDataFromLocalStorage(
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to load users:", error);
+    return null;
+  }
+}
+//MARK: Load user data by username
+async function LoadUserDataByUsername(username) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/users/username/${username}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const programs = await response.json();
+    return programs;
+  } catch (error) {
+    console.error("Failed to load users:", error);
+    return null;
+  }
+}
+//MARK: HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+
+//MARK: Edit user data / dashboard 
+// function EditUserDataFromLocalStorage(
+//   userId,
+//   firstName,
+//   lastName,
+//   phone,
+//   department,
+//   email,
+//   password,
+//   birthday,
+//   program,
+//   username
+// ) {
+//   const existingUsers = LoadUserData() || [];
+//   const updatedUsers = existingUsers.map((userDetails) => {
+//     if (String(userDetails.id) === String(userId)) {
+//       return {
+//         ...userDetails,
+//         firstName: firstName,
+//         lastName: lastName,
+//         phone: phone,
+//         department: department,
+//         email: email,
+//         password: password,
+//         birthday: birthday,
+//         program: program,
+//         username: username,
+//       };
+//     }
+//     return userDetails;
+//   });
+
+//   localStorage.setItem("userData", JSON.stringify(updatedUsers));
+//   console.log("User data edited in local storage");
+// }
+
+
+
+async function EditUserDataFromLocalStorage(
   userId,
+  username,
   firstName,
   lastName,
   phone,
@@ -296,44 +407,57 @@ function EditUserDataFromLocalStorage(
   email,
   password,
   birthday,
-  program,
-  username
+  program
 ) {
-  const existingUsers = LoadUserData() || [];
-  const updatedUsers = existingUsers.map((userDetails) => {
-    if (String(userDetails.id) === String(userId)) {
-      return {
-        ...userDetails,
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        department: department,
-        email: email,
-        password: password,
-        birthday: birthday,
-        program: program,
-        username: username,
-      };
-    }
-    return userDetails;
-  });
+  const updatedUser = {
+    id: userId,
+    username: username,
+    firstName: firstName,
+    lastName: lastName,
+    phone: phone,
+    department: department,
+    email: email,
+    password: password,
+    birthday: birthday,
+    program: program,
+  };
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/admin/users/${userId}`, { // Use classId in the URL
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedUser),
+      credentials: "include",
+    });
 
-  localStorage.setItem("userData", JSON.stringify(updatedUsers));
-  console.log("User data edited in local storage");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const editedClass = await response.json();
+    // console.log('Class edited:', editedClass);
+    return editedClass; // Return the edited class data
+  } catch (error) {
+    console.error("Failed to edit class:", error);
+    return null; // Indicate failure by returning null
+  }
 }
 
 
 export {
   LoadAllPrograms,
-  AddProgramToLocalStorage,
-  EditProgramInLocalStorage,
-  DeleteProgramFromLocalStorage,
+  AddProgram,
+  EditProgram,
+  DeleteProgram,
   LoadAllClasses,
   LoadUserClasses,
-  AddClassToLocalStorage,
-  RemoveClassFromLocalStorage,
-  EditClassFromLocalStorage,
+  AddClassFunction,
+  RemoveCourse,
+  EditCourse,
   AddToUserClasses,
   DropUserClass,
+  LoadUserData,
+  LoadUserDataByUsername,
   EditUserDataFromLocalStorage
 };

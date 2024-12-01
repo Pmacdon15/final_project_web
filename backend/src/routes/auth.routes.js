@@ -7,6 +7,7 @@ import {
   changePassword,
 } from '../controllers/auth.controller.js';
 
+
 const router = express.Router();
 
 // POST /api/v1/auth/login

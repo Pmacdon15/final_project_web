@@ -35,9 +35,18 @@ export const getUserByIdModel = async (id) => {
     .query('SELECT * FROM users WHERE id = @id'); // Execute secure query
   return result.recordset[0];
 };
+//Get user by username
+export const getUserByUsernameModel = async (username) => {
+  await sql.connect(config);
+  const result = await sql.query`SELECT * FROM users WHERE username = ${username}`;
+  return result.recordset[0];
+};
 
 export const createUserModel = async (userData) => {
   const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
+
+  // Hash the password before storing
+  // const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
     const pool = await poolPromise;
@@ -63,16 +72,13 @@ export const createUserModel = async (userData) => {
 
 // Update user by ID
 export const updateUserModel = async (id, userData) => {
-  const { isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
-
-  // Hash the password before storing
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const { firstName, lastName, birthday, phone, email,  program, } = userData;
 
   try {
     await sql.connect(config);
     const result = await sql.query`
       UPDATE users
-      SET isAdmin = ${isAdmin}, firstName = ${firstName}, lastName = ${lastName}, birthday = ${birthday}, phone = ${phone}, email = ${email}, department = ${department}, program = ${program}, username = ${username}, password = ${hashedPassword}
+      SET firstName = ${firstName}, lastName = ${lastName}, birthday = ${birthday}, phone = ${phone}, email = ${email}
       WHERE id = ${id}
     `;
     return result;

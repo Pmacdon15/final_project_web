@@ -1,4 +1,4 @@
-import { DeleteProgramFromLocalStorage } from "../../../placeholders/load-data/loadData.action";
+import { DeleteProgram } from "../../../placeholders/load-data/loadData.action";
 
 export default function DisplayProgram({ program, isAdmin, onEdit, onDelete }) {
   return (
@@ -40,7 +40,7 @@ export default function DisplayProgram({ program, isAdmin, onEdit, onDelete }) {
           <button
             className="bg-red-600 p-2 text-white font-extrabold rounded-lg shadow-lg hover:scale-110 hover:bg-red-700"
             onClick={() => {
-              DeleteProgramFromLocalStorage(program.id);
+              DeleteProgram(program.id);
               onDelete(program.id);
             }}
           >

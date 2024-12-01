@@ -23,10 +23,9 @@ export default function LoginForm({ loginType }) {
     //Prevent authenticated user from accessing this page
     if (currentUser) {
         if (currentUser.isAdmin) {
-            window.location.href = '/admin/dashboard';
+            window.location.href = 'admin/all-programs';
             return;
         }
-
         window.location.href = '/student/dashboard';
     }
 
@@ -44,15 +43,15 @@ export default function LoginForm({ loginType }) {
 
     const { vertical, horizontal, open, errorMessage } = toastState;
 
-    function handleLogin(event) {
+    async function handleLogin(event) {
         event.preventDefault();
 
         const username = event.target.userEmail.value;
         const password = event.target.password.value;
 
         try {
-            const userExists = handleLoginAction(username, password);
-
+            const userExists = await handleLoginAction(username, password);
+            // console.log(userExists);            
             if (!userExists) {
                 setToastState(oldState => ({
                     ...oldState,
@@ -67,6 +66,7 @@ export default function LoginForm({ loginType }) {
                     errorMessage: ''
                 }));
 
+                // await new Promise(resolve => setTimeout(resolve, 10000));
                 //Should redirect the user to the homepage
                 if (userExists.isAdmin) {
                     window.location.href = `/admin/all-programs`;

@@ -8,8 +8,7 @@ import {
 
 // Get all programs
 export const getAllPrograms = asyncHandler(async (req, res) => {
-  const result = await getAllProgramsModel();
-  console.log("Query result:", result);
+  const result = await getAllProgramsModel(); 
   res.status(200).json(result.recordset);
 });
 
