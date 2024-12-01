@@ -2,6 +2,7 @@ import express, { urlencoded, json } from "express";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
+
 import dotenv from 'dotenv';
 import adminPrograms from './routes/adminPrograms.routes.js';
 import adminCoursesRoutes from './routes/adminCourses.routes.js';
@@ -13,11 +14,9 @@ import adminCommentsRoutes from './routes/adminComment.routes.js';
 
 import authRoutes from './routes/auth.routes.js';
 
-
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 import { authenticateToken } from './middlewares/auth.middleware.js'; // **Import Middleware**
-
 
 // Load .env file
 dotenv.config();
@@ -33,34 +32,38 @@ const app = express();
 const limiter = rateLimit({
   limit: 100, // Maximum number of requests allowed per IP
   windowMs: 15 * 60 * 1000, // 15-minute window
+
   message: "Too many requests from this IP address, please try again later", // Response message for rate-limiting
   headers: true // Include rate limit headers in the response
+
 });
 
 // Serve static HTML files from the "public" folder (any file inside the public folder can be accessed by the browser directly)
 app.use(express.static('public'));
 
-
-// Middleware for JSON parsing with size limits
-app.use(json({
-  limit: "16kb", // Maximum size of the JSON body
-  extended: true
-}));
+app.use(
+  json({
+    limit: '16kb', // Maximum size of the JSON body
+    extended: true,
+  })
+);
 
 // Middleware for URL-encoded form data with size limits
-app.use(urlencoded({
-  limit: "16kb", // Maximum size of form data
-  extended: true
-}));
-
+app.use(
+  urlencoded({
+    limit: '16kb', // Maximum size of form data
+    extended: true,
+  })
+);
 
 // Middleware for enabling Cross-Origin Resource Sharing (CORS)
 // Allows restricted resources to be accessed by client applications from a different domain
-app.use(cors({
-  origin: process.env.CORS_ORIGIN, // Allow requests from this specific origin
-  credentials: true,// Allow credentials (e.g., cookies) to be included in requests  
-}));
-
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN, // Allow requests from this specific origin
+    credentials: true, // Allow credentials (e.g., cookies) to be included in requests
+  })
+);
 
 // Middleware for parsing cookies
 // Makes cookies sent by the client available in `req.cookies`
@@ -90,7 +93,5 @@ app.use('/api/v1/admin', authenticateToken, adminCommentsRoutes);
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
 app.use('/api/v1/client', authenticateToken, clientCommentRoutes);
-
-
 
 export default app;

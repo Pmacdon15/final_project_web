@@ -2,7 +2,7 @@
 SQL Server Configuration
 This file holds the configuration to connect to your SQL Server instance.
 */
-
+import sql from 'mssql'; // Import the mssql package for connecting to SQL Server
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -23,6 +23,14 @@ export const config = {
     },
   },
 };
+
+export const poolPromise = new sql.ConnectionPool(config)
+  .connect()
+  .then((pool) => {
+    console.log('Connected to SQL Server');
+    return pool;
+  })
+  .catch((err) => console.log('Database Connection Failed - ', err));
 
 // config for Windows Authentication (Hardcoded config)
 /*
