@@ -10,7 +10,7 @@ export default function StudentPortalAllPrograms() {
 
     useEffect(() => {
         const fetchPrograms = async () => {
-            const loadedPrograms = LoadAllPrograms();
+            const loadedPrograms = await LoadAllPrograms();
             setPrograms(loadedPrograms);
         };
 
