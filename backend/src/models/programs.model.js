@@ -7,6 +7,11 @@ export async function getAllProgramsModel() {
     return await sql.query('SELECT * FROM programs');
 }
 
+export async function getProgramByIdModel(id) {
+    await sql.connect(config);
+    return await sql.query`SELECT * FROM programs WHERE id = ${id}`;
+}
+
 export async function addProgramModel(name, description, durationTerms, tuition) {
     await sql.connect(config);
     return await sql.query`
