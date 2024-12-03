@@ -14,7 +14,7 @@ import SearchFilters from './SearchFliters';
 
 export default function StudentPortalMyClasses() {
     const { email } = getUserInfo();
-    console.log('User email:', email);
+    // console.log('User email:', email);
 
     // const [season, setSeason] = useState();
     const [searchByName, setSearchByName] = useState('');
@@ -46,6 +46,8 @@ export default function StudentPortalMyClasses() {
         });
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
     };
+
+    console.log("All Classes: ", allClasses);
 
     return (
         <>
@@ -102,7 +104,7 @@ const useGetAndSetAllClasses = (email) => {
 
     const fetchAllClasses = useCallback(async () => {
         setIsLoading(true);
-        const loadedAllClasses = LoadAllClasses();
+        const loadedAllClasses = await LoadAllClasses(false);
         const loadedUserClasses = LoadUserClasses();
 
         setAllClasses(loadedAllClasses);

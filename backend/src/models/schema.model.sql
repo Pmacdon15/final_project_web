@@ -298,111 +298,109 @@ VALUES (1, 1),
 (20, 2);
 
 -- Insert data into the users table
-INSERT INTO
-    users (
-        id,
-        isAdmin,
-        firstName,
-        lastName,
-        birthday,
-        phone,
-        email,
-        department,
-        program,
-        username,
-        password
-    )
-VALUES (
-        'SD000001',
-        1,
-        'Patrick',
-        'Macdonald',
-        '01011990',
-        '1234567890',
-        'patrick@bvc.com',
-        'Software Development',
-        'SD diploma',
-        'patrick',
-        '1234'
-    ),
-    (
-        'SD000002',
-        0,
-        'Manuella',
-        'Lopes',
-        '01011990',
-        '1234567890',
-        'manuella@bvc.com',
-        'Software Development',
-        'SD diploma',
-        'manuella',
-        '1234'
-    ),
-    (
-        'SD000003',
-        0,
-        'Thiago',
-        'Lima',
-        '01011990',
-        '1234567890',
-        'thiago@bvc.com',
-        'Software Development',
-        'SD diploma',
-        'thiago',
-        '1234'
-    ),
-    (
-        'SD000004',
-        1,
-        'Mariana',
-        'Rangel',
-        '01011990',
-        '1234567890',
-        'mariana@bvc.com',
-        'Software Development',
-        'SD diploma',
-        'mariana',
-        '1234'
-    ),
-    (
-        'SD000005',
-        0,
-        'Arshdeep',
-        'Kaur',
-        '01011990',
-        '1234567890',
-        'arshdeep@bvc.com',
-        'Software Development',
-        'SD diploma',
-        'arshdeep',
-        '1234'
-    );
+-- INSERT INTO
+--     users (
+--         id,
+--         isAdmin,
+--         firstName,
+--         lastName,
+--         birthday,
+--         phone,
+--         email,
+--         department,
+--         program,
+--         username,
+--         password
+--     )
+-- VALUES (
+--         'SD000001',
+--         1,
+--         'Patrick',
+--         'Macdonald',
+--         '01011990',
+--         '1234567890',
+--         'patrick@bvc.com',
+--         'Software Development',
+--         'SD diploma',
+--         'patrick',
+--         '1234'
+--     ),
+--     (
+--         'SD000002',
+--         0,
+--         'Manuella',
+--         'Lopes',
+--         '01011990',
+--         '1234567890',
+--         'manuella@bvc.com',
+--         'Software Development',
+--         'SD diploma',
+--         'manuella',
+--         '1234'
+--     ),
+--     (
+--         'SD000003',
+--         0,
+--         'Thiago',
+--         'Lima',
+--         '01011990',
+--         '1234567890',
+--         'thiago@bvc.com',
+--         'Software Development',
+--         'SD diploma',
+--         'thiago',
+--         '1234'
+--     ),
+--     (
+--         'SD000004',
+--         1,
+--         'Mariana',
+--         'Rangel',
+--         '01011990',
+--         '1234567890',
+--         'mariana@bvc.com',
+--         'Software Development',
+--         'SD diploma',
+--         'mariana',
+--         '1234'
+--     ),
+--     (
+--         'SD000005',
+--         0,
+--         'Arshdeep',
+--         'Kaur',
+--         '01011990',
+--         '1234567890',
+--         'arshdeep@bvc.com',
+--         'Software Development',
+--         'SD diploma',
+--         'arshdeep',
+--         '1234'
+--     );
 
 -- Insert data into the user_programs table
-INSERT INTO
-    user_programs (userId, programId)
-VALUES ('SD000001', 1),
-    ('SD000002', 1),
-    ('SD000003', 1),
-    ('SD000004', 1),
-    ('SD000005', 1);
+-- INSERT INTO
+--     user_programs (userId, programId)
+-- VALUES ('SD000001', 1),
+--     ('SD000002', 1),
+--     ('SD000003', 1),
+--     ('SD000004', 1),
+--     ('SD000005', 1);
 
 -- Insert data into the user_classes table
 
-INSERT INTO
-    user_courses (
-        userId,
-        courseId,
-        userTermId,
-        termSeasonId
-    )
-VALUES ('SD000001', 1, 1, 1),
-    ('SD000001', 2, 1, 1),
-    ('SD000001', 3, 1, 1),
-    ('SD000001', 4, 1, 1),
-    ('SD000001', 5, 1, 1),
-    ('SD000001', 6, 2, 2);
+-- INSERT INTO
+--     user_courses (
+--         userId,
+--         courseId,
+--         userTermId,
+--         termSeasonId
+--     )
+-- VALUES ('SD000001', 1, 1, 1),
+--     ('SD000001', 2, 1, 1),
+--     ('SD000001', 3, 1, 1),
+--     ('SD000001', 4, 1, 1),
+--     ('SD000001', 5, 1, 1),
+--     ('SD000001', 6, 2, 2);
 
-select * from users;
 
-SELECT * FROM users WHERE username = 'admin13'

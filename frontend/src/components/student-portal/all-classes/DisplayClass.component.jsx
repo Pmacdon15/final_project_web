@@ -129,22 +129,22 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
           </p>
           <p className="text-xl font-bold mb-2">Availability</p>
 
-          {classDetails.availableFall && (
+          {classDetails.availableFall != 0 && (
             <p className="font-bold mb-2">
               Fall: <spam className="text-xl font-normal mb-2">Yes</spam>
             </p>
           )}
-          {classDetails.availableWinter && (
+          {classDetails.availableWinter != 0 && (
             <p className="font-bold mb-2">
               Winter: <spam className="text-xl font-normal mb-2">Yes</spam>
             </p>
           )}
-          {classDetails.availableSpring && (
+          {classDetails.availableSpring != 0 && (
             <p className=" font-bold mb-2">
               Spring: <spam className="text-xl font-normal mb-2">Yes</spam>
             </p>
           )}
-          {classDetails.availableSummer && (
+          {classDetails.availableSummer != 0 && (
             <p className="font-bold mb-2">
               Summer: <spam className="text-xl font-normal mb-2">Yes</spam>
             </p>
@@ -168,22 +168,22 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
       <p className="text-justify mb-2">{classDetails.description}</p>
       <p className="text-xl font-bold mb-2">Availability</p>
 
-      {classDetails.availableFall && (
+      {classDetails.availableFall != 0 && (
         <p className="font-bold mb-2">
           Fall: <spam className="text-xl font-normal mb-2">Yes</spam>
         </p>
       )}
-      {classDetails.availableWinter && (
+      {classDetails.availableWinter != 0 && (
         <p className="font-bold mb-2">
           Winter: <spam className="text-xl font-normal mb-2">Yes</spam>
         </p>
       )}
-      {classDetails.availableSpring && (
+      {classDetails.availableSpring != 0 && (
         <p className=" font-bold mb-2">
           Spring: <spam className="text-xl font-normal mb-2">Yes</spam>
         </p>
       )}
-      {classDetails.availableSummer && (
+      {classDetails.availableSummer != 0 && (
         <p className="font-bold mb-2">
           Summer: <spam className="text-xl font-normal mb-2">Yes</spam>
         </p>
