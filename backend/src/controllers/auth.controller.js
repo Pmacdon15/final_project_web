@@ -74,7 +74,7 @@ export const register = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  // console.log(user);
+  console.log(hashedPassword);
 
   // Generate JWT token
   const token = jwt.sign(

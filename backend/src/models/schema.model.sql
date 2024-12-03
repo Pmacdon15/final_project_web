@@ -298,33 +298,33 @@ VALUES (1, 1),
 (20, 2);
 
 -- Insert data into the users table
--- INSERT INTO
---     users (
---         id,
---         isAdmin,
---         firstName,
---         lastName,
---         birthday,
---         phone,
---         email,
---         department,
---         program,
---         username,
---         password
---     )
--- VALUES (
---         'SD000001',
---         1,
---         'Patrick',
---         'Macdonald',
---         '01011990',
---         '1234567890',
---         'patrick@bvc.com',
---         'Software Development',
---         'SD diploma',
---         'patrick',
---         '1234'
---     ),
+INSERT INTO
+    users (
+        id,
+        isAdmin,
+        firstName,
+        lastName,
+        birthday,
+        phone,
+        email,
+        department,
+        program,
+        username,
+        password
+    )
+VALUES (
+        'SD1',
+        1,
+        'Patrick',
+        'Macdonald',
+        '01011990',
+        '1234567890',
+        'patrick@bvc.com',
+        'Software Development',
+        'SD diploma',
+        'patrick',
+        '1$2b$10$KBf0TqVP8oyelqdWn7J.luz5QrK64csBG6JRbHyPn.TJdyLvITL4W'
+    );
 --     (
 --         'SD000002',
 --         0,
@@ -422,3 +422,5 @@ VALUES (1, 1),
 
 -- select  * from user_courses;
 -- select * from users;
+
+-- SELECT id, username FROM users WHERE username = 'student';

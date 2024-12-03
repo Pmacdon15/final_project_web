@@ -256,10 +256,10 @@ async function AddToUserCourses(
     userTermId: Number(termId), // Ensure termId is a number
     termSeason: season,
   };
-
   try {
     const response = await fetch(
       `http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${courseId}/userTermId/${termId}/termSeason/${season}`,
+      
       {
         method: "POST",
         headers: {

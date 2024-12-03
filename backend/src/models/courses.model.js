@@ -30,17 +30,64 @@ export const addUserCourseModel = async (
   userTermId,
   termSeason
 ) => {
-  await sql.connect(config);
-  return await sql.query`
-    INSERT INTO user_courses (userId, courseId, userTermId, termSeasonId)
-    VALUES (
-      (SELECT id FROM users WHERE username = ${username}),
-      ${courseId},
-      ${userTermId},
-      (SELECT id FROM terms WHERE season = ${termSeason})
-    )
+  console.log('addUserCourseModel called');
+  try {
+    await sql.connect(config);
+
+    // Debug: Check if username exists
+    const userResult = await sql.query`
+    SELECT id FROM users WHERE username = ${username};
   `;
+    console.log('User Query Result:', userResult);
+
+    if (!userResult.recordset[0]) {
+      throw new Error(`User with username '${username}' not found`);
+    }
+
+    const userId = userResult.recordset[0].id;
+
+    // Debug: Check if termSeason exists
+    const termResult = await sql.query`
+    SELECT id FROM terms WHERE season = ${termSeason};
+  `;
+    console.log('Term Query Result:', termResult);
+
+    if (!termResult.recordset[0]) {
+      throw new Error(`Term season '${termSeason}' not found`);
+    }
+
+    const termSeasonId = termResult.recordset[0].id;
+
+    // Insert the course
+    await sql.query`
+    INSERT INTO user_courses (userId, courseId, userTermId, termSeasonId)
+    VALUES (${userId}, ${courseId}, ${userTermId}, ${termSeasonId});
+  `;
+  } catch (error) {
+    console.error('Error adding user course:', error);
+    return error;
+  }
 };
+// export const addUserCourseModel = async (
+//   username,
+//   courseId,
+//   userTermId,
+//   termSeason
+// ) => {
+//   await sql.connect(config);
+
+//   return await sql.query`
+//     INSERT INTO user_courses (userId, courseId, userTermId, termSeasonId)
+//     VALUES (
+//       (SELECT id FROM users WHERE username = ${username}),
+//       ${courseId},
+//       ${userTermId},
+//       (SELECT id FROM terms WHERE season = ${termSeason})
+//     )
+//   `;
+// };
+
+
 
 //MARK: Remove User Course
 export const removeUserCourseModel = async (userId, courseId) => {
