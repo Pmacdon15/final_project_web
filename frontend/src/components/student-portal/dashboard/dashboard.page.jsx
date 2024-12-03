@@ -47,9 +47,7 @@ const useFetchUserCourses = (username) => {
 
   const fetchUserCourses = useCallback(async () => {
     const loadedUserCourses = await LoadUserClasses();
-    // const userProgramId = loadedUserClasses.find((userClass) => userClass.userId === username).programId;
     setUserCourses(loadedUserCourses);
-    // setUserProgram(userProgramId);
   }, [username]);
 
   useEffect(() => {

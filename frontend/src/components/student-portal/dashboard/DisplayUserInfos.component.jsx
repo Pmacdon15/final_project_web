@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { EditUserDataFromLocalStorage } from "../../../placeholders/load-data/loadData.action";
 
-export default function DisplayUserInfos({ userInfos, classes, program, onFormAction }) {
+export default function DisplayUserInfos({
+  userInfos,
+  onFormAction,
+}) {
   const [isEditing, setIsEditing] = useState(false);
 
   async function handleOnEdit(event) {
@@ -15,9 +18,10 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
     const program = formData.get("program");
     const username = formData.get("username");
 
-    console.log("Editing user:", firstName, lastName);
+    console.log("Editing user:", userInfos.id);
     await EditUserDataFromLocalStorage(
       userInfos.id,
+      userInfos.username,
       firstName,
       lastName,
       phone,
@@ -34,7 +38,7 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
 
   return (
     <div className="flex flex-col w-full items-center bg-white">
-      {isEditing ? (
+      {isEditing  ? (
         <form
           onSubmit={handleOnEdit}
           className="flex flex-col h-fit items-center border border-black shadow-lg rounded-lg p-4 w-full md:w-2/6"
@@ -75,13 +79,7 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
             defaultValue={userInfos.birthday}
             className="text-center w-5/6 md:w-5/6 border rounded-lg p-2 mb-2"
           />
-          <label>Program:</label>
-          <input
-            type="text"
-            name="program"
-            defaultValue={userInfos.program}
-            className="text-center w-5/6 md:w-5/6 border rounded-lg p-2 mb-2"
-          />
+
           <label>Username:</label>
           <input
             type="text"
@@ -110,9 +108,11 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
           </h1>
           <p className="mb-2">ID: {userInfos.id}</p>
           <p className="mb-2">Email: {userInfos.email}</p>
+          <p className="mb-2">Username: {userInfos.username}</p>
+          <p className="mb-2">First name: {userInfos.firstName}</p>
+          <p className="mb-2">Last name: {userInfos.lastName}</p>
           <p className="mb-2">Phone: {userInfos.phone}</p>
           <p className="mb-2">Department: {userInfos.department}</p>
-          <p className="mb-2">Program: {userInfos.program}</p>
           <p className="mb-2">Birthday: {userInfos.birthday}</p>
           <button
             className="flex flex-col m-4 px-4 py-2 w-1.5/6 items-center bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
@@ -120,20 +120,6 @@ export default function DisplayUserInfos({ userInfos, classes, program, onFormAc
           >
             Update Personal Information
           </button>
-
-          <h2 className="text-xl font-bold mb-2">Program</h2>
-          {program ? <p className="mb-2">{program.name}</p> : <p className="mb-2">Software Development Diploma</p>}
-          
-          <h2 className="text-xl font-bold mb-2">Classes</h2>
-          {classes && classes.length > 0 ? (
-            classes.map((classItem, index) => (
-              <p key={index} className="mb-2">
-                {classItem.name}
-              </p>
-            ))
-          ) : (
-            <p className="mb-2">No registered classes!</p>
-          )}
         </div>
       )}
     </div>
