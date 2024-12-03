@@ -43,7 +43,7 @@ function App() {
                         element={
                             <RouteWrapper>
                                 <StudentPortalAllPrograms />
-                            //</RouteWrapper>
+                            </RouteWrapper>
                         }
                     />
                     <Route

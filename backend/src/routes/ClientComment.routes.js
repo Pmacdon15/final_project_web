@@ -10,10 +10,10 @@ const router = express.Router();
 // Route to create a new user comment
 router.post('/comments', createNewUserComment);
 
-// Route to update an existing user comment by ID
-router.put('/comments/:commentId', updateUserComment);
+// // Route to update an existing user comment by ID
+// router.put('/comments/:commentId', updateUserComment);
 
-// Route to delete a user comment by ID
-router.delete('/comments/:commentId', deleteUserComment);
+// // Route to delete a user comment by ID
+// router.delete('/comments/:commentId', deleteUserComment);
 
 export default router;
