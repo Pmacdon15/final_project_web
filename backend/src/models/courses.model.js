@@ -57,6 +57,7 @@ export const getUserCourseModel = async (username) => {
     uc.courseId, 
     c.name,
     c.description,
+    t.season AS termSeason,
     uc.userTermId, 
     uc.termSeasonId
 FROM 
@@ -69,6 +70,10 @@ JOIN
     courses c
 ON  
     c.id = uc.courseId
+JOIN
+    terms t
+ON
+    t.id = uc.termSeasonId
 WHERE 
     u.username = ${username};
   `;

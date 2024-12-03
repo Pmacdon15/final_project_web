@@ -1,5 +1,5 @@
 import { AddToUserCourses } from '../../../placeholders/load-data/loadData.action';
-export default function DisplayAvailableClasses({ filteredClasses, email, termId, season, onAddClass }) {
+export default function DisplayAvailableClasses({ filteredClasses, username, termId, season, onAddClass }) {
 
     async function handleOnSubmit(event) {
         event.preventDefault();
@@ -27,7 +27,7 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
                             <h1 className="flex text-2xl font-bold mb-2">{classDetails.name}</h1>
                             <p className="mb-2">{classDetails.description}</p>
                             <form onSubmit={handleOnSubmit} className="flex mx-auto">
-                                <input type="hidden" name="username" value={email} />
+                                <input type="hidden" name="username" value={username} />
                                 <input type="hidden" name="classId" value={classDetails.id} />
                                 <input type="hidden" name="programId" value={1} />
                                 <input type="hidden" name="name" value={classDetails.name} />

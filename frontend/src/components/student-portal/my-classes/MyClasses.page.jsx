@@ -68,7 +68,7 @@ export default function StudentPortalMyClasses() {
                         <>
                             <DisplayAvailableClasses
                                 filteredClasses={filteredClasses}
-                                email={username}
+                                username={username}
                                 termId={selectedTerm?.userTermId}
                                 season={season}
                                 onAddClass={handleChangeInClasses}

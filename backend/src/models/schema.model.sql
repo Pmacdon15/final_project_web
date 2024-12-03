@@ -405,20 +405,20 @@ VALUES (1, 1),
 
 
 
-SELECT 
-    u.id, 
-    u.username, 
-    uc.courseId, 
-    uc.userTermId, 
-    uc.termSeasonId
-FROM 
-    users u
-JOIN 
-    user_courses uc 
-ON 
-    u.id = uc.userId
-WHERE 
-    u.username = 'student';
+-- SELECT 
+--     u.id, 
+--     u.username, 
+--     uc.courseId, 
+--     uc.userTermId, 
+--     uc.termSeasonId
+-- FROM 
+--     users u
+-- JOIN 
+--     user_courses uc 
+-- ON 
+--     u.id = uc.userId
+-- WHERE 
+--     u.username = 'student';
 
-select  * from user_courses;
-select * from users;
+-- select  * from user_courses;
+-- select * from users;
