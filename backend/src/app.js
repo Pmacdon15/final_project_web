@@ -95,6 +95,6 @@ app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
 app.use('/api/v1/client', authenticateToken, clientCommentRoutes);
 
-app.use('/api/v1/guest', authenticateToken, guestPrograms);
+app.use('/api/v1/guest', guestPrograms);
 
 export default app;
