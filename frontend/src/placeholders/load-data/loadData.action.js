@@ -2,9 +2,13 @@
 import userClasses from "./userClasses.data.json";
 
 //MARK: Program data 
-async function LoadAllPrograms() {
+async function LoadAllPrograms(isAdmin) {
+  let url = "";
+  if (isAdmin) url = "http://localhost:5000/api/v1/admin/programs";
+  else url = "http://localhost:5000/api/v1/guest/programs";
+
   try {
-    const response = await fetch("http://localhost:5000/api/v1/admin/programs", {
+    const response = await fetch(`${url}`, {
       method: "GET",
       credentials: "include",
     });
@@ -20,6 +24,7 @@ async function LoadAllPrograms() {
     return null;
   }
 }
+
 
 //MARK: Add program
 async function AddProgram(program) {
@@ -173,7 +178,7 @@ async function RemoveCourse(courseId) {
   }
 }
 //MARK: Edit course
-async function EditCourse(classId, programId ,className, description, availableFall, availableWinter, availableSpring, availableSummer) {
+async function EditCourse(classId, programId, className, description, availableFall, availableWinter, availableSpring, availableSummer) {
   const updatedClass = {
     id: classId, // Assuming classId is the identifier for the class
     programId: programId,

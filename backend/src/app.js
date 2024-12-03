@@ -11,6 +11,7 @@ import clientCoursesRoutes from './routes/clientCourses.routes.js';
 import clientUsersRoutes from './routes/clientUsers.routes.js';
 import clientCommentRoutes from './routes/ClientComment.routes.js';
 import adminCommentsRoutes from './routes/adminComment.routes.js';
+import guestPrograms from './routes/guestPrograms.routes.js';
 
 import authRoutes from './routes/auth.routes.js';
 
@@ -93,5 +94,7 @@ app.use('/api/v1/admin', authenticateToken, adminCommentsRoutes);
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
 app.use('/api/v1/client', authenticateToken, clientCommentRoutes);
+
+app.use('/api/v1/guest', authenticateToken, guestPrograms);
 
 export default app;

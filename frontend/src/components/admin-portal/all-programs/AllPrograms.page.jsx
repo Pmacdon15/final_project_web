@@ -75,7 +75,7 @@ const useFetchPrograms = () => {
 
   const fetchPrograms = async () => {
     try {
-      const loadedPrograms = await LoadAllPrograms();
+      const loadedPrograms = await LoadAllPrograms(true);
       setPrograms(loadedPrograms);
     } catch (error) {
       console.error("Failed to fetch programs:", error);
