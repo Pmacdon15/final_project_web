@@ -92,9 +92,12 @@ async function DeleteProgram(programId) {
 
 
 //MARK: Classes data 
-async function LoadAllClasses() {
+async function LoadAllClasses(isAdmin) {
+  let url = "";
+  if (isAdmin) url = "http://localhost:5000/api/v1/admin/courses";
+  else url = "http://localhost:5000/api/v1/client/courses";
   try {
-    const response = await fetch("http://localhost:5000/api/v1/admin/Courses", {
+    const response = await fetch(`${url}`, {
       method: "GET",
       credentials: "include",
     });

@@ -1,6 +1,5 @@
 import asyncHandler from '../utils/asyncHandler.js';
-import sql from "mssql";
-import { config } from "../db/index.js";
+
 import {
   getAllCoursesModel,
   removeCourseModel,

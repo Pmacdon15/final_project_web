@@ -6,7 +6,7 @@ import cors from 'cors'
 import dotenv from 'dotenv';
 import adminPrograms from './routes/adminPrograms.routes.js';
 import adminCoursesRoutes from './routes/adminCourses.routes.js';
-import adminUsersRoutes from './routes/AdminUsers.routes.js';
+import adminUsersRoutes from './routes/adminUsers.routes.js';
 import clientCoursesRoutes from './routes/clientCourses.routes.js';
 import clientUsersRoutes from './routes/clientUsers.routes.js';
 import clientCommentRoutes from './routes/ClientComment.routes.js';
