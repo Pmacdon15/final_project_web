@@ -32,9 +32,9 @@ export const removeCourse = asyncHandler(async (req, res) => {
 
 // Add User Course
 export const addUserCourse = asyncHandler(async (req, res) => {
-  const { userId, courseId, userTermId, termSeason } = req.params;
+  const { username, courseId, userTermId, termSeason } = req.params;
 
-  const enrolledCourses = await getUserCourseModel(userId);
+  const enrolledCourses = await getUserCourseModel(username);
 
   const coursesCountByTerm = enrolledCourses.recordset.reduce(
     (acc, current) => {
@@ -44,7 +44,7 @@ export const addUserCourse = asyncHandler(async (req, res) => {
     {}
   );
 
-  console.log(coursesCountByTerm);
+  // console.log(coursesCountByTerm);
 
   if (coursesCountByTerm[userTermId] >= 5) {
     res
@@ -54,7 +54,7 @@ export const addUserCourse = asyncHandler(async (req, res) => {
   }
 
   const result = await addUserCourseModel(
-    userId,
+    username,
     courseId,
     userTermId,
     termSeason

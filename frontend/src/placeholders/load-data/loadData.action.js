@@ -1,5 +1,4 @@
 
-import userClasses from "./userClasses.data.json";
 
 //MARK: Program data 
 async function LoadAllPrograms() {
@@ -214,26 +213,10 @@ async function EditCourse(classId, programId, className, description, availableF
 }
 
 //MARK: User classes data 
-// function LoadUserClassesToLocalStorage() {
-//   const existingUserClasses =
-//     JSON.parse(localStorage.getItem("userClasses")) || [];
-//   const newUserClasses = userClasses.filter(
-//     (newUserClass) =>
-//       existingUserClasses &&
-//       !existingUserClasses.some(
-//         (existingUserClass) => existingUserClass.id === newUserClass.id
-//       )
-//   );
-//   const updatedUserClasses = [...existingUserClasses, ...newUserClasses];
-//   if (existingUserClasses.length === 0) {
-//     localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
-//   }
-// }
-
-// LoadUserClassesToLocalStorage();
 
 
 async function LoadUserClasses(username) {
+  console.log('Username:', username);
   try {
     const userClasses = await fetch(`http://localhost:5000/api/v1/client/courses/username/${username}`, {
       method: "GET",
@@ -245,6 +228,7 @@ async function LoadUserClasses(username) {
     }
 
     const userClassesData = await userClasses.json();
+    console.log('User classes:', userClassesData);
     return userClassesData;
   } catch (error) {
     console.error("Failed to load user classes:", error);
@@ -253,7 +237,7 @@ async function LoadUserClasses(username) {
 }
 
 async function AddToUserCourses(
-  userId,
+  username,
   courseId,
   programId,
   name,
@@ -264,7 +248,7 @@ async function AddToUserCourses(
 
   const newUserCourse = {
     id: courseId,
-    userId: userId,
+    username: username,
     courseId: Number(courseId),
     programId: Number(programId),
     name: name,
@@ -275,8 +259,7 @@ async function AddToUserCourses(
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/v1/client/courses/userId/SD3/courseId/4/userTermId/1/termSeason/Fall`,
-
+      `http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${courseId}/userTermId/${termId}/termSeason/${season}`,
       {
         method: "POST",
         headers: {

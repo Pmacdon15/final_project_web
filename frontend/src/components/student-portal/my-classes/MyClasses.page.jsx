@@ -14,12 +14,10 @@ import SearchFilters from './SearchFliters';
 
 export default function StudentPortalMyClasses() {
     const { username } = getUserInfo();
-    // console.log('User email:', email);
-
-    // const [season, setSeason] = useState();
     const [searchByName, setSearchByName] = useState('');
 
-    const { allClasses, userClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses(username );
+    const { allClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses();
+    const { userClasses, fetchUserClasses } = useGetAndSetUserClasses(username);
     const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
     const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
     const { filteredClasses } = useGetAndSetFilteredClasses(season, allClasses, userClasses, searchByName);
@@ -34,6 +32,7 @@ export default function StudentPortalMyClasses() {
 
     const handleChangeInClasses = async (termId, termSeason) => {
         await fetchAllClasses();
+        await fetchUserClasses();
         setUserTerms(prevTerms => {
             const newTerm = { userTermId: Number(termId), termSeason: termSeason };
             const termExists = prevTerms.some(term => term.userTermId === newTerm.userTermId);
@@ -43,7 +42,7 @@ export default function StudentPortalMyClasses() {
             return prevTerms;
         });
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
-    };    
+    };
 
     return (
         <>
@@ -69,7 +68,7 @@ export default function StudentPortalMyClasses() {
                         <>
                             <DisplayAvailableClasses
                                 filteredClasses={filteredClasses}
-                                email={username }
+                                email={username}
                                 termId={selectedTerm?.userTermId}
                                 season={season}
                                 onAddClass={handleChangeInClasses}
@@ -78,7 +77,7 @@ export default function StudentPortalMyClasses() {
                             {filteredClasses && filteredClasses.length > 0 && (
                                 <DisplayUserClasses
                                     userClasses={filteredUserClasses}
-                                    email={username }
+                                    email={username}
                                     onDropClass={handleChangeInClasses}
                                     termId={selectedTerm?.userTermId}
                                     season={season}
@@ -93,28 +92,34 @@ export default function StudentPortalMyClasses() {
 }
 
 
-const useGetAndSetAllClasses = (username ) => {
+const useGetAndSetAllClasses = () => {
     const [allClasses, setAllClasses] = useState();
-    const [userClasses, setUserClasses] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchAllClasses = useCallback(async () => {
         setIsLoading(true);
-        const loadedAllClasses = await LoadAllClasses(false);
-        const loadedUserClasses = await LoadUserClasses(username );
-
+        const loadedAllClasses = await LoadAllClasses(false);       
         setAllClasses(loadedAllClasses);
-       
-        setUserClasses(loadedUserClasses);
         setIsLoading(false);
-
-    }, [username]);
+    }, []);
 
     useEffect(() => {
         fetchAllClasses();
     }, [fetchAllClasses]);
-    return { allClasses, userClasses, fetchAllClasses, isLoading };
+    return { allClasses, fetchAllClasses, isLoading };
 
+};
+const useGetAndSetUserClasses = (username) => {
+    const [userClasses, setUserClasses] = useState();
+    const fetchUserClasses = useCallback(async () => {
+        const loadedUserClasses = await LoadUserClasses(username);
+        setUserClasses(loadedUserClasses);
+    }, [username]);
+    
+    useEffect(() => {
+        fetchUserClasses();
+    }, [fetchUserClasses, username]);
+    return { userClasses, fetchUserClasses };
 };
 
 const useGetAndSetUserTerms = (userClasses) => {

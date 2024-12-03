@@ -25,15 +25,21 @@ export const removeCourseModel = async (courseId) => {
 
 //MARK: Add Course
 export const addUserCourseModel = async (
-  userId,
+  username,
   courseId,
   userTermId,
   termSeason
 ) => {
   await sql.connect(config);
-  return await sql.query`INSERT INTO user_courses 
-    (userId, courseId, userTermId, termSeasonId) VALUES (${userId}, ${courseId}, ${userTermId}, 
-    (select id from terms where season = ${termSeason}))`;
+  return await sql.query`
+    INSERT INTO user_courses (userId, courseId, userTermId, termSeasonId)
+    VALUES (
+      (SELECT id FROM users WHERE username = ${username}),
+      ${courseId},
+      ${userTermId},
+      (SELECT id FROM terms WHERE season = ${termSeason})
+    )
+  `;
 };
 
 //MARK: Remove User Course
@@ -42,12 +48,28 @@ export const removeUserCourseModel = async (userId, courseId) => {
   return await sql.query`DELETE FROM user_courses WHERE userId = ${userId} AND courseId = ${courseId}`;
 };
 
-export const getUserCourseModel = async (userId) => {
+export const getUserCourseModel = async (username) => {
   await sql.connect(config);
   return await sql.query`
-    SELECT uc.*, u.username
-    FROM user_courses uc
-    JOIN users u ON uc.userId = u.id
-    WHERE uc.userId = ${userId}
+    SELECT 
+    u.id, 
+    u.username, 
+    uc.courseId, 
+    c.name,
+    c.description,
+    uc.userTermId, 
+    uc.termSeasonId
+FROM 
+    users u
+JOIN 
+    user_courses uc 
+ON 
+    u.id = uc.userId
+JOIN
+    courses c
+ON  
+    c.id = uc.courseId
+WHERE 
+    u.username = ${username};
   `;
 };

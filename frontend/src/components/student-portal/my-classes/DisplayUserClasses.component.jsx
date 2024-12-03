@@ -1,5 +1,5 @@
 import { DropUserClass } from "../../../placeholders/load-data/loadData.action";
-export default function DisplayUserClasses({ userClasses=[], email, termId, season, onDropClass }) {
+export default function DisplayUserClasses({ userClasses=[], username, termId, season, onDropClass }) {
     async function handleOnSubmit(event) {
         event.preventDefault();
         const classId = event.target.classId.value;
@@ -25,7 +25,7 @@ export default function DisplayUserClasses({ userClasses=[], email, termId, seas
                             <p className="mb-2">{classDetails.description}</p>
                             <form onSubmit={handleOnSubmit} className="mx-auto">
                                 <input type="hidden" name="classId" value={classDetails.id} />
-                                <input type="hidden" name="email" value={email} />
+                                <input type="hidden" name="username" value={username} />
                                 <input type="hidden" name="userTermId" value={termId} />
                                 <input type="hidden" name="termSeason" value={season} />
                                 <button className="bg-red-300 hover:bg-red-700 text-white font-bold py-2 px-4 rounded hover:scale-110" type="submit">Drop</button>

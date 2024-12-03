@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/courses',getAllCourses)
 router.post(
-  '/courses/userId/:userId/courseId/:courseId/userTermId/:userTermId/termSeason/:termSeason',
+  '/courses/username/:username/courseId/:courseId/userTermId/:userTermId/termSeason/:termSeason',
   addUserCourse
 );
 router.delete('/courses/userId/:userId/courseId/:courseId', removeUserCourse);

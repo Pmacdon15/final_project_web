@@ -404,3 +404,21 @@ VALUES (1, 1),
 --     ('SD000001', 6, 2, 2);
 
 
+
+SELECT 
+    u.id, 
+    u.username, 
+    uc.courseId, 
+    uc.userTermId, 
+    uc.termSeasonId
+FROM 
+    users u
+JOIN 
+    user_courses uc 
+ON 
+    u.id = uc.userId
+WHERE 
+    u.username = 'student';
+
+select  * from user_courses;
+select * from users;
