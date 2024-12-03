@@ -5,13 +5,13 @@ import {
   removeCourseModel,
   addUserCourseModel,
   removeUserCourseModel,
+  getUserCourseModel,
 } from "../models/courses.model.js";
 
 // Get All Courses
 export const getAllCourses = asyncHandler(async (req, res) => {
   console.log("getAllCourses called");
   const result = await getAllCoursesModel();
-  console.log("Query result:", result.recordset);
   res.status(200).json(result.recordset);
 });
 
@@ -82,10 +82,8 @@ export const removeUserCourse = asyncHandler(async (req, res) => {
 
 
 export const getUserCourses = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-  console.log('getUserCourses called', userId);
-
-  const result = await getUserCourseModel(userId);
+  const { username} = req.params;
+  const result = await getUserCourseModel(username);
 
   res.status(200).json(result.recordset);
 });

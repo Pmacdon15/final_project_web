@@ -176,7 +176,7 @@ async function RemoveCourse(courseId) {
   }
 }
 //MARK: Edit course
-async function EditCourse(classId, programId ,className, description, availableFall, availableWinter, availableSpring, availableSummer) {
+async function EditCourse(classId, programId, className, description, availableFall, availableWinter, availableSpring, availableSummer) {
   const updatedClass = {
     id: classId, // Assuming classId is the identifier for the class
     programId: programId,
@@ -214,48 +214,58 @@ async function EditCourse(classId, programId ,className, description, availableF
 }
 
 //MARK: User classes data 
-function LoadUserClassesToLocalStorage() {
-  const existingUserClasses =
-    JSON.parse(localStorage.getItem("userClasses")) || [];
-  const newUserClasses = userClasses.filter(
-    (newUserClass) =>
-      existingUserClasses &&
-      !existingUserClasses.some(
-        (existingUserClass) => existingUserClass.id === newUserClass.id
-      )
-  );
-  const updatedUserClasses = [...existingUserClasses, ...newUserClasses];
-  if (existingUserClasses.length === 0) {
-    localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
+// function LoadUserClassesToLocalStorage() {
+//   const existingUserClasses =
+//     JSON.parse(localStorage.getItem("userClasses")) || [];
+//   const newUserClasses = userClasses.filter(
+//     (newUserClass) =>
+//       existingUserClasses &&
+//       !existingUserClasses.some(
+//         (existingUserClass) => existingUserClass.id === newUserClass.id
+//       )
+//   );
+//   const updatedUserClasses = [...existingUserClasses, ...newUserClasses];
+//   if (existingUserClasses.length === 0) {
+//     localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
+//   }
+// }
+
+// LoadUserClassesToLocalStorage();
+
+
+async function LoadUserClasses(username) {
+  try {
+    const userClasses = await fetch(`http://localhost:5000/api/v1/client/courses/username/${username}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!userClasses.ok) {
+      throw new Error(`HTTP error! Status: ${userClasses.status}`);
+    }
+
+    const userClassesData = await userClasses.json();
+    return userClassesData;
+  } catch (error) {
+    console.error("Failed to load user classes:", error);
+    return null;
   }
 }
 
-LoadUserClassesToLocalStorage();
-
-
-function LoadUserClasses() {
-  const storedUserClasses = localStorage.getItem("userClasses");
-  if (!storedUserClasses) {
-    LoadUserClassesToLocalStorage();
-  }
-  return storedUserClasses ? JSON.parse(storedUserClasses) : null;
-}
-
-function AddToUserClasses(
+async function AddToUserCourses(
   userId,
-  classId,
+  courseId,
   programId,
   name,
   description,
   termId,
   season
 ) {
-  const existingUserClasses = LoadUserClasses() || [];
 
-  const newUserClass = {
-    id: classId,
+  const newUserCourse = {
+    id: courseId,
     userId: userId,
-    classId: Number(classId),
+    courseId: Number(courseId),
     programId: Number(programId),
     name: name,
     description: description,
@@ -263,10 +273,29 @@ function AddToUserClasses(
     termSeason: season,
   };
 
-  console.log(newUserClass);
-  const updatedUserClasses = [...existingUserClasses, newUserClass];
-  localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
-  console.log("User class added");
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/client/courses/userId/SD3/courseId/4/userTermId/1/termSeason/Fall`,
+
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUserCourse),
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+  } catch (error) {
+    console.error("Failed to add user course:", error);
+    return null;
+  }
+
 }
 
 function DropUserClass(classId, email) {
@@ -353,51 +382,7 @@ async function LoadUserDataByUsername(username) {
   }
 }
 //MARK: HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
-//MARK: Edit user data / dashboard 
-// function EditUserDataFromLocalStorage(
-//   userId,
-//   firstName,
-//   lastName,
-//   phone,
-//   department,
-//   email,
-//   password,
-//   birthday,
-//   program,
-//   username
-// ) {
-//   const existingUsers = LoadUserData() || [];
-//   const updatedUsers = existingUsers.map((userDetails) => {
-//     if (String(userDetails.id) === String(userId)) {
-//       return {
-//         ...userDetails,
-//         firstName: firstName,
-//         lastName: lastName,
-//         phone: phone,
-//         department: department,
-//         email: email,
-//         password: password,
-//         birthday: birthday,
-//         program: program,
-//         username: username,
-//       };
-//     }
-//     return userDetails;
-//   });
-
-//   localStorage.setItem("userData", JSON.stringify(updatedUsers));
-//   console.log("User data edited in local storage");
-// }
-
+//TODO RENAME THIS FUNCTION remove to local storage
 
 
 async function EditUserDataFromLocalStorage(
@@ -458,7 +443,7 @@ export {
   AddClassFunction,
   RemoveCourse,
   EditCourse,
-  AddToUserClasses,
+  AddToUserCourses,
   DropUserClass,
   LoadUserData,
   LoadUserDataByUsername,

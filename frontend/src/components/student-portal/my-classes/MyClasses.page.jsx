@@ -13,13 +13,13 @@ import filterPrograms from '../../../utils/search-filter';
 import SearchFilters from './SearchFliters';
 
 export default function StudentPortalMyClasses() {
-    const { email } = getUserInfo();
+    const { username } = getUserInfo();
     // console.log('User email:', email);
 
     // const [season, setSeason] = useState();
     const [searchByName, setSearchByName] = useState('');
 
-    const { allClasses, userClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses(email);
+    const { allClasses, userClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses(username );
     const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
     const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
     const { filteredClasses } = useGetAndSetFilteredClasses(season, allClasses, userClasses, searchByName);
@@ -34,8 +34,6 @@ export default function StudentPortalMyClasses() {
 
     const handleChangeInClasses = async (termId, termSeason) => {
         await fetchAllClasses();
-        console.log('User terms: ', userTerms);
-        console.log('Class added to term ID: ', termId, 'Term Season: ', termSeason);
         setUserTerms(prevTerms => {
             const newTerm = { userTermId: Number(termId), termSeason: termSeason };
             const termExists = prevTerms.some(term => term.userTermId === newTerm.userTermId);
@@ -45,9 +43,7 @@ export default function StudentPortalMyClasses() {
             return prevTerms;
         });
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
-    };
-
-    console.log("All Classes: ", allClasses);
+    };    
 
     return (
         <>
@@ -73,7 +69,7 @@ export default function StudentPortalMyClasses() {
                         <>
                             <DisplayAvailableClasses
                                 filteredClasses={filteredClasses}
-                                email={email}
+                                email={username }
                                 termId={selectedTerm?.userTermId}
                                 season={season}
                                 onAddClass={handleChangeInClasses}
@@ -82,7 +78,7 @@ export default function StudentPortalMyClasses() {
                             {filteredClasses && filteredClasses.length > 0 && (
                                 <DisplayUserClasses
                                     userClasses={filteredUserClasses}
-                                    email={email}
+                                    email={username }
                                     onDropClass={handleChangeInClasses}
                                     termId={selectedTerm?.userTermId}
                                     season={season}
@@ -97,7 +93,7 @@ export default function StudentPortalMyClasses() {
 }
 
 
-const useGetAndSetAllClasses = (email) => {
+const useGetAndSetAllClasses = (username ) => {
     const [allClasses, setAllClasses] = useState();
     const [userClasses, setUserClasses] = useState();
     const [isLoading, setIsLoading] = useState(true);
@@ -105,16 +101,14 @@ const useGetAndSetAllClasses = (email) => {
     const fetchAllClasses = useCallback(async () => {
         setIsLoading(true);
         const loadedAllClasses = await LoadAllClasses(false);
-        const loadedUserClasses = LoadUserClasses();
+        const loadedUserClasses = await LoadUserClasses(username );
 
         setAllClasses(loadedAllClasses);
-        const filteredUserClasses = loadedUserClasses.filter(
-            userClass => userClass.userId === email
-        );
-        setUserClasses(filteredUserClasses);
+       
+        setUserClasses(loadedUserClasses);
         setIsLoading(false);
 
-    }, [email]);
+    }, [username]);
 
     useEffect(() => {
         fetchAllClasses();
@@ -147,7 +141,6 @@ const useGetAndSetUserTerms = (userClasses) => {
             });
         }
     }, [userClasses]);
-    console.log('User terms: ', userTerms);
     return { userTerms, setUserTerms };
 }
 

@@ -44,7 +44,10 @@ export const removeUserCourseModel = async (userId, courseId) => {
 
 export const getUserCourseModel = async (userId) => {
   await sql.connect(config);
-  return await sql.query`SELECT * 
-  FROM user_courses 
-  WHERE userId = ${userId}`;
+  return await sql.query`
+    SELECT uc.*, u.username
+    FROM user_courses uc
+    JOIN users u ON uc.userId = u.id
+    WHERE uc.userId = ${userId}
+  `;
 };

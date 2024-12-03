@@ -1,4 +1,4 @@
-import { AddToUserClasses } from '../../../placeholders/load-data/loadData.action';
+import { AddToUserCourses } from '../../../placeholders/load-data/loadData.action';
 export default function DisplayAvailableClasses({ filteredClasses, email, termId, season, onAddClass }) {
 
     async function handleOnSubmit(event) {
@@ -13,7 +13,7 @@ export default function DisplayAvailableClasses({ filteredClasses, email, termId
         const termSeason = formData.get('termSeason');
 
         // Call the action to add the class
-        await AddToUserClasses(userId, classId, programId, name, description, userTermId, termSeason);
+        await AddToUserCourses(userId, classId, programId, name, description, userTermId, termSeason);
         onAddClass(userTermId, termSeason);     
     }
 

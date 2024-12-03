@@ -14,6 +14,6 @@ router.post(
   addUserCourse
 );
 router.delete('/courses/userId/:userId/courseId/:courseId', removeUserCourse);
-router.get('/courses/userId/:userId', getUserCourses);
+router.get('/courses/username/:username', getUserCourses);
 
 export default router;
