@@ -16,7 +16,7 @@ export default function StudentPortalMyClasses() {
     const { username } = getUserInfo();
     const [searchByName, setSearchByName] = useState('');
 
-    const { allClasses, isLoading } = useGetAndSetAllClasses();
+    const { allClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses();
     const { userClasses, fetchUserClasses } = useGetAndSetUserClasses(username);
     const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
     const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
@@ -40,10 +40,12 @@ export default function StudentPortalMyClasses() {
             }
             return prevTerms;
         });
-        await fetchUserClasses();
+
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
-        // await fetchAllClasses();
-        
+        await fetchAllClasses();
+
+        await fetchUserClasses();
+
     };
 
     return (
@@ -76,7 +78,7 @@ export default function StudentPortalMyClasses() {
                                 onAddClass={handleChangeInClasses}
                             />
 
-                            {filteredUserClasses  && (
+                            {filteredUserClasses && (
                                 <DisplayUserClasses
                                     userClasses={filteredUserClasses}
                                     username={username}
@@ -100,7 +102,7 @@ const useGetAndSetAllClasses = () => {
 
     const fetchAllClasses = useCallback(async () => {
         setIsLoading(true);
-        const loadedAllClasses = await LoadAllClasses(false);       
+        const loadedAllClasses = await LoadAllClasses(false);
         setAllClasses(loadedAllClasses);
         setIsLoading(false);
     }, []);
@@ -108,7 +110,7 @@ const useGetAndSetAllClasses = () => {
     useEffect(() => {
         fetchAllClasses();
     }, [fetchAllClasses]);
-    return { allClasses, isLoading };
+    return { allClasses, fetchAllClasses, isLoading };
 
 };
 const useGetAndSetUserClasses = (username) => {
@@ -117,7 +119,7 @@ const useGetAndSetUserClasses = (username) => {
         const loadedUserClasses = await LoadUserClasses(username);
         setUserClasses(loadedUserClasses);
     }, [username]);
-    
+
     useEffect(() => {
         fetchUserClasses();
     }, [fetchUserClasses, username]);
@@ -201,12 +203,12 @@ const useGetAndSetSelectedTermAndSeason = (userTerms) => {
     const [season, setSeason] = useState(null);
 
     useEffect(() => {
-        if (userTerms && userTerms.length > 0) {
+        if (userTerms && userTerms.length > 0 && !selectedTerm) {
             const sortedUserTerms = [...userTerms].sort((a, b) => a.userTermId - b.userTermId);
             setSelectedTerm(sortedUserTerms[0]);
             setSeason(sortedUserTerms[0].termSeason);
         }
-    }, [userTerms]);
+    }, [userTerms, selectedTerm]);
 
     return { selectedTerm, setSelectedTerm, season, setSeason };
 };
