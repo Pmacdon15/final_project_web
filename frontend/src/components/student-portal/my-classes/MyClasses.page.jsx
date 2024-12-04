@@ -181,7 +181,7 @@ const useGetAndSetFilteredClasses = (season, allClasses, userClasses, searchByNa
             //Filter out classes that the user is already enrolled in
             if (userClasses) {
                 const userClassIds = userClasses.map(
-                    userClass => userClass.classId
+                    userClass => userClass.courseId
                 ); // Use classId from userClasses
                 availableClasses = availableClasses.filter(
                     classItem => !userClassIds.includes(classItem.id)
