@@ -281,16 +281,24 @@ async function AddToUserCourses(
 
 }
 
-function DropUserClass(classId, email) {
-  const existingUserClasses = LoadUserClasses() || [];
+function DropUserClass(username,classId) {
+  console.log('Dropping class:', classId);
+  console.log('Username:', username);
+  try {
+    const response = fetch(`http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${classId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
 
-  // Keep classes that do not match both the classId and userId (email)
-  const updatedUserClasses = existingUserClasses.filter(
-    (userClass) =>
-      !(userClass.classId === Number(classId) && userClass.userId === email)
-  );
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-  localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
+  } catch (error) {
+    console.error("Failed to drop user class:", error);
+    return null;
+  }
+
 }
 
 // Function to save user data to local storage

@@ -424,3 +424,4 @@ VALUES (
 -- select * from users;
 
 -- SELECT id, username FROM users WHERE username = 'student';
+EXEC sp_columns user_courses;

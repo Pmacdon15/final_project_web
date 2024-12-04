@@ -13,7 +13,7 @@ router.post(
   '/courses/username/:username/courseId/:courseId/userTermId/:userTermId/termSeason/:termSeason',
   addUserCourse
 );
-router.delete('/courses/userId/:userId/courseId/:courseId', removeUserCourse);
+router.delete('/courses/username/:username/courseId/:courseId', removeUserCourse);
 router.get('/courses/username/:username', getUserCourses);
 
 export default router;

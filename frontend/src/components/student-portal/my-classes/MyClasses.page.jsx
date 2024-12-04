@@ -77,7 +77,7 @@ export default function StudentPortalMyClasses() {
                             {filteredClasses && filteredClasses.length > 0 && (
                                 <DisplayUserClasses
                                     userClasses={filteredUserClasses}
-                                    email={username}
+                                    username={username}
                                     onDropClass={handleChangeInClasses}
                                     termId={selectedTerm?.userTermId}
                                     season={season}

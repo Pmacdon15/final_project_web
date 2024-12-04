@@ -70,10 +70,10 @@ export const addUserCourse = asyncHandler(async (req, res) => {
 
 // Remove User Course
 export const removeUserCourse = asyncHandler(async (req, res) => {
-  const { userId, courseId } = req.params;
+  const { username, courseId } = req.params;
   console.log("removeUserCourse called");
 
-  const result = await removeUserCourseModel(userId, courseId);
+  const result = await removeUserCourseModel(username, courseId);
   if (result.rowsAffected[0] === 0) {
     res.status(404).json({ error: "User course not found" });
     return;

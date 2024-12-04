@@ -13,11 +13,11 @@ export default function DisplayAvailableClasses({ filteredClasses, username, ter
         const termSeason = formData.get('termSeason');
 
         // Call the action to add the class
-        console.log(username, classId, programId, name, description, userTermId, termSeason);
+        // console.log(username, classId, programId, name, description, userTermId, termSeason);
         await AddToUserCourses(username, classId, programId, name, description, userTermId, termSeason);
         onAddClass(userTermId, termSeason);     
     }
-console.log(username, termId, season)
+
     return (
         <div className='flex flex-col w-full h-full items-center md:w-3/6'>
             <h1 className="text-2xl">Available classes:</h1>
