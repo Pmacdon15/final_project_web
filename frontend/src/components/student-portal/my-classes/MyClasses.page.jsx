@@ -16,7 +16,7 @@ export default function StudentPortalMyClasses() {
     const { username } = getUserInfo();
     const [searchByName, setSearchByName] = useState('');
 
-    const { allClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses();
+    const { allClasses, isLoading } = useGetAndSetAllClasses();
     const { userClasses, fetchUserClasses } = useGetAndSetUserClasses(username);
     const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
     const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
@@ -31,8 +31,7 @@ export default function StudentPortalMyClasses() {
 
 
     const handleChangeInClasses = async (termId, termSeason) => {
-        await fetchAllClasses();
-        await fetchUserClasses();
+        //If the term is not already in the userTerms array, add it
         setUserTerms(prevTerms => {
             const newTerm = { userTermId: Number(termId), termSeason: termSeason };
             const termExists = prevTerms.some(term => term.userTermId === newTerm.userTermId);
@@ -41,7 +40,10 @@ export default function StudentPortalMyClasses() {
             }
             return prevTerms;
         });
+        await fetchUserClasses();
         setSelectedTerm({ userTermId: Number(termId), termSeason: termSeason });
+        // await fetchAllClasses();
+        
     };
 
     return (
@@ -74,7 +76,7 @@ export default function StudentPortalMyClasses() {
                                 onAddClass={handleChangeInClasses}
                             />
 
-                            {filteredClasses && filteredClasses.length > 0 && (
+                            {filteredUserClasses  && (
                                 <DisplayUserClasses
                                     userClasses={filteredUserClasses}
                                     username={username}
@@ -106,7 +108,7 @@ const useGetAndSetAllClasses = () => {
     useEffect(() => {
         fetchAllClasses();
     }, [fetchAllClasses]);
-    return { allClasses, fetchAllClasses, isLoading };
+    return { allClasses, isLoading };
 
 };
 const useGetAndSetUserClasses = (username) => {

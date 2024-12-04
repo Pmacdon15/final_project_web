@@ -43,8 +43,7 @@ export const addUserCourseModel = async (
             (SELECT id FROM terms WHERE season = ${termSeason})
         );
     `;
-
-    console.log('Insert Query Result:', results);
+    
     return results;
   } catch (error) {
     console.error('Error adding user course:', error);

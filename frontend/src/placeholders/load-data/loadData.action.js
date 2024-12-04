@@ -215,8 +215,7 @@ async function EditCourse(classId, programId, className, description, availableF
 //MARK: User classes data 
 
 
-async function LoadUserClasses(username) {
-  console.log('Username:', username);
+async function LoadUserClasses(username) {  
   try {
     const userClasses = await fetch(`http://localhost:5000/api/v1/client/courses/username/${username}`, {
       method: "GET",
@@ -228,7 +227,6 @@ async function LoadUserClasses(username) {
     }
 
     const userClassesData = await userClasses.json();
-    console.log('User classes:', userClassesData);
     return userClassesData;
   } catch (error) {
     console.error("Failed to load user classes:", error);
@@ -282,8 +280,7 @@ async function AddToUserCourses(
 }
 
 function DropUserClass(username,classId) {
-  console.log('Dropping class:', classId);
-  console.log('Username:', username);
+  console.log('Dropping class:', classId);  
   try {
     const response = fetch(`http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${classId}`, {
       method: "DELETE",
