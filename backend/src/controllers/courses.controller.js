@@ -1,18 +1,17 @@
 import asyncHandler from '../utils/asyncHandler.js';
-import sql from "mssql";
-import { config } from "../db/index.js";
+
 import {
   getAllCoursesModel,
   removeCourseModel,
   addUserCourseModel,
   removeUserCourseModel,
+  getUserCourseModel,
 } from "../models/courses.model.js";
 
 // Get All Courses
 export const getAllCourses = asyncHandler(async (req, res) => {
   console.log("getAllCourses called");
   const result = await getAllCoursesModel();
-  console.log("Query result:", result.recordset);
   res.status(200).json(result.recordset);
 });
 
@@ -33,9 +32,9 @@ export const removeCourse = asyncHandler(async (req, res) => {
 
 // Add User Course
 export const addUserCourse = asyncHandler(async (req, res) => {
-  const { userId, courseId, userTermId, termSeason } = req.params;
+  const { username, courseId, userTermId, termSeason } = req.params;
 
-  const enrolledCourses = await getUserCourseModel(userId);
+  const enrolledCourses = await getUserCourseModel(username);
 
   const coursesCountByTerm = enrolledCourses.recordset.reduce(
     (acc, current) => {
@@ -45,7 +44,7 @@ export const addUserCourse = asyncHandler(async (req, res) => {
     {}
   );
 
-  console.log(coursesCountByTerm);
+  // console.log(coursesCountByTerm);
 
   if (coursesCountByTerm[userTermId] >= 5) {
     res
@@ -55,7 +54,7 @@ export const addUserCourse = asyncHandler(async (req, res) => {
   }
 
   const result = await addUserCourseModel(
-    userId,
+    username,
     courseId,
     userTermId,
     termSeason
@@ -71,10 +70,10 @@ export const addUserCourse = asyncHandler(async (req, res) => {
 
 // Remove User Course
 export const removeUserCourse = asyncHandler(async (req, res) => {
-  const { userId, courseId } = req.params;
+  const { username, courseId } = req.params;
   console.log("removeUserCourse called");
 
-  const result = await removeUserCourseModel(userId, courseId);
+  const result = await removeUserCourseModel(username, courseId);
   if (result.rowsAffected[0] === 0) {
     res.status(404).json({ error: "User course not found" });
     return;
@@ -83,10 +82,8 @@ export const removeUserCourse = asyncHandler(async (req, res) => {
 
 
 export const getUserCourses = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-  console.log('getUserCourses called', userId);
-
-  const result = await getUserCourseModel(userId);
+  const { username} = req.params;
+  const result = await getUserCourseModel(username);
 
   res.status(200).json(result.recordset);
 });

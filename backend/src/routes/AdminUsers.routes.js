@@ -3,9 +3,9 @@ import {
   getAllUsers,
   getUserById,
   getUserByUsername,
-  createUser,
+  // createUser,
   updateUser,
-  deleteUser,
+  // deleteUser,
 } from "../controllers/users.controller.js";
 
 const router = express.Router();

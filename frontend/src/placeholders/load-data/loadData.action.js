@@ -1,5 +1,4 @@
 
-import userClasses from "./userClasses.data.json";
 
 //MARK: Program data 
 async function LoadAllPrograms(isAdmin) {
@@ -116,9 +115,12 @@ async function DeleteProgram(programId) {
 
 
 //MARK: Classes data 
-async function LoadAllClasses() {
+async function LoadAllClasses(isAdmin) {
+  let url = "";
+  if (isAdmin) url = "http://localhost:5000/api/v1/admin/courses";
+  else url = "http://localhost:5000/api/v1/client/courses";
   try {
-    const response = await fetch("http://localhost:5000/api/v1/admin/Courses", {
+    const response = await fetch(`${url}`, {
       method: "GET",
       credentials: "include",
     });
@@ -235,71 +237,89 @@ async function EditCourse(classId, programId, className, description, availableF
 }
 
 //MARK: User classes data 
-function LoadUserClassesToLocalStorage() {
-  const existingUserClasses =
-    JSON.parse(localStorage.getItem("userClasses")) || [];
-  const newUserClasses = userClasses.filter(
-    (newUserClass) =>
-      existingUserClasses &&
-      !existingUserClasses.some(
-        (existingUserClass) => existingUserClass.id === newUserClass.id
-      )
-  );
-  const updatedUserClasses = [...existingUserClasses, ...newUserClasses];
-  if (existingUserClasses.length === 0) {
-    localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
+
+
+async function LoadUserClasses(username) {  
+  try {
+    const userClasses = await fetch(`http://localhost:5000/api/v1/client/courses/username/${username}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!userClasses.ok) {
+      throw new Error(`HTTP error! Status: ${userClasses.status}`);
+    }
+
+    const userClassesData = await userClasses.json();
+    return userClassesData;
+  } catch (error) {
+    console.error("Failed to load user classes:", error);
+    return null;
   }
 }
 
-LoadUserClassesToLocalStorage();
-
-
-function LoadUserClasses() {
-  const storedUserClasses = localStorage.getItem("userClasses");
-  if (!storedUserClasses) {
-    LoadUserClassesToLocalStorage();
-  }
-  return storedUserClasses ? JSON.parse(storedUserClasses) : null;
-}
-
-function AddToUserClasses(
-  userId,
-  classId,
+async function AddToUserCourses(
+  username,
+  courseId,
   programId,
   name,
   description,
   termId,
   season
 ) {
-  const existingUserClasses = LoadUserClasses() || [];
 
-  const newUserClass = {
-    id: classId,
-    userId: userId,
-    classId: Number(classId),
+  const newUserCourse = {
+    id: courseId,
+    username: username,
+    courseId: Number(courseId),
     programId: Number(programId),
     name: name,
     description: description,
     userTermId: Number(termId), // Ensure termId is a number
     termSeason: season,
   };
+  try {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${courseId}/userTermId/${termId}/termSeason/${season}`,
+      
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUserCourse),
+        credentials: "include",
+      }
+    );
 
-  console.log(newUserClass);
-  const updatedUserClasses = [...existingUserClasses, newUserClass];
-  localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
-  console.log("User class added");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+  } catch (error) {
+    console.error("Failed to add user course:", error);
+    return null;
+  }
+
 }
 
-function DropUserClass(classId, email) {
-  const existingUserClasses = LoadUserClasses() || [];
+function DropUserClass(username,classId) {
+  console.log('Dropping class:', classId);  
+  try {
+    const response = fetch(`http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${classId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
 
-  // Keep classes that do not match both the classId and userId (email)
-  const updatedUserClasses = existingUserClasses.filter(
-    (userClass) =>
-      !(userClass.classId === Number(classId) && userClass.userId === email)
-  );
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-  localStorage.setItem("userClasses", JSON.stringify(updatedUserClasses));
+  } catch (error) {
+    console.error("Failed to drop user class:", error);
+    return null;
+  }
+
 }
 
 // Function to save user data to local storage
@@ -374,7 +394,8 @@ async function LoadUserDataByUsername(username) {
   }
 }
 
-
+//MARK: HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//TODO RENAME THIS FUNCTION remove to local storage
 
 async function EditUserDataFromLocalStorage(
   userId,
@@ -435,7 +456,7 @@ export {
   AddClassFunction,
   RemoveCourse,
   EditCourse,
-  AddToUserClasses,
+  AddToUserCourses,
   DropUserClass,
   LoadUserData,
   LoadUserDataByUsername,
