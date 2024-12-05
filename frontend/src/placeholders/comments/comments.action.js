@@ -18,7 +18,7 @@ async function LoadComments() {
   }
 }
 
-function AddComment(name, email, comment) {
+async function AddComment(name, email, comment) {
   const newComment = {
     name,
     email,
@@ -26,9 +26,26 @@ function AddComment(name, email, comment) {
     date: new Date().toISOString()
   };
 
-  const updatedComments = [...LoadComments(), newComment];
-  localStorage.setItem('comments', JSON.stringify(updatedComments));
-  console.log('Comment added');
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/client/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(newComment),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Failed to add comment:", error);
+    return null;
+  }
 }
 
 export { LoadComments, AddComment };

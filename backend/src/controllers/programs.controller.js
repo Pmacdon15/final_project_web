@@ -4,12 +4,23 @@ import {
   addProgramModel,
   updateProgramModel,
   removeProgramModel,
-} from "../models/adminPrograms.model.js";
+  getProgramByIdModel,
+} from "../models/programs.model.js";
 
 // Get all programs
 export const getAllPrograms = asyncHandler(async (req, res) => {
   const result = await getAllProgramsModel(); 
   res.status(200).json(result.recordset);
+});
+
+// Get a program by id
+export const getProgramById = asyncHandler(async (req, res) => {
+  const result = await getProgramByIdModel(req.params.id);
+  if (result.recordset.length === 0) {
+    res.status(404).json({ error: "Program not found" });
+    return;
+  }
+  res.status(200).json(result.recordset[0]);
 });
 
 // Add a new program

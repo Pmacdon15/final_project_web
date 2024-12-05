@@ -1,43 +1,17 @@
 import DisplayUserInfos from './DisplayUserInfos.component.jsx';
 import { LoadUserClasses } from '../../../placeholders/load-data/loadData.action.js';
-import { LoadUserData } from '../../../placeholders/load-data/loadData.action.js';
-import { LoadAllPrograms } from '../../../placeholders/load-data/loadData.action.js';
+import { LoadUserDataByUsername } from '../../../placeholders/load-data/loadData.action.js';
+import { LoadProgramById } from '../../../placeholders/load-data/loadData.action.js';
 import { useState, useEffect } from 'react';
 import getUserInfo from '../../../utils/get-user-info.js';
 import { useCallback } from 'react';
 
 export default function StudentPortalDashBoard() {
-  const { email } = getUserInfo();
-  console.log("User email:", email);
+  const { username } = getUserInfo();
 
-  const [userData, setUserData] = useState([]);
-  const [userClasses, setUserClasses] = useState([]);
-  const [userProgram, setUserProgram] = useState();
-
-  // Fetching users data from local storage and find current user data through email
-
-  const fetchUserData = useCallback(async () => {
-    const loadedUsersData = await LoadUserData();
-    const loadedUserData = loadedUsersData.find(student => student.email === email);
-    setUserData(loadedUserData);
-  }, [email]);
-
-  const fetchUserClasses = useCallback(async () => {
-    const loadedUserClasses = await LoadUserClasses();
-    const sessionClasses = loadedUserClasses.filter((userClass) => userClass.userId === email);
-    setUserClasses(sessionClasses);
-    if (sessionClasses.length > 0) { 
-      const userProgramId = sessionClasses[0].programId;
-      const loadedAllPrograms = await LoadAllPrograms();
-      const userProgram = loadedAllPrograms.find((program) => program.id === userProgramId);
-      setUserProgram(userProgram);
-    }
-  }, [email]); // Add email to dependency array
-
-  useEffect(() => {
-    fetchUserData();
-    fetchUserClasses();
-  }, [fetchUserData, fetchUserClasses, email]); // Add email to dependency array
+  const { userData, fetchUserData } = useFetchUserData(username);
+  const { userCourses } = useFetchUserCourses(username);
+  const { userProgram } = useFetchProgram(userCourses?.[0]?.programId);
 
   const onFormAction = async () => {
     fetchUserData();
@@ -48,8 +22,51 @@ export default function StudentPortalDashBoard() {
       <div className='bg-blue-100 shadow-lg gap-4 w-3/6 md:w-2/6  p-4 md:p-5 border rounded-lg '>
         <h1 className='text-2xl font-bold mb-2'>My Dashboard</h1>
       </div>
-      <DisplayUserInfos userInfos={userData} classes={userClasses} program={userProgram} onFormAction={onFormAction} />
+      <DisplayUserInfos userInfos={userData} classes={userCourses} program={userProgram} onFormAction={onFormAction} />
     </div>
   );
 
+}
+
+const useFetchUserData = (username) => {
+  const [userData, setUserData] = useState([]);
+
+  const fetchUserData = useCallback(async () => {
+    const loadedUsersData = await LoadUserDataByUsername(username);
+    setUserData(loadedUsersData);
+  }, [username]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [username, fetchUserData]);
+  return { userData, fetchUserData };
+}
+
+const useFetchUserCourses = (username) => {
+  const [userCourses, setUserCourses] = useState([]);
+
+  const fetchUserCourses = useCallback(async () => {
+    const loadedUserCourses = await LoadUserClasses();
+    setUserCourses(loadedUserCourses);
+  }, [username]);
+
+  useEffect(() => {
+    fetchUserCourses();
+  }, [username, fetchUserCourses]);
+
+  return { userCourses };
+}
+
+const useFetchProgram = (programId) => {
+  const [userProgram, setUserProgram] = useState([]);
+
+  useEffect(() => {
+    const fetchProgram = async () => {
+      const userProgram = await LoadProgramById();
+      setUserProgram(userProgram);
+    };
+    fetchProgram();
+  }, [programId]);
+
+  return { userProgram };
 }

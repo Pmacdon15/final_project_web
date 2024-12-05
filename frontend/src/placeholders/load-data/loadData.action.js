@@ -1,9 +1,13 @@
 
 
 //MARK: Program data 
-async function LoadAllPrograms() {
+async function LoadAllPrograms(isAdmin) {
+  let url = "";
+  if (isAdmin) url = "http://localhost:5000/api/v1/admin/programs";
+  else url = "http://localhost:5000/api/v1/guest/programs";
+
   try {
-    const response = await fetch("http://localhost:5000/api/v1/admin/programs", {
+    const response = await fetch(`${url}`, {
       method: "GET",
       credentials: "include",
     });
@@ -19,6 +23,26 @@ async function LoadAllPrograms() {
     return null;
   }
 }
+//MARK: Load program by id
+async function LoadProgramById(programId) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/guest/programs/${programId}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const program = await response.json();
+    return program;
+  } catch (error) {
+    console.error("Failed to load program:", error);
+    return null;
+  }
+}
+
 
 //MARK: Add program
 async function AddProgram(program) {
@@ -369,9 +393,9 @@ async function LoadUserDataByUsername(username) {
     return null;
   }
 }
+
 //MARK: HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //TODO RENAME THIS FUNCTION remove to local storage
-
 
 async function EditUserDataFromLocalStorage(
   userId,
@@ -423,6 +447,7 @@ async function EditUserDataFromLocalStorage(
 
 export {
   LoadAllPrograms,
+  LoadProgramById,
   AddProgram,
   EditProgram,
   DeleteProgram,
