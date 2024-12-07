@@ -48,7 +48,7 @@ export const getUserByUsernameModel = async (username) => {
 
 export const createUserModel = async (userData) => {
   const {
-    isAdmin = 0, //make sure the user will be different form isAdmin
+    isAdmin=0, 
     firstName,
     lastName,
     birthday,
@@ -75,9 +75,11 @@ export const createUserModel = async (userData) => {
       .input('username', sql.VarChar, username) 
       .input('password', sql.VarChar, password) 
       .query(
-        'INSERT INTO users (isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password) VALUES (@isAdmin, @firstName, @lastName, @birthday, @phone, @email, @department, @program, @username, @password)'
+        `INSERT INTO users (isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password)
+    VALUES (@isAdmin, @firstName, @lastName, @birthday, @phone, @email, @department, @program, @username, @password);
+    SELECT SCOPE_IDENTITY() AS id;`
       ); 
-    return result.recordset[0];
+      return result.recordset[0]?.id || null; //will return the id created
   } catch (err) {
     console.error('Error creating user:', err);
     throw err;
