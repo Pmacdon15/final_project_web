@@ -61,10 +61,15 @@ app.use(
 // Allows restricted resources to be accessed by client applications from a different domain
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN, // Allow requests from this specific origin
+    //make sure that inside of the .env file you put the CORS_ORIGIN=http://localhost:3000
+    origin: process.env.CORS_ORIGIN, // Allow requests from this specific origin 
     credentials: true, // Allow credentials (e.g., cookies) to be included in requests
   })
 );
+
+
+// Handle preflight requests for all routes
+app.options('*', cors());
 
 // Middleware for parsing cookies
 // Makes cookies sent by the client available in `req.cookies`
