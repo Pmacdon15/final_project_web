@@ -136,6 +136,7 @@ export default function LoginForm({ loginType }) {
             id="password"
             name="password"
             label="Password"
+            type="password"
             variant="standard"
             sx={{
               "& .MuiInputLabel-root": {

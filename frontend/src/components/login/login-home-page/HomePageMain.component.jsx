@@ -23,7 +23,7 @@ export default function HomePageMain() {
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-4 w-full md:w-2/6 rounded-lg text-white bg-blue-500">
       <h1>Access portal</h1>
-      <ButtonLink text="Login" link="/login" />
+      <ButtonLink link="/login" />
       <a href="/guest/all-programs">
         <button className="LoginHomePageButtonLink">Guest Access</button>
       </a>
