@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import BVCImage from "../bvc-image/BVCImage.component";
-import { Button, Container, Grid } from "@mui/material";
+import { Button, Container } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import InputField from "./inputField.component";
-import { SaveUserData } from "../../placeholders/load-data/loadData.action"; // Import SaveUserData function
+import { RegisterUser } from "../../placeholders/load-data/loadData.action"; // Import SaveUserData function
 
 const StudentSignupForm = () => {
   const navigate = useNavigate();
@@ -24,28 +25,21 @@ const StudentSignupForm = () => {
     formDataRef.current[e.target.name] = e.target.value;
   };
 
-  // Generate a random Student ID
-  const generateStudentId = () => {
-    return `SD${Math.floor(Math.random() * 1000000)}`;
-  };
-
-  // Handles form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Generate a Student ID and update state
-    const newStudentId = generateStudentId();
+    const signupData = { ...formDataRef.current };
 
-    // Store form data and the generated Student ID in localStorage
-    const signupData = {
-      ...formDataRef.current,
-      id: newStudentId,
-    };
+    try {
+      const response = await RegisterUser(signupData); // Call the API
+      console.log("Signup successful:", response);
 
-    SaveUserData(signupData); // Call SaveUserData to save the form data to local storage
-
-    // Redirect to welcome page after signup
-    navigate(`/student/dashboard`); // Redirect after signup
+      // Redirect to login page after successful registration
+      navigate("/student-login");
+    } catch (error) {
+      console.error("Signup failed:", error.message);
+      // Optionally display an error message to the user
+    }
   };
 
   return (
@@ -62,57 +56,52 @@ const StudentSignupForm = () => {
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <InputField
                   id="firstName"
                   name="firstName"
                   label="First Name"
                   type="text"
-                  // value={formDataRef.firstName}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <InputField
                   id="lastName"
                   name="lastName"
                   label="Last Name"
                   type="text"
-                  // value={formDataRef.lastName}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <InputField
                   id="email"
                   name="email"
                   label="Email"
                   type="email"
-                  // value={formDataRef.email}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <InputField
                   id="phone"
                   name="phone"
                   label="Phone"
                   type="number"
-                  // value={formDataRef.phone}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <InputField
                   id="birthday"
                   name="birthday"
                   label="Birthday"
                   placeholder="mm/dd/yyyy"
-                  // value={formDataRef.birthday}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <InputField
                   id="department"
                   name="department"
@@ -121,35 +110,32 @@ const StudentSignupForm = () => {
                   readOnly
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <InputField
                   id="program"
                   name="program"
                   label="Program"
-                  // value={formDataRef.program}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <InputField
                   id="username"
                   name="username"
                   label="Username"
-                  // value={formDataRef.username}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <InputField
                   id="password"
                   name="password"
                   label="Password"
                   type="password"
-                  // value={formDataRef.password}
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} className="text-center">
+              <Grid xs={12} className="text-center">
                 <Button
                   variant="contained"
                   color="primary"
@@ -159,13 +145,12 @@ const StudentSignupForm = () => {
                   Sign Up
                 </Button>
               </Grid>
-              <Grid item xs={12} className="text-center text-xs">
+              <Grid xs={12} className="text-center text-xs">
                 <a href="/">Click here to Sign In</a>
               </Grid>
             </Grid>
           </form>
         </Container>
-
       </div>
     </>
   );
