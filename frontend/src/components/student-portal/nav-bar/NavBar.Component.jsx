@@ -19,7 +19,7 @@ import handleLogout from '../../../placeholders/authentication/logout.action';
 
 const commonPages = ['Dashboard','All Programs', 'All Classes', 'Comments'];
 
-const guestPages = [...commonPages];
+const guestPages = ['All Programs', 'All Classes', 'Comments'];
 
 const adminPages = [ 'View Students', ...commonPages];
 const studentPages = [ 'My Classes', ...commonPages];
