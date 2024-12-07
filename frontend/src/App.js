@@ -2,8 +2,10 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './components/login/login-home-page/LoginHomePage.page';
-import StudentLogin from './components/login/student-login/StudentLogin.page';
-import AdminLogin from './components/login/admin-login/AdminLogin.page';
+import UnifiedLogin from './components/login/login-home-page/UnifiedLogin.page';
+
+// import StudentLogin from './components/login/student-login/StudentLogin.page';
+// import AdminLogin from './components/login/admin-login/AdminLogin.page';
 import StudentPortalDashboard from './components/student-portal/dashboard/dashboard.page';
 import StudentPortalAllPrograms from './components/student-portal/all-programs/AllPrograms.page';
 import StudentPortalAllClasses from './components/student-portal/all-classes/AllClasses.page';
@@ -24,9 +26,10 @@ function App() {
         <div className="App">
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/student-login" element={<StudentLogin />} />
+                <Route path="/login" element={<UnifiedLogin />} />
+                {/* <Route path="/student-login" element={<StudentLogin />} /> */}
                 <Route path="/student-signup" element={<StudentSignupForm />} />
-                <Route path="/admin-login" element={<AdminLogin />} />
+                {/* <Route path="/admin-login" element={<AdminLogin />} /> */}
 
                 {/* Student Routes */}
                 <Route path="/student">
