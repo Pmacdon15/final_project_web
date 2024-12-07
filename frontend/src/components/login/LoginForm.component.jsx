@@ -120,7 +120,7 @@ export default function LoginForm({ loginType }) {
                     <TextField
                         id="userEmail"
                         name="userEmail"
-                        label="User Email"
+                        label="User Name"
                         variant="standard"
                         sx={{
                             '& .MuiInputLabel-root': {
