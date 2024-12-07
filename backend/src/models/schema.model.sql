@@ -82,15 +82,15 @@ CREATE TABLE comments (
 
 -- Create the users table
 CREATE TABLE users (
-    id VARCHAR(10) PRIMARY KEY,
-    isAdmin BIT NOT NULL,
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    isAdmin BIT NOT NULL DEFAULT 0, --as we do not have a logic to handle the isAdmin in the sign up form 0 will the default value
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
     birthday VARCHAR(8) NOT NULL,
     phone VARCHAR(15) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    department VARCHAR(255) NOT NULL, --TODO: Remove this field
-    program VARCHAR(255) NOT NULL, --TODO: Remove this field
+    department VARCHAR(255) NOT NULL, 
+    program VARCHAR(255) NOT NULL, 
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );

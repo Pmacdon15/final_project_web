@@ -444,6 +444,37 @@ async function EditUserDataFromLocalStorage(
   }
 }
 
+const RegisterUser = async (userData) => {
+  try {
+    const response = await fetch('http://localhost:5000/api/v1/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Specify the content type
+      },
+      credentials: 'include', // Include cookies if needed
+      body: JSON.stringify(userData), // Convert the user data to JSON format
+    });
+
+    if (!response.ok) {
+      // If the HTTP status is not ok, extract the error message and throw it
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Registration failed');
+    }
+
+    const data = await response.json(); // Parse the JSON response
+    console.log('User successfully registered:', data);
+
+    // Return the response for further use
+    return data;
+  } catch (error) {
+    // Handle errors (network issues or server errors)
+    console.error('Error during user registration:', error.message);
+
+    // Optionally, rethrow the error to handle it elsewhere
+    throw error;
+  }
+};
+
 
 export {
   LoadAllPrograms,
@@ -460,5 +491,6 @@ export {
   DropUserClass,
   LoadUserData,
   LoadUserDataByUsername,
-  EditUserDataFromLocalStorage
+  EditUserDataFromLocalStorage,
+  RegisterUser
 };

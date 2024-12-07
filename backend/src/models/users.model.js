@@ -3,6 +3,7 @@ import { config } from '../db/index.js';
 import bcrypt from 'bcrypt';
 import { poolPromise } from '../db/index.js';
 
+
 export const getUserModel = async (userId) => {
   await sql.connect(config);
   const result = await sql.query`SELECT * FROM users WHERE id = ${userId}`;
@@ -12,9 +13,10 @@ export const getUserModel = async (userId) => {
 export const getUserByUsername = async (username) => {
   try {
     const pool = await poolPromise;
-    const result = await pool.request()
-      .input('username', sql.VarChar, username) // Bind user input safely
-      .query('SELECT * FROM users WHERE username = @username'); // Execute secure query
+    const result = await pool
+      .request()
+      .input('username', sql.VarChar, username) 
+      .query('SELECT * FROM users WHERE username = @username'); 
     return result.recordset[0] || null;
   } catch (err) {
     console.error('Error fetching user by username:', err);
@@ -30,40 +32,54 @@ export const getAllUsersModel = async () => {
 
 export const getUserByIdModel = async (id) => {
   const pool = await poolPromise;
-  const result = await pool.request()
-    .input('id', sql.VarChar, id) // Bind user input safely
-    .query('SELECT * FROM users WHERE id = @id'); // Execute secure query
+  const result = await pool
+    .request()
+    .input('id', sql.VarChar, id) 
+    .query('SELECT * FROM users WHERE id = @id'); 
   return result.recordset[0];
 };
 //Get user by username
 export const getUserByUsernameModel = async (username) => {
   await sql.connect(config);
-  const result = await sql.query`SELECT * FROM users WHERE username = ${username}`;
+  const result =
+    await sql.query`SELECT * FROM users WHERE username = ${username}`;
   return result.recordset[0];
 };
 
 export const createUserModel = async (userData) => {
-  const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = userData;
-
-  // Hash the password before storing
-  // const hashedPassword = await bcrypt.hash(password, 10);
+  const {
+    isAdmin=0, 
+    firstName,
+    lastName,
+    birthday,
+    phone,
+    email,
+    department,
+    program,
+    username,
+    password,
+  } = userData;
 
   try {
     const pool = await poolPromise;
-    const result = await pool.request()
-      .input('id', sql.VarChar, id) // Bind user input safely
-      .input('isAdmin', sql.Bit, isAdmin) // Bind user input safely
-      .input('firstName', sql.VarChar, firstName) // Bind user input safely
-      .input('lastName', sql.VarChar, lastName) // Bind user input safely
-      .input('birthday', sql.VarChar, birthday) // Bind user input safely
-      .input('phone', sql.VarChar, phone) // Bind user input safely
-      .input('email', sql.VarChar, email) // Bind user input safely
-      .input('department', sql.VarChar, department) // Bind user input safely
-      .input('program', sql.VarChar, program) // Bind user input safely
-      .input('username', sql.VarChar, username) // Bind user input safely
-      .input('password', sql.VarChar, password) // Bind user input safely
-      .query('INSERT INTO users (id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password) VALUES (@id, @isAdmin, @firstName, @lastName, @birthday, @phone, @email, @department, @program, @username, @password)'); // Execute secure query
-    return result;
+    const result = await pool
+      .request()
+      .input('isAdmin', sql.Bit, isAdmin) 
+      .input('firstName', sql.VarChar, firstName) 
+      .input('lastName', sql.VarChar, lastName) 
+      .input('birthday', sql.VarChar, birthday) 
+      .input('phone', sql.VarChar, phone) 
+      .input('email', sql.VarChar, email) 
+      .input('department', sql.VarChar, department) 
+      .input('program', sql.VarChar, program) 
+      .input('username', sql.VarChar, username) 
+      .input('password', sql.VarChar, password) 
+      .query(
+        `INSERT INTO users (isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password)
+    VALUES (@isAdmin, @firstName, @lastName, @birthday, @phone, @email, @department, @program, @username, @password);
+    SELECT SCOPE_IDENTITY() AS id;`
+      ); 
+      return result.recordset[0]?.id || null; //will return the id created
   } catch (err) {
     console.error('Error creating user:', err);
     throw err;
@@ -72,7 +88,7 @@ export const createUserModel = async (userData) => {
 
 // Update user by ID
 export const updateUserModel = async (id, userData) => {
-  const { firstName, lastName, birthday, phone, email,  program, } = userData;
+  const { firstName, lastName, birthday, phone, email, program } = userData;
 
   try {
     await sql.connect(config);
@@ -92,9 +108,10 @@ export const updateUserModel = async (id, userData) => {
 export const deleteUserModel = async (id) => {
   const pool = await poolPromise;
   try {
-    const result = await pool.request()
-    .input('id', sql.VarChar, id) // Bind user input safely
-    .query('DELETE FROM users WHERE id = @id'); // Execute secure query
+    const result = await pool
+      .request()
+      .input('id', sql.VarChar, id) // Bind user input safely
+      .query('DELETE FROM users WHERE id = @id'); // Execute secure query
     if (result.rowsAffected[0] === 0) {
       throw new Error('User not found');
     }
