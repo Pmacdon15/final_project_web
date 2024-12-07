@@ -47,7 +47,7 @@ export const login = asyncHandler(async (req, res) => {
  * Creates a new user with hashed password.
  */
 export const register = asyncHandler(async (req, res) => {
-  const { id, isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password } = req.body;
+  const { isAdmin, firstName, lastName, birthday, phone, email, program, username, password } = req.body;
 
   // Check if username already exists
   const existingUser = await getUserByUsername(username);
@@ -61,14 +61,13 @@ export const register = asyncHandler(async (req, res) => {
 
   // Create new user
   const user = await createUserModel({
-    id,
     isAdmin,
     firstName,
     lastName,
     birthday,
     phone,
     email,
-    department,
+    department: "Software Department", //default department
     program,
     username,
     password: hashedPassword,
