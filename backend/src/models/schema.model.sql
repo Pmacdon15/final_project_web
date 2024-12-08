@@ -7,31 +7,33 @@ ALTER DATABASE BVC_Portal
 SET
     SINGLE_USER
 WITH
-ROLLBACK IMMEDIATE;
+    ROLLBACK IMMEDIATE;
 
 GO
 -- Delete the BVC_Portal database if it exists
 IF EXISTS (
-    SELECT *
-    FROM sys.databases
+    SELECT
+        *
+    FROM
+        sys.databases
     WHERE
         name = 'BVC_Portal'
-)
-BEGIN
+) BEGIN
 DROP DATABASE BVC_Portal;
-END;
 
+END;
 
 GO
 -- Create the BVC_Portal database if it doesn't exist
 IF NOT EXISTS (
-    SELECT *
-    FROM sys.databases
+    SELECT
+        *
+    FROM
+        sys.databases
     WHERE
         name = 'BVC_Portal'
-)
-BEGIN
-CREATE DATABASE BVC_Portal;
+) BEGIN CREATE DATABASE BVC_Portal;
+
 END;
 
 GO
@@ -40,92 +42,96 @@ USE BVC_Portal;
 
 GO
 -- Create the programs table
-CREATE TABLE programs (
-    id INT IDENTITY (1, 1) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE,
-    description TEXT NOT NULL,
-    durationTerms INT NOT NULL,
-    tuition DECIMAL(10, 2) NOT NULL
-);
+CREATE TABLE
+    programs (
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        name VARCHAR(255) NOT NULL UNIQUE,
+        description TEXT NOT NULL,
+        durationTerms INT NOT NULL,
+        tuition DECIMAL(10, 2) NOT NULL
+    );
 
 -- Create the courses table
-CREATE TABLE courses (
-    id INT IDENTITY (1, 1) PRIMARY KEY,
-    programId INT,
-    name VARCHAR(255) NOT NULL UNIQUE,
-    description TEXT NOT NULL,
-    FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
-);
+CREATE TABLE
+    courses (
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        programId INT,
+        name VARCHAR(255) NOT NULL UNIQUE,
+        description TEXT NOT NULL,
+        FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
+    );
 
-CREATE TABLE terms (
-    id INT IDENTITY (1, 1) PRIMARY KEY,
-    season VARCHAR(50) NOT NULL
-);
+CREATE TABLE
+    terms (
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        season VARCHAR(50) NOT NULL
+    );
 
-CREATE TABLE courses_available_terms (
-    id INT IDENTITY (1, 1) PRIMARY KEY,
-    courseId INT NOT NULL,
-    termSeason INT NOT NULL,
-    FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
-    FOREIGN KEY (termSeason) REFERENCES terms (id)
-);
+CREATE TABLE
+    courses_available_terms (
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        courseId INT NOT NULL,
+        termSeason INT NOT NULL,
+        FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
+        FOREIGN KEY (termSeason) REFERENCES terms (id)
+    );
 
 -- Create the comments table
-CREATE TABLE comments (
-    -- Insert data into the courses table
-    id INT IDENTITY (1, 1) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    comment TEXT NOT NULL,
-    date DATETIME NOT NULL
-);
+CREATE TABLE
+    comments (
+        -- Insert data into the courses table
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        comment TEXT NOT NULL,
+        date DATETIME NOT NULL
+    );
 
 -- Create the users table
-CREATE TABLE users (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    isAdmin BIT NOT NULL DEFAULT 0, --as we do not have a logic to handle the isAdmin in the sign up form 0 will the default value
-    firstName VARCHAR(255) NOT NULL,
-    lastName VARCHAR(255) NOT NULL,
-    birthday VARCHAR(8) NOT NULL,
-    phone VARCHAR(15) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    department VARCHAR(255) NOT NULL, 
-    program VARCHAR(255) NOT NULL, 
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
+CREATE TABLE
+    users (
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        isAdmin BIT NOT NULL DEFAULT 0, --as we do not have a logic to handle the isAdmin in the sign up form 0 will the default value
+        firstName VARCHAR(255) NOT NULL,
+        lastName VARCHAR(255) NOT NULL,
+        birthday VARCHAR(8) NOT NULL,
+        phone VARCHAR(15) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        department VARCHAR(255) NOT NULL,
+        program VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL
+    );
 
 -- Create the user_programs table
-CREATE TABLE user_programs (
-    id INT IDENTITY (1, 1) PRIMARY KEY,
-    userId INT(10) NOT NULL,
-    programId INT NOT NULL,
-    FOREIGN KEY (userId) REFERENCES users (id),
-    FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
-);
+CREATE TABLE
+    user_programs (
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        userId INT NOT NULL,
+        programId INT NOT NULL,
+        FOREIGN KEY (userId) REFERENCES users (id),
+        FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
+    );
 
 -- Create the user_classes table
-CREATE TABLE user_courses (
-    id INT IDENTITY (1, 1) PRIMARY KEY,
-    userId VARCHAR(10) NOT NULL,
-    courseId INT NOT NULL UNIQUE,
-    userTermId INT NOT NULL,
-    termSeasonId INT NOT NULL,
-    FOREIGN KEY (userId) REFERENCES users (id),
-    FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
-    FOREIGN KEY (termSeasonId) REFERENCES terms (id)
-    -- We will use the other tables to derive the data such as program ID course name, and description and any other data we need to attach
-);
+CREATE TABLE
+    user_courses (
+        id INT IDENTITY (1, 1) PRIMARY KEY,
+        userId INT NOT NULL,
+        courseId INT NOT NULL UNIQUE,
+        userTermId INT NOT NULL,
+        termSeasonId INT NOT NULL,
+        FOREIGN KEY (userId) REFERENCES users (id),
+        FOREIGN KEY (courseId) REFERENCES courses (id) ON DELETE CASCADE,
+        FOREIGN KEY (termSeasonId) REFERENCES terms (id)
+        -- We will use the other tables to derive the data such as program ID course name, and description and any other data we need to attach
+    );
 
 -- Insert data into the programs table
 INSERT INTO
-    programs (
-        name,
-        description,
-        durationTerms,
-        tuition
-    )
-VALUES (
+    programs (name, description, durationTerms, tuition)
+VALUES
+    (
         'Software development diploma',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         4,
@@ -143,11 +149,11 @@ VALUES (
         2,
         6000
     );
-    
 
 INSERT INTO
     courses (programId, name, description)
-VALUES (
+VALUES
+    (
         1,
         'Math For the Computer Industry',
         'This course is designed to provide students with the mathematical knowledge and skills required to solve problems in the computer industry. Topics include: algebra. Students will learn to apply mathematical concepts to solve problems in computer programming, networking, and database management.'
@@ -251,7 +257,8 @@ VALUES (
 -- Insert data into the terms table
 INSERT INTO
     terms (season)
-VALUES ('Fall'),
+VALUES
+    ('Fall'),
     ('Winter'),
     ('Spring'),
     ('Summer');
@@ -259,7 +266,8 @@ VALUES ('Fall'),
 -- Insert data into the coursesAvailableTerms table
 INSERT INTO
     courses_available_terms (courseId, termSeason)
-VALUES (1, 1),
+VALUES
+    (1, 1),
     (1, 2),
     (2, 1),
     (2, 2),
@@ -269,38 +277,35 @@ VALUES (1, 1),
     (4, 2),
     (5, 1),
     (5, 2),
-
-(6, 2),
-(6, 3),
-(6, 4),
-(7, 2),
-(7, 3),
-(7, 4),
-(8, 2),
-(8, 3),
-(8, 4),
-(9, 2),
-(9, 3),
-(9, 4),
-(10, 2),
-(10, 3),
-(10, 4),
-
-(11, 1),
-(12, 1),
-(13, 1),
-(14, 1),
-(15, 1),
-(16, 2),
-(17, 2),
-(18, 2),
-(19, 2),
-(20, 2);
+    (6, 2),
+    (6, 3),
+    (6, 4),
+    (7, 2),
+    (7, 3),
+    (7, 4),
+    (8, 2),
+    (8, 3),
+    (8, 4),
+    (9, 2),
+    (9, 3),
+    (9, 4),
+    (10, 2),
+    (10, 3),
+    (10, 4),
+    (11, 1),
+    (12, 1),
+    (13, 1),
+    (14, 1),
+    (15, 1),
+    (16, 2),
+    (17, 2),
+    (18, 2),
+    (19, 2),
+    (20, 2);
 
 -- Insert data into the users table
 INSERT INTO
     users (
-        id,
         isAdmin,
         firstName,
         lastName,
@@ -312,8 +317,8 @@ INSERT INTO
         username,
         password
     )
-VALUES (
-        'SD1',
+VALUES
+    (
         1,
         'Patrick',
         'Macdonald',
@@ -325,6 +330,7 @@ VALUES (
         'patrick',
         '1$2b$10$KBf0TqVP8oyelqdWn7J.luz5QrK64csBG6JRbHyPn.TJdyLvITL4W'
     );
+
 --     (
 --         'SD000002',
 --         0,
@@ -377,7 +383,6 @@ VALUES (
 --         'arshdeep',
 --         '1234'
 --     );
-
 -- Insert data into the user_programs table
 -- INSERT INTO
 --     user_programs (userId, programId)
@@ -386,9 +391,7 @@ VALUES (
 --     ('SD000003', 1),
 --     ('SD000004', 1),
 --     ('SD000005', 1);
-
 -- Insert data into the user_classes table
-
 -- INSERT INTO
 --     user_courses (
 --         userId,
@@ -402,9 +405,6 @@ VALUES (
 --     ('SD000001', 4, 1, 1),
 --     ('SD000001', 5, 1, 1),
 --     ('SD000001', 6, 2, 2);
-
-
-
 -- SELECT 
 --     u.id, 
 --     u.username, 
@@ -419,9 +419,7 @@ VALUES (
 --     u.id = uc.userId
 -- WHERE 
 --     u.username = 'student';
-
 -- select  * from user_courses;
 -- select * from users;
-
 -- SELECT id, username FROM users WHERE username = 'student';
 EXEC sp_columns user_courses;
