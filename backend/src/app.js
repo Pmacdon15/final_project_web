@@ -96,13 +96,13 @@ app.use('/api/v1/admin', authenticateToken, adminCoursesRoutes);
 app.use('/api/v1/admin', authenticateToken, adminPrograms);
 app.use('/api/v1/admin', authenticateToken, adminCommentsRoutes);
 
+// Unprotected Routes
+app.use('/api/v1/client', clientGetCoursesRoutes);
 // Protected Client Routes
-// app.use('/api/v1/client', clientGetCoursesRoutes);
 app.use('/api/v1/client', clientCommentRoutes);
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
 app.use('/api/v1/client', authenticateToken, clientProgramRoutes);
 
-app.use('/api/v1/guest', guestPrograms);
 
 export default app;

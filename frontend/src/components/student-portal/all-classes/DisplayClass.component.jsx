@@ -21,7 +21,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const classId = formData.get("classId");
-    const programId = classDetails.programId;
+    const programId = formData.get("programId");
     const className = formData.get("className");
     const description = formData.get("description");
     const availableFall = formData.get("availableFall");
@@ -75,6 +75,12 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
               name="description"
               defaultValue={classDetails.description}
               className="w-5/6 md:w-3/6 h-36 border rounded-lg p-2 mb-2" // Increased height
+            />
+            <input 
+              type="text"
+              name="programId"
+              defaultValue={classDetails.programId}
+              className=" text-center w-5/6 md:w-2/6 border rounded-lg p-2 mb-2"
             />
             <div className="flex flex-col md:flex-row gap-4">
               <label htmlFor="availableFall">Available fall:</label>

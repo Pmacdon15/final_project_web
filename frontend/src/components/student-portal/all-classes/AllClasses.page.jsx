@@ -30,7 +30,7 @@ const useGetAndSetAllClasses = () => {
 
     const fetchAllClasses = async () => {
         setIsLoading(true);
-        const loadedAllClasses = await LoadAllClasses();
+        const loadedAllClasses = await LoadAllClasses(false);
         setAllClasses(loadedAllClasses);
         setIsLoading(false);
     };
