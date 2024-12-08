@@ -66,7 +66,7 @@ const useFetchAllClasses = () => {
     const [allClasses, setAllClasses] = useState([]);
 
     const fetchAllClasses = async () => {
-        const loadedAllClasses = await LoadAllClasses();
+        const loadedAllClasses = await LoadAllClasses(true);
         setAllClasses(loadedAllClasses);
     };
 
