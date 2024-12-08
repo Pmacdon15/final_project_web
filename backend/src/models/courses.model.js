@@ -17,6 +17,22 @@ export const getAllCoursesModel = async () => {
   return result;
 };
 
+//MARK: Get All Courses By Program
+export const getAllCoursesByProgramModel = async (programId) => {
+  await sql.connect(config);
+  return await sql.query`
+    SELECT 
+        c.*,
+        CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 1) THEN 1 ELSE 0 END AS availableFall,
+        CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 2) THEN 1 ELSE 0 END AS availableWinter,
+        CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 3) THEN 1 ELSE 0 END AS availableSpring,
+        CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 4) THEN 1 ELSE 0 END AS availableSummer
+    FROM 
+        courses c
+    WHERE 
+        c.programId = ${programId};
+  `;
+};
 //MARK: Remove course
 export const removeCourseModel = async (courseId) => {
   await sql.connect(config);
