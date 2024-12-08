@@ -132,19 +132,19 @@ INSERT INTO
     programs (name, description, durationTerms, tuition)
 VALUES
     (
-        'Software development diploma',
+        'Diploma',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         4,
         10000
     ),
     (
-        'Software development post diploma',
+        'Post diploma',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         3,
         8000
     ),
     (
-        'Certificate in software development',
+        'Certificate',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         2,
         6000

@@ -5,6 +5,7 @@ import { Button, Container } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import InputField from "./inputField.component";
 import { RegisterUser } from "../../placeholders/load-data/loadData.action"; // Import SaveUserData function
+import { TextField } from "@mui/material";
 
 const StudentSignupForm = () => {
   const navigate = useNavigate();
@@ -41,6 +42,20 @@ const StudentSignupForm = () => {
       // Optionally display an error message to the user
     }
   };
+  const options = [
+    {
+      value: "Diploma",
+      label: "Diploma",
+    },
+    {
+      value: "Post diploma",
+      label: "Post diploma",
+    },
+    {
+      value: "Certificate",
+      label: "Certificate",
+    },
+  ];
 
   return (
     <>
@@ -111,12 +126,56 @@ const StudentSignupForm = () => {
                 />
               </Grid>
               <Grid xs={12}>
-                <InputField
+                <TextField
+                  id="program"
+                  select
+                  label="Program"
+                  defaultValue="Diploma"
+                  variant="standard"
+                  fullWidth
+                  slotProps={{
+                    select: {
+                      native: true,
+                    },
+                  }}
+                  sx={{
+                    '& .MuiInputLabel-root': {
+                      color: 'white',
+                      '&.Mui-focused': {
+                        color: 'white'
+                      }
+                    },
+                    '& .MuiInput-underline': {
+                      '&:before': {
+                        borderBottomColor: 'white'
+                      },
+                      '&:after': {
+                        borderBottomColor: 'white'
+                      }
+                    },
+                    '& .MuiInputBase-input': {
+                      '&:focus': {
+                        color: 'black'
+                      },
+                      '&:not(:focus)': {
+                        color: 'white'
+                      }
+                    }
+                  }}
+                  helperText="Please select program"
+                >
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
+                {/* <InputField
                   id="program"
                   name="program"
                   label="Program"
                   onChange={handleChange}
-                />
+                /> */}
               </Grid>
               <Grid xs={12}>
                 <InputField
