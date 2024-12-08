@@ -8,7 +8,7 @@ const operatorsMap = {
 
 /* Filter logic */
 function filterPrograms(programs, searchedName, searchedLength) {
-    const filteredPrograms = programs.filter(el => {
+    const filteredPrograms = programs?.filter(el => {
         let matchesCriteria = false;
 
         if (el.name.toLocaleLowerCase().includes(searchedName)) {
