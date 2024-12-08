@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
   const [isEditing, setIsEditing] = useState(false);
-
+  console.log(classDetails);
   async function handleOnRemove(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -16,7 +16,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     await RemoveCourse(classId);
     onFormAction(className);
   }
- 
+
   async function handleOnEdit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -76,7 +76,7 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
               defaultValue={classDetails.description}
               className="w-5/6 md:w-3/6 h-36 border rounded-lg p-2 mb-2" // Increased height
             />
-            <input 
+            <input
               type="text"
               name="programId"
               defaultValue={classDetails.programId}
@@ -127,12 +127,14 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
         <div className="flex flex-col w-full items-center">
           <p className="text-xl font-bold mb-2">Course Description</p>
           <p className="text-justify mb-2">{classDetails.description}</p>
+
           <p className="text-xl font-bold mb-2">
-            Program ID :{" "}
+            Program ID :
             <span className="text-xl font-normal mb-2">
               {classDetails.programId}
             </span>
           </p>
+
           <p className="text-xl font-bold mb-2">Availability</p>
 
           {classDetails.availableFall !== 0 && (
@@ -172,6 +174,12 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
         </h1>
       </div>
       <p className="text-justify mb-2">{classDetails.description}</p>
+      <p className="text-xl font-bold mb-2">
+            Program ID :
+            <span className="text-xl font-normal mb-2">
+              {classDetails.programId}
+            </span>
+          </p>
       <p className="text-xl font-bold mb-2">Availability</p>
 
       {classDetails.availableFall !== 0 && (
