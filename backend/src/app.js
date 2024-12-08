@@ -8,6 +8,7 @@ import adminPrograms from './routes/adminPrograms.routes.js';
 import adminCoursesRoutes from './routes/adminCourses.routes.js';
 import adminUsersRoutes from './routes/adminUsers.routes.js';
 import clientCoursesRoutes from './routes/clientCourses.routes.js';
+import clientGetCoursesRoutes from './routes/ClientGetCourses.routes.js';
 import clientUsersRoutes from './routes/clientUsers.routes.js';
 import clientCommentRoutes from './routes/ClientComment.routes.js';
 import adminCommentsRoutes from './routes/adminComment.routes.js';
@@ -88,7 +89,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-
 // Protected Admin Routes
 app.use('/api/v1/admin', authenticateToken, adminUsersRoutes); // **Apply Authentication Middleware**
 app.use('/api/v1/admin', authenticateToken, adminCoursesRoutes);
@@ -96,9 +96,10 @@ app.use('/api/v1/admin', authenticateToken, adminPrograms);
 app.use('/api/v1/admin', authenticateToken, adminCommentsRoutes);
 
 // Protected Client Routes
+app.use('/api/v1/client', clientGetCoursesRoutes);
+app.use('/api/v1/client', clientCommentRoutes);
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
-app.use('/api/v1/client', clientCommentRoutes);
 
 app.use('/api/v1/guest', guestPrograms);
 

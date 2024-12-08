@@ -35,7 +35,7 @@ const StudentSignupForm = () => {
       console.log("Signup successful:", response);
 
       // Redirect to login page after successful registration
-      navigate("/student-login");
+      navigate("/login");
     } catch (error) {
       console.error("Signup failed:", error.message);
       // Optionally display an error message to the user

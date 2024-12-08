@@ -48,7 +48,7 @@ const useFetchUserCourses = (username) => {
   const fetchUserCourses = useCallback(async () => {
     const loadedUserCourses = await LoadUserClasses();
     setUserCourses(loadedUserCourses);
-  }, [username]);
+  }, []);
 
   useEffect(() => {
     fetchUserCourses();
@@ -65,7 +65,7 @@ const useFetchProgram = (programId) => {
       const userProgram = await LoadProgramById();
       setUserProgram(userProgram);
     };
-    fetchProgram();
+    programId && fetchProgram();
   }, [programId]);
 
   return { userProgram };
