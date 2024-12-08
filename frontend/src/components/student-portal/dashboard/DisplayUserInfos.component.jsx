@@ -4,6 +4,7 @@ import { EditUserDataFromLocalStorage } from "../../../placeholders/load-data/lo
 export default function DisplayUserInfos({
   userInfos,
   onFormAction,
+  userProgram,
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -113,6 +114,7 @@ export default function DisplayUserInfos({
           <p className="mb-2">Last name: {userInfos.lastName}</p>
           <p className="mb-2">Phone: {userInfos.phone}</p>
           <p className="mb-2">Department: {userInfos.department}</p>
+          {userProgram && <p className="mb-2">Program: {userProgram.name}</p>}
           <p className="mb-2">Birthday: {userInfos.birthday}</p>
           <button
             className="flex flex-col m-4 px-4 py-2 w-1.5/6 items-center bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
