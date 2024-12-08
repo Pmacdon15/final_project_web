@@ -4,7 +4,7 @@
 async function LoadAllPrograms(isAdmin) {
   let url = "";
   if (isAdmin) url = "http://localhost:5000/api/v1/admin/programs";
-  else url = "http://localhost:5000/api/v1/guest/programs";
+  else url = "http://localhost:5000/api/v1/client/programs";
 
   try {
     const response = await fetch(`${url}`, {
