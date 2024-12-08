@@ -11,6 +11,7 @@ import clientCoursesRoutes from './routes/clientCourses.routes.js';
 import clientGetCoursesRoutes from './routes/ClientGetCourses.routes.js';
 import clientUsersRoutes from './routes/clientUsers.routes.js';
 import clientCommentRoutes from './routes/ClientComment.routes.js';
+import clientProgramRoutes from './routes/clientProgram.routes.js';
 import adminCommentsRoutes from './routes/adminComment.routes.js';
 import guestPrograms from './routes/guestPrograms.routes.js';
 
@@ -100,6 +101,7 @@ app.use('/api/v1/client', clientGetCoursesRoutes);
 app.use('/api/v1/client', clientCommentRoutes);
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
+app.use('/api/v1/client', authenticateToken, clientProgramRoutes);
 
 app.use('/api/v1/guest', guestPrograms);
 
