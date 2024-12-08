@@ -252,7 +252,18 @@ VALUES
         1,
         'Enterprise computing',
         'This course is designed to provide students with the fundamental concepts of enterprise computing. Topics include: enterprise computing architectures, enterprise computing technologies, and enterprise computing tools. Students will learn to design and implement enterprise computing solutions.'
-    );
+    ),
+    ----------ProgramId 3
+    (3, 'Course 1 for Program 3', 'Description for Course 1'),
+    (3, 'Course 2 for Program 3', 'Description for Course 2'),
+    (3, 'Course 3 for Program 3', 'Description for Course 3'),
+    (3, 'Course 4 for Program 3', 'Description for Course 4'),
+    (3, 'Course 5 for Program 3', 'Description for Course 5'),
+    (3, 'Course 6 for Program 3', 'Description for Course 6'),
+    (3, 'Course 7 for Program 3', 'Description for Course 7'),
+    (3, 'Course 8 for Program 3', 'Description for Course 8'),
+    (3, 'Course 9 for Program 3', 'Description for Course 9'),
+    (3, 'Course 10 for Program 3', 'Description for Course 10')
 
 -- Insert data into the terms table
 INSERT INTO
@@ -301,7 +312,38 @@ VALUES
     (17, 2),
     (18, 2),
     (19, 2),
-    (20, 2);
+    (20, 2),
+    ----ProgramId 3
+    (21,1),
+    (21, 2),
+    (21, 3),
+    (22, 1),
+    (22, 2),
+    (22, 3),
+    (23, 1),
+    (23, 2),
+    (23, 3),
+    (24, 1),
+    (24, 2),
+    (24, 3),
+    (25, 1),
+    (25, 2),
+    (25, 3),
+    (26, 2),
+    (26, 3),
+    (26, 4),
+    (27, 2),
+    (27, 3),
+    (27, 4),
+    (28, 2),
+    (28, 3),
+    (28, 4),
+    (29, 2),
+    (29, 3),
+    (29, 4),
+    (30, 2),
+    (30, 3),
+    (30, 4);
 
 -- Insert data into the users table
 -- INSERT INTO

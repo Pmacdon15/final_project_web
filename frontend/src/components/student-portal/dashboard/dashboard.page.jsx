@@ -1,7 +1,6 @@
 import DisplayUserInfos from './DisplayUserInfos.component.jsx';
 import { LoadUserClasses } from '../../../placeholders/load-data/loadData.action.js';
 import { LoadUserDataByUsername } from '../../../placeholders/load-data/loadData.action.js';
-import { LoadProgramById } from '../../../placeholders/load-data/loadData.action.js';
 import { useState, useEffect } from 'react';
 import getUserInfo from '../../../utils/get-user-info.js';
 import { useCallback } from 'react';
