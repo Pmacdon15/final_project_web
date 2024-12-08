@@ -59,7 +59,6 @@ export const createUserModel = async (userData) => {
     username,
     password,
   } = userData;
-
   try {
     const pool = await poolPromise;
     const result = await pool
@@ -75,9 +74,13 @@ export const createUserModel = async (userData) => {
       .input('username', sql.VarChar, username) 
       .input('password', sql.VarChar, password) 
       .query(
-        `INSERT INTO users (isAdmin, firstName, lastName, birthday, phone, email, department, program, username, password)
-    VALUES (@isAdmin, @firstName, @lastName, @birthday, @phone, @email, @department, @program, @username, @password);
-    SELECT SCOPE_IDENTITY() AS id;`
+        `INSERT INTO users (isAdmin, firstName, lastName, birthday, phone, email, department, username, password)
+    VALUES (@isAdmin, @firstName, @lastName, @birthday, @phone, @email, @department, @username, @password);
+    SELECT SCOPE_IDENTITY() AS id;
+    
+    INSERT INTO user_programs (userId, programId)
+    VALUES (SCOPE_IDENTITY(), (SELECT id FROM programs WHERE name = @program));    
+    `
       ); 
       return result.recordset[0]?.id || null; //will return the id created
   } catch (err) {

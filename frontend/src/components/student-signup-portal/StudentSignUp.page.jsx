@@ -5,7 +5,7 @@ import { Button, Container } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import InputField from "./inputField.component";
 import { RegisterUser } from "../../placeholders/load-data/loadData.action"; // Import SaveUserData function
-import { TextField } from "@mui/material";
+
 
 const StudentSignupForm = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const StudentSignupForm = () => {
     phone: "",
     birthday: "",
     department: "Software Development",
-    program: "",
+    program: "Diploma",
     username: "",
     password: "",
   });
@@ -29,8 +29,7 @@ const StudentSignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const signupData = { ...formDataRef.current };
-
+    const signupData = { ...formDataRef.current };    
     try {
       const response = await RegisterUser(signupData); // Call the API
       console.log("Signup successful:", response);
@@ -125,23 +124,27 @@ const StudentSignupForm = () => {
                   readOnly
                 />
               </Grid>
-              <Grid xs={12}>                
+              <Grid xs={12}>
                 <InputField
-                  id="program"                  
+                  id="program"
                   name="program"
-                  label="Program"
-                  onChange={handleChange}
+                  label="Program"                  
+                  onChange={(e) => {
+                    formDataRef.current.program = e.target.value;
+                  }}
                   type={"select"}
                   slotProps={{
                     select: {
                       native: true,
                     },
-                  }}                
-                > {options.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}</InputField>
+                  }}
+                >
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </InputField>
               </Grid>
               <Grid xs={12}>
                 <InputField

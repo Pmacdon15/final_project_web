@@ -98,7 +98,7 @@ CREATE TABLE
         phone VARCHAR(15) NOT NULL,
         email VARCHAR(255) NOT NULL,
         department VARCHAR(255) NOT NULL,
-        program VARCHAR(255) NOT NULL,
+        -- program VARCHAR(255) NOT NULL,
         username VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL
     );
@@ -138,7 +138,7 @@ VALUES
         10000
     ),
     (
-        'Post diploma',
+        'Post Diploma',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         3,
         8000
@@ -304,32 +304,30 @@ VALUES
     (20, 2);
 
 -- Insert data into the users table
-INSERT INTO
-    users (
-        isAdmin,
-        firstName,
-        lastName,
-        birthday,
-        phone,
-        email,
-        department,
-        program,
-        username,
-        password
-    )
-VALUES
-    (
-        1,
-        'Patrick',
-        'Macdonald',
-        '01011990',
-        '1234567890',
-        'patrick@bvc.com',
-        'Software Development',
-        'SD diploma',
-        'patrick',
-        '1$2b$10$KBf0TqVP8oyelqdWn7J.luz5QrK64csBG6JRbHyPn.TJdyLvITL4W'
-    );
+-- INSERT INTO
+--     users (
+--         isAdmin,
+--         firstName,
+--         lastName,
+--         birthday,
+--         phone,
+--         email,
+--         department,
+--         username,
+--         password
+--     )
+-- VALUES
+--     (
+--         1,
+--         'Patrick',
+--         'Macdonald',
+--         '01011990',
+--         '1234567890',
+--         'patrick@bvc.com',
+--         'Software Development',
+--         'patrick',
+--         '1$2b$10$KBf0TqVP8oyelqdWn7J.luz5QrK64csBG6JRbHyPn.TJdyLvITL4W'
+--     );
 
 --     (
 --         'SD000002',
@@ -422,4 +420,6 @@ VALUES
 -- select  * from user_courses;
 -- select * from users;
 -- SELECT id, username FROM users WHERE username = 'student';
-EXEC sp_columns user_courses;
+-- EXEC sp_columns user_courses;
+
+select * from user_programs;
