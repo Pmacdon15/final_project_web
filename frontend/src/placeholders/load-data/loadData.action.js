@@ -236,10 +236,9 @@ async function EditCourse(classId, programId, className, description, availableF
   }
 }
 
-//MARK: User classes data 
+//MARK: User classes data
 
-
-async function LoadUserClasses(username) {  
+async function LoadUserClasses(username) {
   try {
     const userClasses = await fetch(`http://localhost:5000/api/v1/client/courses/username/${username}`, {
       method: "GET",
@@ -254,6 +253,26 @@ async function LoadUserClasses(username) {
     return userClassesData;
   } catch (error) {
     console.error("Failed to load user classes:", error);
+    return null;
+  }
+}
+//MARK: Load courses by program id
+async function LoadCoursesByProgramId(programId) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/v1/client/courses/${programId}`, {
+
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    } else {
+      const courses = await response.json();
+      return courses;
+    }
+  } catch (error) {
+    console.error("Failed to load courses:", error);
     return null;
   }
 }
@@ -281,7 +300,7 @@ async function AddToUserCourses(
   try {
     const response = await fetch(
       `http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${courseId}/userTermId/${termId}/termSeason/${season}`,
-      
+
       {
         method: "POST",
         headers: {
@@ -303,8 +322,8 @@ async function AddToUserCourses(
 
 }
 
-function DropUserClass(username,classId) {
-  console.log('Dropping class:', classId);  
+function DropUserClass(username, classId) {
+  console.log('Dropping class:', classId);
   try {
     const response = fetch(`http://localhost:5000/api/v1/client/courses/username/${username}/courseId/${classId}`, {
       method: "DELETE",
@@ -483,6 +502,7 @@ export {
   EditProgram,
   DeleteProgram,
   LoadAllClasses,
+  LoadCoursesByProgramId,
   LoadUserClasses,
   AddClassFunction,
   RemoveCourse,

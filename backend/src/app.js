@@ -97,7 +97,7 @@ app.use('/api/v1/admin', authenticateToken, adminPrograms);
 app.use('/api/v1/admin', authenticateToken, adminCommentsRoutes);
 
 // Protected Client Routes
-app.use('/api/v1/client', clientGetCoursesRoutes);
+// app.use('/api/v1/client', clientGetCoursesRoutes);
 app.use('/api/v1/client', clientCommentRoutes);
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
