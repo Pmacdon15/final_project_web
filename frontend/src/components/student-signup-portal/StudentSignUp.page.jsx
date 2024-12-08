@@ -125,57 +125,23 @@ const StudentSignupForm = () => {
                   readOnly
                 />
               </Grid>
-              <Grid xs={12}>
-                <TextField
-                  id="program"
-                  select
+              <Grid xs={12}>                
+                <InputField
+                  id="program"                  
+                  name="program"
                   label="Program"
-                  defaultValue="Diploma"
-                  variant="standard"
-                  fullWidth
+                  onChange={handleChange}
+                  type={"select"}
                   slotProps={{
                     select: {
                       native: true,
                     },
-                  }}
-                  sx={{
-                    '& .MuiInputLabel-root': {
-                      color: 'white',
-                      '&.Mui-focused': {
-                        color: 'white'
-                      }
-                    },
-                    '& .MuiInput-underline': {
-                      '&:before': {
-                        borderBottomColor: 'white'
-                      },
-                      '&:after': {
-                        borderBottomColor: 'white'
-                      }
-                    },
-                    '& .MuiInputBase-input': {
-                      '&:focus': {
-                        color: 'black'
-                      },
-                      '&:not(:focus)': {
-                        color: 'white'
-                      }
-                    }
-                  }}
-                  helperText="Please select program"
-                >
-                  {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-                {/* <InputField
-                  id="program"
-                  name="program"
-                  label="Program"
-                  onChange={handleChange}
-                /> */}
+                  }}                
+                > {options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}</InputField>
               </Grid>
               <Grid xs={12}>
                 <InputField
