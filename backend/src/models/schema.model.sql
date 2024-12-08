@@ -98,7 +98,7 @@ CREATE TABLE users (
 -- Create the user_programs table
 CREATE TABLE user_programs (
     id INT IDENTITY (1, 1) PRIMARY KEY,
-    userId VARCHAR(10) NOT NULL,
+    userId INT(10) NOT NULL,
     programId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES users (id),
     FOREIGN KEY (programId) REFERENCES programs (id) ON DELETE CASCADE
