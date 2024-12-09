@@ -3,9 +3,19 @@ import { config } from '../db/index.js';
 
 // Get all courses
 export const getAllCoursesModel = async () => {
-  await sql.connect(config);
-  return await sql.query`SELECT * FROM courses`;
-};
+   await sql.connect(config);
+   const result = await sql.query(`
+     SELECT 
+         c.*,
+         CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 1) THEN 1 ELSE 0 END AS availableFall,
+         CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 2) THEN 1 ELSE 0 END AS availableWinter,
+         CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 3) THEN 1 ELSE 0 END AS availableSpring,
+         CASE WHEN EXISTS (SELECT 1 FROM courses_available_terms cat WHERE cat.courseId = c.id AND cat.termSeason = 4) THEN 1 ELSE 0 END AS availableSummer
+     FROM 
+         courses c;
+   `);
+   return result;
+ };
 
 // Add a new course
 export const addCourseModel = async (programId, name, description) => {
