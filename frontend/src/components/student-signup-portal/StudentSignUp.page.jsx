@@ -47,8 +47,8 @@ const StudentSignupForm = () => {
       label: "Diploma",
     },
     {
-      value: "Post diploma",
-      label: "Post diploma",
+      value: "Post Diploma",
+      label: "Post Diploma",
     },
     {
       value: "Certificate",

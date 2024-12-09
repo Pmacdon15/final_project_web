@@ -109,6 +109,7 @@ const useGetUserProgram = (username) => {
                     credentials: 'include',
                 });
                 const data = await response.json();
+                console.log(data);
                 setUserProgram(data); // Update state only if data is valid
             } catch (error) {
                 console.error(error);
