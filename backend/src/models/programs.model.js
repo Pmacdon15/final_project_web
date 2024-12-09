@@ -7,6 +7,24 @@ export async function getAllProgramsModel() {
     return await sql.query('SELECT * FROM programs');
 }
 
+export async function getProgramByUsernameModel(username) {
+    await sql.connect(config);
+    const user = await sql.query`SELECT id FROM users WHERE username = ${username};`;
+    const userId = user.recordset[0].id;
+  
+    return await sql.query`
+      SELECT 
+        p.*
+      FROM 
+        programs p
+      JOIN 
+        user_programs up
+      ON 
+        p.id = up.programId
+      WHERE 
+        up.userId = ${userId};
+    `;
+  }
 export async function getProgramByIdModel(id) {
     await sql.connect(config);
     return await sql.query`SELECT * FROM programs WHERE id = ${id}`;

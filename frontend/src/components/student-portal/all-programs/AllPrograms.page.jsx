@@ -28,7 +28,9 @@ export default function StudentPortalAllPrograms() {
                     enroll in.
                 </p>
             </div>
-            <DisplayAllPrograms programs={programs} isAdmin={false} />
+            {programs &&
+                <DisplayAllPrograms programs={programs} isAdmin={false} />
+            }
         </>
     );
 }

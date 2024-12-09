@@ -33,13 +33,27 @@ export const addCourse = asyncHandler(async (req, res) => {
 // Update an existing course
 export const updateCourse = asyncHandler(async (req, res) => {
   const { courseId } = req.params;
-  const { programId, name, description } = req.body;
-  const result = await updateCourseModel(courseId, programId, name, description);
-  if (result.rowsAffected[0] === 0) {
-    return res.status(404).json({ error: 'Course not found' });
-  }
-  res.status(200).json({ message: 'Course updated successfully' });
-});
+  const { 
+    programId, 
+    name, 
+    description, 
+    availableFall, 
+    availableWinter, 
+    availableSpring, 
+    availableSummer 
+  } = req.body;
+  const result = await updateCourseModel(
+    courseId, 
+    programId, 
+    name, 
+    description, 
+    availableFall, 
+    availableWinter, 
+    availableSpring, 
+    availableSummer
+  );
+  res.status(200).json(result);
+})
 
 // Delete a course
 export const deleteCourse = asyncHandler(async (req, res) => {

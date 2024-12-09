@@ -48,7 +48,6 @@ export const login = asyncHandler(async (req, res) => {
  */
 export const register = asyncHandler(async (req, res) => {
   const { isAdmin, firstName, lastName, birthday, phone, email, program, username, password } = req.body;
-
   // Check if username already exists
   const existingUser = await getUserByUsername(username);
   if (existingUser) {
@@ -71,9 +70,7 @@ export const register = asyncHandler(async (req, res) => {
     program,
     username,
     password: hashedPassword,
-  });
-
-  console.log(hashedPassword);
+  });  
 
   // Generate JWT token
   const token = jwt.sign(

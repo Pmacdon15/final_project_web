@@ -9,10 +9,12 @@ import adminCoursesRoutes from './routes/adminCourses.routes.js';
 import adminUsersRoutes from './routes/adminUsers.routes.js';
 import clientCoursesRoutes from './routes/clientCourses.routes.js';
 import clientGetCoursesRoutes from './routes/ClientGetCourses.routes.js';
+import clientGetProgramsRoutes from './routes/clientGetPrograms.routes.js';
 import clientUsersRoutes from './routes/clientUsers.routes.js';
 import clientCommentRoutes from './routes/ClientComment.routes.js';
+import clientProgramRoutes from './routes/clientProgram.routes.js';
 import adminCommentsRoutes from './routes/adminComment.routes.js';
-import guestPrograms from './routes/guestPrograms.routes.js';
+// import guestPrograms from './routes/clientGetAllProgramd.routes.js';
 
 import authRoutes from './routes/auth.routes.js';
 
@@ -95,12 +97,14 @@ app.use('/api/v1/admin', authenticateToken, adminCoursesRoutes);
 app.use('/api/v1/admin', authenticateToken, adminPrograms);
 app.use('/api/v1/admin', authenticateToken, adminCommentsRoutes);
 
-// Protected Client Routes
+// Unprotected Routes
 app.use('/api/v1/client', clientGetCoursesRoutes);
+app.use('/api/v1/client', clientGetProgramsRoutes);
+// Protected Client Routes
 app.use('/api/v1/client', clientCommentRoutes);
 app.use('/api/v1/client', authenticateToken, clientUsersRoutes);
 app.use('/api/v1/client', authenticateToken, clientCoursesRoutes);
+app.use('/api/v1/client', authenticateToken, clientProgramRoutes);
 
-app.use('/api/v1/guest', guestPrograms);
 
 export default app;

@@ -2,8 +2,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 import DisplayAvailableClasses from './DisplayAvailableClasses.component';
 import DisplayUserClasses from './DisplayUserClasses.component';
 import {
-    LoadAllClasses,
-    LoadUserClasses
+    // LoadAllClasses,
+    LoadUserClasses,
+    LoadCoursesByProgramId
 } from '../../../placeholders/load-data/loadData.action';
 import FirstSeasonSelector from './FirstSeasonSelector.component';
 import TermButtonSelector from './TermButtonSelector.component';
@@ -16,7 +17,10 @@ export default function StudentPortalMyClasses() {
     const { username } = getUserInfo();
     const [searchByName, setSearchByName] = useState('');
 
-    const { allClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses();
+    const { userProgram } = useGetUserProgram(username);
+
+
+    const { allClasses, fetchAllClasses, isLoading } = useGetAndSetAllClasses(userProgram?.id);
     const { userClasses, fetchUserClasses } = useGetAndSetUserClasses(username);
     const { userTerms, setUserTerms } = useGetAndSetUserTerms(userClasses);
     const { selectedTerm, setSelectedTerm, season, setSeason } = useGetAndSetSelectedTermAndSeason(userTerms);
@@ -95,21 +99,44 @@ export default function StudentPortalMyClasses() {
     );
 }
 
-
-const useGetAndSetAllClasses = () => {
-    const [allClasses, setAllClasses] = useState();
-    const [isLoading, setIsLoading] = useState(true);
-
-    const fetchAllClasses = useCallback(async () => {
-        setIsLoading(true);
-        const loadedAllClasses = await LoadAllClasses(false);
-        setAllClasses(loadedAllClasses);
-        setIsLoading(false);
-    }, []);
+const useGetUserProgram = (username) => {
+    const [userProgram, setUserProgram] = useState(null);
 
     useEffect(() => {
-        fetchAllClasses();
-    }, [fetchAllClasses]);
+        const fetchUserProgram = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/v1/client/programs/${username}`, {
+                    credentials: 'include',
+                });
+                const data = await response.json();
+                console.log(data);
+                setUserProgram(data); // Update state only if data is valid
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchUserProgram();
+    }, [username]);
+
+    return { userProgram };
+};
+
+const useGetAndSetAllClasses = (programId) => {
+    const [allClasses, setAllClasses] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+   
+    const fetchAllClasses = useCallback(async () => {
+        setIsLoading(true);
+        const loadedAllClasses = await LoadCoursesByProgramId(programId);
+        setAllClasses(loadedAllClasses);
+        setIsLoading(false);
+    }, [programId]);
+    useEffect(() => {
+        if (programId) {
+            fetchAllClasses();
+        }
+    }, [fetchAllClasses, programId]);
+    
     return { allClasses, fetchAllClasses, isLoading };
 
 };

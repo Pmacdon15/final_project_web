@@ -6,12 +6,21 @@ import {
   addUserCourseModel,
   removeUserCourseModel,
   getUserCourseModel,
+  getAllCoursesByProgramModel,
 } from "../models/courses.model.js";
 
 // Get All Courses
 export const getAllCourses = asyncHandler(async (req, res) => {
   console.log("getAllCourses called");
   const result = await getAllCoursesModel();
+  res.status(200).json(result.recordset);
+});
+
+// Get All Courses By Program
+export const getAllCoursesByProgram = asyncHandler(async (req, res) => {
+  const { programId } = req.params;
+  console.log("getAllCoursesByProgram called");
+  const result = await getAllCoursesByProgramModel(programId);
   res.status(200).json(result.recordset);
 });
 

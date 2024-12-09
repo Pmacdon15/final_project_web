@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid2";
 import InputField from "./inputField.component";
 import { RegisterUser } from "../../placeholders/load-data/loadData.action"; // Import SaveUserData function
 
+
 const StudentSignupForm = () => {
   const navigate = useNavigate();
   const formDataRef = useRef({
@@ -15,7 +16,7 @@ const StudentSignupForm = () => {
     phone: "",
     birthday: "",
     department: "Software Development",
-    program: "",
+    program: "Diploma",
     username: "",
     password: "",
   });
@@ -28,8 +29,7 @@ const StudentSignupForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const signupData = { ...formDataRef.current };
-
+    const signupData = { ...formDataRef.current };    
     try {
       const response = await RegisterUser(signupData); // Call the API
       console.log("Signup successful:", response);
@@ -41,6 +41,20 @@ const StudentSignupForm = () => {
       // Optionally display an error message to the user
     }
   };
+  const options = [
+    {
+      value: "Diploma",
+      label: "Diploma",
+    },
+    {
+      value: "Post Diploma",
+      label: "Post Diploma",
+    },
+    {
+      value: "Certificate",
+      label: "Certificate",
+    },
+  ];
 
   return (
     <>
@@ -114,9 +128,23 @@ const StudentSignupForm = () => {
                 <InputField
                   id="program"
                   name="program"
-                  label="Program"
-                  onChange={handleChange}
-                />
+                  label="Program"                  
+                  onChange={(e) => {
+                    formDataRef.current.program = e.target.value;
+                  }}
+                  type={"select"}
+                  slotProps={{
+                    select: {
+                      native: true,
+                    },
+                  }}
+                >
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </InputField>
               </Grid>
               <Grid xs={12}>
                 <InputField

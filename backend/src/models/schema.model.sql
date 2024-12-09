@@ -98,7 +98,7 @@ CREATE TABLE
         phone VARCHAR(15) NOT NULL,
         email VARCHAR(255) NOT NULL,
         department VARCHAR(255) NOT NULL,
-        program VARCHAR(255) NOT NULL,
+        -- program VARCHAR(255) NOT NULL,
         username VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL
     );
@@ -132,19 +132,19 @@ INSERT INTO
     programs (name, description, durationTerms, tuition)
 VALUES
     (
-        'Software development diploma',
+        'Diploma',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         4,
         10000
     ),
     (
-        'Software development post diploma',
+        'Post Diploma',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         3,
         8000
     ),
     (
-        'Certificate in software development',
+        'Certificate',
         'This program is designed to provide students with the knowledge and skills necessary to pursue a career in software development.',
         2,
         6000
@@ -252,7 +252,34 @@ VALUES
         1,
         'Enterprise computing',
         'This course is designed to provide students with the fundamental concepts of enterprise computing. Topics include: enterprise computing architectures, enterprise computing technologies, and enterprise computing tools. Students will learn to design and implement enterprise computing solutions.'
-    );
+    ),
+    
+    (2, 'Course 1 for Program 2', 'Description for Course 1 for program 2'),
+    (2, 'Course 2 for Program 2', 'Description for Course 2 for program 2'),
+    (2, 'Course 3 for Program 2', 'Description for Course 3 for program 2'),
+    (2, 'Course 4 for Program 2', 'Description for Course 4 for program 2'),
+    (2, 'Course 5 for Program 2', 'Description for Course 5 for program 2'),
+    (2, 'Course 6 for Program 2', 'Description for Course 6 for program 2'),
+    (2, 'Course 7 for Program 2', 'Description for Course 7 for program 2'),
+    (2, 'Course 8 for Program 2', 'Description for Course 8 for program 2'),
+    (2, 'Course 9 for Program 2', 'Description for Course 9 for program 2'),
+    (2, 'Course 10 for Program 2', 'Description for Course 10  for program 2'),
+    (2, 'Course 11 for Program 2', 'Description for Course 11 for program 2'),
+    (2, 'Course 12 for Program 2', 'Description for Course 12 for program 2'),
+    (2, 'Course 13 for Program 2', 'Description for Course 13 for program 2'),
+    (2, 'Course 14 for Program 2', 'Description for Course 14 for program 2'),
+    (2, 'Course 15 for Program 2', 'Description for Course 15 for program 2'),
+    ----------ProgramId 3
+    (3, 'Course 1 for Program 3', 'Description for Course 1 for program 3'),
+    (3, 'Course 2 for Program 3', 'Description for Course 2 for program 3'),
+    (3, 'Course 3 for Program 3', 'Description for Course 3 for program 3'),
+    (3, 'Course 4 for Program 3', 'Description for Course 4 for program 3'),
+    (3, 'Course 5 for Program 3', 'Description for Course 5 for program 3'),
+    (3, 'Course 6 for Program 3', 'Description for Course 6 for program 3'),
+    (3, 'Course 7 for Program 3', 'Description for Course 7 for program 3'),
+    (3, 'Course 8 for Program 3', 'Description for Course 8 for program 3'),
+    (3, 'Course 9 for Program 3', 'Description for Course 9 for program 3'),
+    (3, 'Course 10 for Program 3', 'Description for Course 10 for program 3');
 
 -- Insert data into the terms table
 INSERT INTO
@@ -301,35 +328,105 @@ VALUES
     (17, 2),
     (18, 2),
     (19, 2),
-    (20, 2);
+    (20, 2),
+    -----ProgramId 2
+    (21, 1),
+    (21, 2),    
+    (22, 1),
+    (22, 2),
+    (23, 1),
+    (23, 2),
+    (24, 1),
+    (24, 2),
+    (25, 1),
+    (25, 2),
+    (26, 2),
+    (26, 4),
+    (27, 2),
+    (27, 3),
+    (27, 4),
+    (28, 2),
+    (28, 3),
+    (28, 4),
+    (29, 2),
+    (29, 3),
+    (29, 4),
+    (30, 2),
+    (30, 3),
+    (30, 4),
+    (31, 1),
+    (31, 2),
+    (31, 3),
+    (32, 1),
+    (32, 2),
+    (32, 3),
+    (33, 1),
+    (33, 2),
+    (33, 3),
+    (34, 1),
+    (34, 2),
+    (34, 3),
+    (35, 1),
+    (35, 2),
+    (35, 3),   
+   
+    ----ProgramId 3
+    (36,1),
+    (36, 2),
+    (36, 3),
+    (37, 1),
+    (37, 2),
+    (37, 3),
+    (38, 1),
+    (38, 2),
+    (38, 3),
+    (39, 1),
+    (39, 2),
+    (39, 3),
+    (40, 1),
+    (40, 2),
+    (40, 3),
+    (41, 2),
+    (41, 3),
+    (41, 4),
+    (42, 2),
+    (42, 3),
+    (42, 4),
+    (43, 2),
+    (43, 3),
+    (43, 4),
+    (44, 2),
+    (44, 3),
+    (44, 4),
+    (45, 2),
+    (45, 3),
+    (45, 4);
 
 -- Insert data into the users table
-INSERT INTO
-    users (
-        isAdmin,
-        firstName,
-        lastName,
-        birthday,
-        phone,
-        email,
-        department,
-        program,
-        username,
-        password
-    )
-VALUES
-    (
-        1,
-        'Patrick',
-        'Macdonald',
-        '01011990',
-        '1234567890',
-        'patrick@bvc.com',
-        'Software Development',
-        'SD diploma',
-        'patrick',
-        '1$2b$10$KBf0TqVP8oyelqdWn7J.luz5QrK64csBG6JRbHyPn.TJdyLvITL4W'
-    );
+-- INSERT INTO
+--     users (
+--         isAdmin,
+--         firstName,
+--         lastName,
+--         birthday,
+--         phone,
+--         email,
+--         department,
+--         username,
+--         password
+--     )
+-- VALUES
+--     (
+--         1,
+--         'Patrick',
+--         'Macdonald',
+--         '01011990',
+--         '1234567890',
+--         'patrick@bvc.com',
+--         'Software Development',
+--         'patrick',
+--         '1$2b$10$KBf0TqVP8oyelqdWn7J.luz5QrK64csBG6JRbHyPn.TJdyLvITL4W'
+--     );
 
 --     (
 --         'SD000002',
@@ -422,4 +519,6 @@ VALUES
 -- select  * from user_courses;
 -- select * from users;
 -- SELECT id, username FROM users WHERE username = 'student';
-EXEC sp_columns user_courses;
+-- EXEC sp_columns user_courses;
+
+-- select * from user_programs;
