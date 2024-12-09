@@ -34,15 +34,55 @@ export const addCourseModel = async (programId, name, description) => {
 };
 
 // Update an existing course
-export const updateCourseModel = async (courseId, programId, name, description) => {
+export const updateCourseModel = async (courseId, programId, name, description, availableFall, availableWinter, availableSpring, availableSummer) => {
   await sql.connect(config);
-  return await sql.query`
-    UPDATE courses
-    SET programId = ${programId}, name = ${name}, description = ${description}
-    WHERE id = ${courseId}
-  `;
-};
+  
+  // Convert availability values to integers
+  const fall = availableFall === 'on' ? 1 : 0;
+  const winter = availableWinter === 'on' ? 1 : 0;
+  const spring = availableSpring === 'on' ? 1 : 0;
+  const summer = availableSummer === 'on' ? 1 : 0;
 
+  // Update the courses table and insert/update availability records in a single query
+  await sql.query`
+    BEGIN TRANSACTION;
+    BEGIN TRY
+      UPDATE courses
+      SET 
+        programId = ${programId}, 
+        name = ${name}, 
+        description = ${description}
+      WHERE id = ${courseId};
+
+      DELETE FROM courses_available_terms
+      WHERE courseId = ${courseId};
+
+      IF ${fall} = 1
+        INSERT INTO courses_available_terms (courseId, termSeason)
+        VALUES (${courseId}, 1);
+
+      IF ${winter} = 1
+        INSERT INTO courses_available_terms (courseId, termSeason)
+        VALUES (${courseId}, 2);
+
+      IF ${spring} = 1
+        INSERT INTO courses_available_terms (courseId, termSeason)
+        VALUES (${courseId}, 3);
+
+      IF ${summer} = 1
+        INSERT INTO courses_available_terms (courseId, termSeason)
+        VALUES (${courseId}, 4);
+
+      COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+      ROLLBACK TRANSACTION;
+      THROW;
+    END CATCH
+  `;
+
+  return { message: 'Course updated successfully' };
+};
 // Delete a course
 export const deleteCourseModel = async (courseId) => {
   await sql.connect(config);

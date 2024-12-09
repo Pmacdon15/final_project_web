@@ -201,16 +201,14 @@ async function RemoveCourse(courseId) {
 //MARK: Edit course
 async function EditCourse(classId, programId, className, description, availableFall, availableWinter, availableSpring, availableSummer) {
   const updatedClass = {
-    id: classId, // Assuming classId is the identifier for the class
+    id: classId,
     programId: programId,
     name: className,
-    description, // Shorthand property assignment
-    available: {
-      fall: availableFall,
-      winter: availableWinter,
-      spring: availableSpring,
-      summer: availableSummer,
-    },
+    description,
+    availableFall: availableFall,
+    availableWinter: availableWinter,
+    availableSpring: availableSpring,
+    availableSummer: availableSummer,
   };
 
   try {

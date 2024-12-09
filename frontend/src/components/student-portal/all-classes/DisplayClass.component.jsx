@@ -5,8 +5,7 @@ import {
 import { useState } from "react";
 
 export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
-  const [isEditing, setIsEditing] = useState(false);
-  console.log(classDetails);
+  const [isEditing, setIsEditing] = useState(false);  
   async function handleOnRemove(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -24,11 +23,13 @@ export default function DisplayClass({ classDetails, isAdmin, onFormAction }) {
     const programId = formData.get("programId");
     const className = formData.get("className");
     const description = formData.get("description");
-    const availableFall = formData.get("availableFall");
+    let availableFall = formData.get("availableFall");
     const availableWinter = formData.get("availableWinter");
     const availableSpring = formData.get("availableSpring");
     const availableSummer = formData.get("availableSummer");
     console.log("Editing class: ", className);
+    availableFall = availableFall === "on" ? 1 : 0;
+    console.log ("availableFall", availableFall);
     await EditCourse(
       classId,
       programId,
