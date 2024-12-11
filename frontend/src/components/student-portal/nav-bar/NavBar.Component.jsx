@@ -55,7 +55,7 @@ function NavBar({ isAdminPage = false, isGuest = false }) {
     if (!currentUser) {
         settings = ['Login', 'Sign Up'];
     } else {
-        settings = ['Profile', 'Logout'];
+        settings = ['Logout'];
     }
 
     const navigate = useNavigate();
